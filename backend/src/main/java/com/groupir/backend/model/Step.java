@@ -13,10 +13,11 @@ public class Step {
     private Long stepId;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private Product product;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private Integer threshold;
 }

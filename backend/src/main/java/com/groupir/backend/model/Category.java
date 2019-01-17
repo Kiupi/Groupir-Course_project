@@ -12,7 +12,7 @@ public class Category {
     @Getter @Setter
     private Integer categoryId;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String name;
 }

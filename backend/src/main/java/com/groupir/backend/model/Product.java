@@ -14,6 +14,7 @@ public class Product {
     private Long productId;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private User manufacturer;
 
@@ -21,7 +22,7 @@ public class Product {
     @Getter @Setter
     private Category category;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String name;
 
@@ -29,7 +30,7 @@ public class Product {
     @Getter @Setter
     private String description;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private Date endDate;
 

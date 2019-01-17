@@ -27,10 +27,11 @@ public class User {
     private Date birthDate;
 
     @ManyToOne(targetEntity = Role.class)
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private Role role;
 
-    @Column
+    @Column(nullable = false, unique = true)
     @Getter @Setter
     private String email;
 
@@ -38,7 +39,7 @@ public class User {
     @Getter @Setter
     private Address defaultAddress;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String password;
 }

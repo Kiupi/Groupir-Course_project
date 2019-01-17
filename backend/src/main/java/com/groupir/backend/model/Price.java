@@ -13,7 +13,7 @@ public class Price {
     @Getter @Setter
     private PriceKey key;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private BigDecimal price;
 }

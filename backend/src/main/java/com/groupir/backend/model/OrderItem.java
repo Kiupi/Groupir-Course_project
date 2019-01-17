@@ -20,7 +20,7 @@ public class OrderItem {
     @Getter @Setter
     private String trackingNumber;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private Integer quantity;
 }
