@@ -17,23 +17,24 @@ public class Address {
     @Getter @Setter
     private String number;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String street;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String city;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String postalCode;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String country;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private User user;
 }

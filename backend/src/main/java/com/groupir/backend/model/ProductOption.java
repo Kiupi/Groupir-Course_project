@@ -14,10 +14,11 @@ public class ProductOption {
     private Long optionId;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private Product product;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String optionName;
 

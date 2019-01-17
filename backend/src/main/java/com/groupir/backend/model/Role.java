@@ -13,7 +13,7 @@ public class Role {
     @Getter @Setter
     private Integer roleId;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String roleName;
 }

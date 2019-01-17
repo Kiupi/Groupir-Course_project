@@ -14,14 +14,15 @@ public class PaymentMethod {
     private Long paymentMethodId;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private User user;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String type;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private String token;
 }

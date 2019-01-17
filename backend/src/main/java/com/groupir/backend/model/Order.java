@@ -13,15 +13,17 @@ public class Order {
     @Getter @Setter
     private Long orderId;
 
-    @Column
+    @Column(nullable = false)
     @Getter @Setter
     private Date orderDate;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private User user;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     @Getter @Setter
     private PaymentMethod paymentMethod;
 }
