@@ -1,19 +1,17 @@
 package com.groupir.backend.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private Integer roleId;
 
     @Column(nullable = false)
-    @Getter @Setter
     private String roleName;
 }
