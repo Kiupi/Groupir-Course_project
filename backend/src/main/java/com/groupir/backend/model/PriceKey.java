@@ -1,23 +1,20 @@
 package com.groupir.backend.model;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @EqualsAndHashCode
 @Embeddable
+@Data
 public class PriceKey implements Serializable {
 
-    @Getter @Setter
     @ManyToOne
     public ProductOption option;
 
-    @Getter @Setter
     @ManyToOne
     public Step step;
 }

@@ -1,26 +1,24 @@
 package com.groupir.backend.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import java.util.Date;
 
 @Entity
+@Data
 public class OrderItem {
     @EmbeddedId
-    @Getter @Setter
     private OrderItemKey key;
 
     @Column
-    @Getter @Setter
     private Date dispatchmentDate;
 
     @Column
-    @Getter @Setter
     private String trackingNumber;
 
     @Column(nullable = false)
-    @Getter @Setter
     private Integer quantity;
 }
