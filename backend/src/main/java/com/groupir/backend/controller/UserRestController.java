@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 
 @RestController
 @RequestMapping("api/user")
@@ -18,24 +20,26 @@ public class UserRestController {
     private ServiceUser serviceUser;
 
     @GetMapping("/list")
-    public @ResponseBody
-    ResponseEntity<List<User>> getAllUser(){
+    public ResponseEntity<List<User>> getAllUser(){
         return new ResponseEntity<>(serviceUser.findAllUser(), HttpStatus.OK);
     }
-    /*
-    @RequestMapping(path = "/add",method = RequestMethod.POST)
-    public ResponseEntity addUser(@RequestBody User newUser){
-        return new ResponseEntity(serviceUser.add(newUser));
+
+    @PostMapping(value = "/add",produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addUser(@RequestBody User newUser) {
+       serviceUser.add(newUser);
+       return new ResponseEntity<>("User added successfully",HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/delete/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable("id") int idUser){
-        return new ResponseEntity(serviceUser.delete(idUser));
+    @DeleteMapping( "/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") int idUser){
+        serviceUser.delete(idUser);
+        return new ResponseEntity<>("User "+ idUser+ " deleted", HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/update",method = RequestMethod.PATCH)
+    @PutMapping( value = "/update",produces = APPLICATION_JSON_VALUE)
     public ResponseEntity updateUser(@RequestBody User updateUser){
-        return new ResponseEntity(serviceUser.update(updateUser));
-    }*/
+        serviceUser.update(updateUser);
+        return new ResponseEntity<>("User updated", HttpStatus.OK);
+    }
 
 }
