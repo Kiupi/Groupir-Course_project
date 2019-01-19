@@ -17,22 +17,20 @@ public class ServiceUser {
     @Autowired
     private UserRepository userRepository;
 
+
     public List<User> findAllUser(){
         return (List<User>) userRepository.findAll();
     }
-    /*
-    public HttpStatus add(User newUser) {
+
+    public void add(User newUser) {
         userRepository.save(newUser);
-        return HttpStatus.OK;
     }
 
-    public HttpStatus delete(int idUser) {
+    public void delete(int idUser) {
         userRepository.deleteById(idUser);
-        return HttpStatus.OK;
     }
 
-    public HttpStatus update( User updateUser) {
+    public void update( User updateUser) {
         userRepository.save(updateUser);
-        return HttpStatus.OK;
-    }*/
+    }
 }
