@@ -1,0 +1,15 @@
+ion-item ion-col {
+  height: 200px;
+}
+
+ion-item.product img {
+  width: 140px;
+  height: 100px;
+}
+
+ion-item.description {
+  height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
