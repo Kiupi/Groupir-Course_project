@@ -1,9 +1,34 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>products</ion-title>
+    <ion-title>Products</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-card *ngFor="let product of products">
+    <ion-item>
+      <ion-col>
+        <ion-avatar>
+          <img src={{product.image}} />
+        </ion-avatar>
+        <p class="description">{{product.description}}</p>
+      </ion-col>
+      <ion-col>
+        <h2>{{product.name}}</h2>
+      </ion-col>
+    </ion-item>
 
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <div>{{product.quantity}} bought</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <div>11:04 remaining</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
