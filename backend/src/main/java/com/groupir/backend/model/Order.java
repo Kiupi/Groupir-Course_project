@@ -1,5 +1,6 @@
 package com.groupir.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,9 +18,11 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private PaymentMethod paymentMethod;
 }

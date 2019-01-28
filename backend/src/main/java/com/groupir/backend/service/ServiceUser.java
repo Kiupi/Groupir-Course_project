@@ -1,12 +1,16 @@
 package com.groupir.backend.service;
 
+import com.groupir.backend.exceptions.ExceptionNoUserForPrincipal;
 import com.groupir.backend.model.User;
 import com.groupir.backend.repository.UserRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -54,5 +58,25 @@ public class ServiceUser {
      */
     public boolean findById(int idUser) {
         return userRepository.findById(idUser).isPresent();
+    }
+
+    /**
+     * retrieve the user associated to a principal
+     * @param principal the principal for which to find the User
+     * @return the User associated to the principal
+     */
+    public User findByPrincipal(Principal principal){
+        if(principal.getName() != null && principal.getName().equals("")) {
+            Optional<User> user = userRepository.findByEmail(principal.getName());
+            if(user.isPresent()){
+                return user.get();
+            }
+            else {
+                throw new ExceptionNoUserForPrincipal();
+            }
+        }
+        else {
+            throw new RuntimeException("No name for principal");
+        }
     }
 }
