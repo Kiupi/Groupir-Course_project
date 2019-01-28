@@ -16,7 +16,7 @@ import {CommonModule} from '@angular/common';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt_token');
-    
+
 }
 
 @NgModule({
