@@ -25,4 +25,8 @@ public class Order {
     @JoinColumn(nullable = false)
     @JsonIgnore
     private PaymentMethod paymentMethod;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Address address;
 }
