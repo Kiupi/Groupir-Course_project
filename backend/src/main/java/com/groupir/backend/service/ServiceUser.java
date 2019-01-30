@@ -5,6 +5,7 @@ import com.groupir.backend.model.User;
 import com.groupir.backend.repository.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,6 +101,26 @@ public class ServiceUser {
     }
 
     /**
+     * retrieve the user associated to a authentication
+     * @param authentication the authentication for which to find the User
+     * @return the User associated to the authentication
+     */
+    public User findAuthenticated(Authentication authentication){
+        if(authentication.getName() != null && authentication.getName().equals("")) {
+            Optional<User> user = userRepository.findByEmail(authentication.getName());
+            if(user.isPresent()){
+                return user.get();
+            }
+            else {
+                throw new ExceptionNoUserForPrincipal();
+            }
+        }
+        else {
+            throw new RuntimeException("No name for authentication");
+        }
+    }
+
+    /*
      * find user by its id
      * @param idUser user's id
      * @return User
