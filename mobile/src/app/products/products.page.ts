@@ -61,6 +61,11 @@ export class ProductsPage implements OnInit {
     }, Math.random() * 1000 + 100);
   }
 
+  onCategoryClick(event, category) {
+    console.log(category);
+    this.menu.close('categories');
+  }
+
   ngOnInit() {
     this.timerTick();
   }
