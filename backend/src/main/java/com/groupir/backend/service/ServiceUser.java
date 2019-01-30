@@ -52,7 +52,7 @@ public class ServiceUser {
      * @param idUser is id of user
      * @return false if isn't present in database else false
      */
-    public boolean findById(int idUser) {
+    public boolean findIfExist(int idUser) {
         return userRepository.findById(idUser).isPresent();
     }
 }
