@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-products',
@@ -9,8 +10,9 @@ import 'moment/locale/pt-br';
 })
 export class ProductsPage implements OnInit {
   products: any;
+  categories: any;
 
-  constructor() {
+  constructor(private menu: MenuController) {
     moment.locale('FR-fr');
     let page = this;
     this.products = [
@@ -20,15 +22,23 @@ export class ProductsPage implements OnInit {
     ];
     this.products.forEach(function(product) {
       product.endDate = new Date();
-      let seconds = Math.round(Math.random() * 10000 + 100);
+      let seconds = Math.round(Math.random() * 1000 + 100);
       product.endDate.setSeconds(product.endDate.getSeconds() + seconds);
       page.updateRemainingTime(product);
     });
+    this.categories = [];
+    for(let i = 1; i <= 30; i++) {
+      this.categories.push({name: "Categorie " + i});
+    }
+  }
 
+  openCategoriesMenu() {
+    this.menu.enable(true, 'categories');
+    this.menu.open('categories');
   }
 
   updateRemainingTime(product) {
-    product.remainingTime = moment(product.endDate).from(moment());
+    product.remainingTime = moment(product.endDate).fromNow();
   }
 
   timerTick() {
