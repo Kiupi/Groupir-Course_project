@@ -1,0 +1,22 @@
+.vertical-align-content > *
+{
+  display: flex!important;
+  flex-direction: column;
+  align-content: center!important;
+  align-items: center!important;
+}
+
+ion-img {
+  max-width: 200px;
+  margin: auto;
+}
+
+form{
+  width: 75%;
+  margin: auto;
+  text-align: center;
+}
+
+#usefullLink{
+  text-align: center;
+}
