@@ -1,16 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Products</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<ion-searchbar placeholder="Search a product"></ion-searchbar>
 <ion-content padding>
   <ion-card *ngFor="let product of products">
     <ion-item>
       <ion-col>
-        <ion-avatar>
-          <img src={{product.image}} />
-        </ion-avatar>
+        <img src={{product.image}} />
         <p class="description">{{product.description}}</p>
       </ion-col>
       <ion-col>
@@ -20,13 +13,13 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small>
-          <div>{{product.quantity}} bought</div>
+        <button icon-left clear small>
+          <div>{{product.quantity}} achetés</div>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small>
-          <div>11:04 remaining</div>
+        <button icon-right clear small>
+          <div>{{product.remainingTime}}</div>
         </button>
       </ion-col>
     </ion-row>
