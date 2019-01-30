@@ -1,31 +1,36 @@
-<ion-searchbar placeholder="Search a product"></ion-searchbar>
-<ion-content padding>
-  <ion-card *ngFor="let product of products">
-    <ion-item>
-      <ion-col>
-        <img src={{product.image}} />
-        <p class="description">{{product.description}}</p>
-      </ion-col>
-      <ion-col>
-        <h2>{{product.name}}</h2>
-      </ion-col>
-    </ion-item>
+<ion-menu side="start" menuId="categories" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>Categories</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let category of categories">{{category.name}}</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-    <ion-row>
-      <ion-col>
-        <button icon-left clear small>
-          <div>{{product.quantity}} achetés</div>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button icon-right clear small>
-          <div>{{product.remainingTime}}</div>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-</ion-content>
+<ion-router-outlet main>
+  <ion-searchbar placeholder="Search a product"></ion-searchbar>
+  <ion-content padding #content>
+    <ion-card *ngFor="let product of products">
+      <ion-item>
+        <ion-col>
+          <img src={{product.image}} />
+          <p class="description">{{product.description}}</p>
+        </ion-col>
+        <ion-col>
+          <h2>{{product.name}}</h2>
+          <div clear small>{{product.remainingTime}}</div>
+          <div clear small>{{product.quantity}} achetés</div>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+
+</ion-router-outlet>
