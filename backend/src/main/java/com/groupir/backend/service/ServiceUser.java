@@ -5,6 +5,7 @@ import com.groupir.backend.model.User;
 import com.groupir.backend.repository.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,13 +62,13 @@ public class ServiceUser {
     }
 
     /**
-     * retrieve the user associated to a principal
-     * @param principal the principal for which to find the User
-     * @return the User associated to the principal
+     * retrieve the user associated to a authentication
+     * @param authentication the authentication for which to find the User
+     * @return the User associated to the authentication
      */
-    public User findByPrincipal(Principal principal){
-        if(principal.getName() != null && principal.getName().equals("")) {
-            Optional<User> user = userRepository.findByEmail(principal.getName());
+    public User findAuthenticated(Authentication authentication){
+        if(authentication.getName() != null && authentication.getName().equals("")) {
+            Optional<User> user = userRepository.findByEmail(authentication.getName());
             if(user.isPresent()){
                 return user.get();
             }
@@ -76,7 +77,7 @@ public class ServiceUser {
             }
         }
         else {
-            throw new RuntimeException("No name for principal");
+            throw new RuntimeException("No name for authentication");
         }
     }
 }
