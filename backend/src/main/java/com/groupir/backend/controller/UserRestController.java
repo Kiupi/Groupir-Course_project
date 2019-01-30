@@ -3,12 +3,10 @@ package com.groupir.backend.controller;
 import com.groupir.backend.model.User;
 import com.groupir.backend.service.ServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -54,7 +52,7 @@ public class UserRestController {
      */
     @DeleteMapping( "/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") int idUser){
-        if(!serviceUser.findById(idUser)){
+        if(!serviceUser.findIfExist(idUser)){
             return new ResponseEntity<>("User with id "+idUser+" is not found", HttpStatus.NOT_FOUND);
         }
         serviceUser.delete(idUser);
@@ -69,7 +67,7 @@ public class UserRestController {
      */
     @PutMapping( value = "/update/{id}",produces = APPLICATION_JSON_VALUE)
     public ResponseEntity updateUser( @RequestBody User updateUser,@PathVariable(name = "id") int idUser){
-        if(!serviceUser.findById(idUser)){
+        if(!serviceUser.findIfExist(idUser)){
             return new ResponseEntity<>("User with id "+idUser+" is not found", HttpStatus.NOT_FOUND);
         }
         updateUser.setUserId(idUser);
