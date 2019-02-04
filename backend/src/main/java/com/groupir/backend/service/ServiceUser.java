@@ -3,10 +3,12 @@ package com.groupir.backend.service;
 import com.groupir.backend.model.User;
 import com.groupir.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -14,6 +16,9 @@ public class ServiceUser {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      *  find all user from database
@@ -24,10 +29,20 @@ public class ServiceUser {
     }
 
     /**
+     * find user by its email
+     * @param email
+     * @return
+     */
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    /**
      *  Add a user in database
      * @param newUser is a user
      */
     public void add(User newUser) {
+        newUser.encodePassword(passwordEncoder);
         userRepository.save(newUser);
     }
 
@@ -43,7 +58,14 @@ public class ServiceUser {
      *  update a user drom database
      * @param updateUser is a user
      */
-    public void update( User updateUser) {
+    public void update(User updateUser) {
+        Optional<User> inDB = userRepository.findById(updateUser.getUserId());
+        if(updateUser.getPassword() != null){
+            updateUser.encodePassword(passwordEncoder);
+        }
+        else {
+            updateUser.setPassword(inDB.get().getPassword());
+        }
         userRepository.save(updateUser);
     }
 
