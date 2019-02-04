@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {tap} from 'rxjs/operators';
+import {environment} from '../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -21,12 +22,12 @@ export class AuthService {
                 private readonly jwtHelper: JwtHelperService) {
     }
 
-    hasAcces(): Promise<boolean> {
+    hasAccess(): Promise<boolean> {
         const jwt = localStorage.getItem(this.jwtTokenName);
 
         if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
             return new Promise((resolve, _) => {
-                this.httpClient.get('${environment.serverURL}/authenticate')
+                this.httpClient.get(`${environment.serverURL}/authenticate`)
                     .subscribe(() => {
                             this.authUser.next(jwt);
                             resolve(true);
@@ -48,13 +49,17 @@ export class AuthService {
         this.navCtrl.navigateRoot('login', {replaceUrl: true, skipLocationChange: true});
     }
 
-    login(values: any): Observable<string> {
-        return this.httpClient.post('${environment.serverURL}/login', values, {responseType: 'text'})
+    login(username: any, password: any): Observable<string> {
+        let values = {
+            username: username,
+            password: password
+        };
+        return this.httpClient.post(`${environment.serverURL}/api/login`, values, {responseType: 'text'})
             .pipe(tap(jwt => this.handleJwtResponse(jwt)));
     }
 
     signup(values: any): Observable<string> {
-        return this.httpClient.post('${environment.serverURL}/signup', values, {responseType: 'text'})
+        return this.httpClient.post(`${environment.serverURL}/api/signup`, values, {responseType: 'text'})
             .pipe(tap(jwt => {
                 if (jwt !== 'EXIST') {
                     return this.handleJwtResponse(jwt);
