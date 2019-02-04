@@ -1,15 +1,27 @@
 package com.groupir.backend.controller;
 
+import com.groupir.backend.dao.AuthenticationRequest;
 import com.groupir.backend.model.User;
+import com.groupir.backend.security.JwtTokenProvider;
 import com.groupir.backend.service.ServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
@@ -18,6 +30,10 @@ public class UserRestController {
 
     @Autowired
     private ServiceUser serviceUser;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     /**
      *  the get request is "/api/user/list" to use this method
@@ -75,4 +91,18 @@ public class UserRestController {
         return new ResponseEntity<>("User with id "+idUser+" updated", HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity signin(@RequestBody AuthenticationRequest data) {
+        try {
+            String username = data.getEmail();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+            String token = jwtTokenProvider.createToken(username, this.serviceUser.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found")).getRoles());
+            Map<Object, Object> model = new HashMap<>();
+            model.put("username", username);
+            model.put("token", token);
+            return ok(model);
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username/password supplied");
+        }
+    }
 }
