@@ -15,9 +15,6 @@ export class AppComponent {
     title: 'app';
     restItems: any;
 
-    //TODO : change API URL
-    restItemsUrl: 'https://public-api.wordpress.com/rest/v1.1/sites/vocon-it.com/posts';
-
     constructor(
         private platform: Platform,
         private splashScreen: SplashScreen,
