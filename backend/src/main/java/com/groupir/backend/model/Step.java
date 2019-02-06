@@ -1,5 +1,6 @@
 package com.groupir.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Step {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private Product product;
 
     @Column(nullable = false)
