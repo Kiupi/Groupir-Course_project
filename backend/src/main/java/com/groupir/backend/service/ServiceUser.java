@@ -56,7 +56,7 @@ public class ServiceUser {
     }
 
     /**
-     *  update a user drom database
+     *  update a user from database
      * @param updateUser is a user
      */
     public User update(User updateUser) {
@@ -81,7 +81,11 @@ public class ServiceUser {
         return userRepository.findById(idUser).isPresent();
     }
 
-
+    /**
+     * find user by its id
+     * @param idUser user's id
+     * @return User
+     */
     public Optional<User> findById(int idUser) {
         return userRepository.findById(idUser);
     }
