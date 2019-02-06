@@ -11,6 +11,7 @@ import com.groupir.backend.security.JwtTokenProvider;
 import com.groupir.backend.service.ServiceOrderItem;
 import com.groupir.backend.service.ServiceUser;
 import io.swagger.annotations.ApiKeyAuthDefinition;
+import io.swagger.annotations.ApiKeyAuthDefinition;
 import com.groupir.backend.service.ServiceUserOrders;
 import org.modelmapper.ModelMapper;
 import io.swagger.annotations.ApiKeyAuthDefinition;
