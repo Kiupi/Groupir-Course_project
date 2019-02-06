@@ -498,4 +498,61 @@ class UserRestControllerTest {
     class SupplierAccess{
 
     }
+
+    @Nested
+    class AnonymousAccess {
+        // /api/user/add
+        @WithAnonymousUser
+        @Test
+        void Anonymous_shouldBeAbleToRegisterUser() throws Exception {
+            given(serviceUser.add(any(User.class))).willAnswer(invocation -> {
+                User newUser = invocation.getArgument(0);
+                newUser.setUserId(7);
+                return newUser;
+            });
+
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 2\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
+
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk()).andReturn();
+        }
+
+        @WithAnonymousUser
+        @Test
+        void Anonymous_shouldNotBeAbleToRegisterAdmin(){
+            fail();
+        }
+
+        @WithAnonymousUser
+        @Test
+        void Anonymous_shouldNotBeAbleToRegisterSupplier(){
+            fail();
+        }
+
+        // /api/user/
+    }
+    @Nested
+    class AdminAccess {
+
+    }
+    @Nested
+    class UserAccess {
+
+    }
+    @Nested
+    class SupplierAccess{
+
+    }
 }
