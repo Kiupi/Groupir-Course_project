@@ -10,13 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +29,8 @@ public class UserRestController {
 
     @Autowired
     private ServiceUser serviceUser;
+    @Autowired
+    private ServiceOrderItem serviceOrderItem;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
