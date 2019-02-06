@@ -23,11 +23,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles(value = "test")
+@Sql(scripts = {"/sql/groupir_address.sql"})
 class UserRestControllerTest {
 
     @Autowired
@@ -41,6 +43,10 @@ class UserRestControllerTest {
     @MockBean
     private RoleRepository roleRepository;
 
+
+    @AfterEach
+    @Sql({"/sql/drop.sql"})
+    void initDelete(){}
 
 private String exampleUserAddJson = "{\"birthDate\": \"1996-01-19\",\n" +
                                         "  \"defaultAddress\": null \n"+
@@ -56,9 +62,9 @@ private String exampleUserAddJson = "{\"birthDate\": \"1996-01-19\",\n" +
 
 
 
-
     @Test
     void shouldCode200ForGetRequest() throws Exception {
+
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/user/list");
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(200, result.getResponse().getStatus());
