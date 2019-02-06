@@ -11,8 +11,10 @@ public class OrderItemDTO {
     private String trackingNumber;
     private Date dispatchmentDate;
     private int quantity;
+    private long optionId;
     private String  optionName;
     private String image;
+    private long productId;
     private String productName;
     private BigDecimal price ;
 }
