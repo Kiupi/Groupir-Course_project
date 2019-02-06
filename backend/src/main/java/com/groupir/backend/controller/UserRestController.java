@@ -1,22 +1,28 @@
 package com.groupir.backend.controller;
 
-import com.groupir.backend.dao.AuthenticationRequest;
+import com.groupir.backend.dto.AuthenticationRequest;
+import com.groupir.backend.dto.OrderDTO;
+import com.groupir.backend.dto.OrderItemDTO;
+import com.groupir.backend.exceptions.UserNotFoundException;
+import com.groupir.backend.model.Order;
+import com.groupir.backend.model.OrderItem;
 import com.groupir.backend.model.User;
 import com.groupir.backend.security.JwtTokenProvider;
+import com.groupir.backend.service.ServiceOrderItem;
 import com.groupir.backend.service.ServiceUser;
+import com.groupir.backend.service.ServiceUserOrders;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +38,14 @@ public class UserRestController {
     @Autowired
     private ServiceUser serviceUser;
     @Autowired
+    private ServiceOrderItem serviceOrderItem;
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ServiceUserOrders serviceUserOrders;
 
     /**
      *  the get request is "/api/user/list" to use this method
@@ -106,4 +117,33 @@ public class UserRestController {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
     }
+    /**
+     *  the get request is "/api/user/history_purchase/{id}" to use this method
+     * @param idUser is user's id
+     * @return order's list of user
+     */
+    @GetMapping(value = "/history_purchase/{id}")
+    public  ResponseEntity historyPurchase(@PathVariable(name = "id") int idUser)  {
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        ModelMapper modelMapperOrder = new ModelMapper();
+        modelMapperOrder.createTypeMap( Order.class, OrderDTO.class)
+                .addMappings(mapping -> {
+                    mapping.map(Order::getOrderId, OrderDTO::setId);
+                    mapping.map(Order::getAddress, OrderDTO::setAddress);
+                    mapping.map(Order::getOrderDate, OrderDTO::setDateOrder);
+                });
+
+        User user= serviceUser.findById(idUser).orElseThrow(() -> new UserNotFoundException("Not found the user id "+ idUser));
+        List<Order> orderList = serviceUserOrders.getListOrderByUser(user);
+
+        orderList.forEach(order -> {
+            OrderDTO orderDTO = new OrderDTO();
+            modelMapperOrder.map(order, orderDTO);
+
+            orderDTO.setOrderItems(serviceOrderItem.getProducts(order.getOrderId()));
+            orderDTOS.add(orderDTO);
+        });
+        return new ResponseEntity<>(orderDTOS,HttpStatus.OK);
+    }
+
 }

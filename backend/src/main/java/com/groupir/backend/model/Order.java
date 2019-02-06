@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "user_orders")
 @Data
@@ -26,4 +27,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Address address;
+
+
 }
