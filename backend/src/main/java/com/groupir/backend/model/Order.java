@@ -30,4 +30,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Address address;
+
+
 }
