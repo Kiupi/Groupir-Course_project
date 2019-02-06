@@ -77,4 +77,9 @@ public class ServiceUser {
     public boolean findIfExist(int idUser) {
         return userRepository.findById(idUser).isPresent();
     }
+
+
+    public Optional<User> findById(int idUser) {
+        return userRepository.findById(idUser);
+    }
 }
