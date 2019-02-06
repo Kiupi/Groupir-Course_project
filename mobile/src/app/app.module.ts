@@ -20,7 +20,7 @@ import { PaymentListComponent } from './profil/payment-list/payment-list.compone
 
 export function tokenGetter() {
     return localStorage.getItem('jwt_token');
-    
+
 }
 
 @NgModule({
