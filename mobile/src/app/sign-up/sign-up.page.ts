@@ -7,7 +7,7 @@ import {finalize} from 'rxjs/operators';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
-  styleUrls: ['./sign-up.page.scss'],
+  styleUrls: ['./sign-up.page.scss']
 })
 
 export class SignUpPage implements OnInit {
@@ -72,48 +72,4 @@ export class SignUpPage implements OnInit {
   }
   ngOnInit() {
   }
-
-
 }
-
-/*
-export class SignUpPage implements OnInit {
-
-  public isName = true;
-  public isSurname = true;
-  public isBirthDate = true;
-  public isMail = true;
-  public isPassword = true;
-  public isConfirmPassword = true;
-  public isSamePassword = true;
-  public isOldEnough = true;
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  onSubmit(name: string, surname: string, birthDate: string, mail: string, password: string, confirmPassword: string) {
-    /*
-    console.log(mail.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g));
-    if (mail.match(/\w*.?\w*@\w*.{3}[^.| ]/g)) {
-      console.log('match');
-    }
-    this.isName =  name !== '';
-    this.isSurname = surname !== '';
-    this.isBirthDate = birthDate !== '';
-    this.isMail = mail !== '';
-    this.isPassword = password !== '';
-    this.isConfirmPassword = confirmPassword !== '';
-    if (this.isName && this.isSurname && this.isMail && this.isPassword && this.isConfirmPassword && this.isBirthDate) {
-      const now = new Date();
-      this.isOldEnough = Number(birthDate.split('-')[0]) + 18 <= now.getFullYear();
-      if (this.isOldEnough) {
-        this.isSamePassword = password === confirmPassword;
-        if (this.isSamePassword) {
-          console.log('Ca marche !');
-        }
-      }
-    }
-  }
-}
-*/
