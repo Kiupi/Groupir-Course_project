@@ -1,0 +1,13 @@
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/groupir?serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=
+
+#Change if you are not using mysql5 with InnoDB
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+
+#==== APPLICATION ====
+#salt for token generation
+application.security.secret-key=ThisIsNotReallySecret
+#time to live for token in milliseconds
+application.security.token-ttl=604800
