@@ -41,9 +41,10 @@ public class ServiceUser {
      *  Add a user in database
      * @param newUser is a user
      */
-    public void add(User newUser) {
+    public User add(User newUser) {
         newUser.encodePassword(passwordEncoder);
         userRepository.save(newUser);
+        return newUser;
     }
 
     /**

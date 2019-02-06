@@ -10,6 +10,7 @@ import com.groupir.backend.model.User;
 import com.groupir.backend.security.JwtTokenProvider;
 import com.groupir.backend.service.ServiceOrderItem;
 import com.groupir.backend.service.ServiceUser;
+import io.swagger.annotations.ApiKeyAuthDefinition;
 import com.groupir.backend.service.ServiceUserOrders;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +70,9 @@ public class UserRestController {
      * @return String
      */
     @PostMapping(value = "/add",produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addUser(@RequestBody User newUser) {
-       serviceUser.add(newUser);
-       return new ResponseEntity<>("User added successfully",HttpStatus.OK);
+    public User addUser(@RequestBody User newUser) {
+        User updatedUser = serviceUser.add(newUser);
+       return updatedUser;
     }
 
     /**
@@ -104,6 +105,7 @@ public class UserRestController {
         return new ResponseEntity<>("User with id "+idUser+" updated", HttpStatus.OK);
     }
 
+    @ApiKeyAuthDefinition(name="authToken", key="Authorization", in= ApiKeyAuthDefinition.ApiKeyLocation.HEADER)
     @PostMapping("/login")
     public ResponseEntity signin(@RequestBody AuthenticationRequest data) {
         try {
