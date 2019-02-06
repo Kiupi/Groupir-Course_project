@@ -1,9 +1,14 @@
 package com.groupir.backend.controller;
 
+import com.groupir.backend.model.Role;
 import com.groupir.backend.model.User;
 import com.groupir.backend.repository.RoleRepository;
 import com.groupir.backend.repository.UserRepository;
+import com.groupir.backend.service.ServiceOrderItem;
 import com.groupir.backend.service.ServiceUser;
+import com.groupir.backend.service.ServiceUserOrders;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -22,12 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,8 +48,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -67,7 +65,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -145,6 +142,10 @@ class UserRestControllerTest {
 
     @MockBean
     private ServiceUser serviceUser;
+    @MockBean
+    private ServiceOrderItem serviceOrderItem;
+    @MockBean
+    private ServiceUserOrders serviceUserOrders;
 
     @MockBean
     private UserRepository userRepository;
@@ -152,7 +153,7 @@ class UserRestControllerTest {
     private RoleRepository roleRepository;
 
     @BeforeEach
-    void configureMocks(){
+    void configureMocks() {
         given(serviceUser.add(any(User.class))).willAnswer(invocation -> {
             User newUser = invocation.getArgument(0);
             newUser.setUserId(7);
@@ -552,7 +553,8 @@ class UserRestControllerTest {
 
     }
     @Nested
-    class SupplierAccess{
+    class SupplierAccess {
 
     }
+
 }
