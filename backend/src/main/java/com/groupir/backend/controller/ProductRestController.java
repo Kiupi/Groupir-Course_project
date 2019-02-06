@@ -22,59 +22,63 @@ public class ProductRestController {
     private ServiceProduct serviceProduct;
 
     /**
-     *  the get request is "/api/product/list" to use this method
+     * the get request is "/api/product/list" to use this method
+     *
      * @return list of all product
      */
     @GetMapping("/list")
-    public ResponseEntity<List<Product>> getAllProduct(){
-        List<Product> products= serviceProduct.findAllProduct();
-        if(products.size()==0){
-            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
+    public ResponseEntity<List<Product>> getAllProduct() {
+        List<Product> products = serviceProduct.findAllProduct();
+        if (products.size() == 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
             return new ResponseEntity<>(products, HttpStatus.OK);
         }
 
     }
 
     /**
-     *  the post request is "/api/product/add" to use this method
+     * the post request is "/api/product/add" to use this method
+     *
      * @param newProduct is a JSON of product
      * @return String
      */
-    @PostMapping(value = "/add",produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addProduct(@RequestBody Product newProduct) {
         serviceProduct.add(newProduct);
-        return new ResponseEntity<>("Product added successfully",HttpStatus.OK);
+        return new ResponseEntity<>("Product added successfully", HttpStatus.OK);
     }
 
     /**
-     *  the delete request is "/api/product/delete/{id}" to use this method
+     * the delete request is "/api/product/delete/{id}" to use this method
+     *
      * @param idProduct is the variable "id" in the request
      * @return String
      */
-    @DeleteMapping( "/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") int idProduct){
-        if(!serviceProduct.findById(idProduct)){
-            return new ResponseEntity<>("Product with id "+idProduct+" is not found", HttpStatus.NOT_FOUND);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") int idProduct) {
+        if (!serviceProduct.findById(idProduct)) {
+            return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
         }
         serviceProduct.delete(idProduct);
-        return new ResponseEntity<>("Product with id "+ idProduct+ " deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Product with id " + idProduct + " deleted", HttpStatus.OK);
     }
 
     /**
-     *  the put request is "/api/product/update" to use this method
+     * the put request is "/api/product/update" to use this method
+     *
      * @param updateProduct is a JSON of product
-     * @param idProduct is id of product
+     * @param idProduct     is id of product
      * @return string
      */
-    @PutMapping( value = "/update/{id}",produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity updateProduct( @RequestBody Product updateProduct,@PathVariable(name = "id") long idProduct){
-        if(!serviceProduct.findById(idProduct)){
-            return new ResponseEntity<>("Product with id "+idProduct+" is not found", HttpStatus.NOT_FOUND);
+    @PutMapping(value = "/update/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity updateProduct(@RequestBody Product updateProduct, @PathVariable(name = "id") long idProduct) {
+        if (!serviceProduct.findById(idProduct)) {
+            return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
         }
         updateProduct.setProductId(idProduct);
         serviceProduct.update(updateProduct);
-        return new ResponseEntity<>("Product with id "+idProduct+" updated", HttpStatus.OK);
+        return new ResponseEntity<>("Product with id " + idProduct + " updated", HttpStatus.OK);
     }
 
 }
