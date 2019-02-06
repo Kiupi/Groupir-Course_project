@@ -1,3 +1,143 @@
+create table role
+(
+  role_id   int auto_increment
+    primary key,
+  role_name varchar(255) not null
+)
+  engine = InnoDB;
+create table user
+(
+  user_id                    int auto_increment
+    primary key,
+  birth_date                 datetime     null,
+  email                      varchar(255) not null,
+  first_name                 varchar(255) null,
+  last_name                  varchar(255) null,
+  password                   varchar(255) not null,
+  default_address_address_id bigint       null,
+  role_role_id               int          not null,
+  constraint UK_ob8kqyqqgmefl0aco34akdtpe
+    unique (email),
+  constraint FKs2ym81xl98n65ndx09xpwxm66
+    foreign key (role_role_id) references role (role_id)
+)
+  engine = InnoDB;
+create table address
+(
+  address_id   bigint auto_increment
+    primary key,
+  city         varchar(255) not null,
+  country      varchar(255) not null,
+  number       varchar(255) null,
+  postal_code  varchar(255) not null,
+  street       varchar(255) not null,
+  user_user_id int          not null,
+  constraint FKpxpw7qa7k7scwns6b57iio3xg
+    foreign key (user_user_id) references user (user_id)
+)
+  engine = InnoDB;
+  alter table user add
+  constraint FKshd60bvbse1d38tmf8jmj87j5
+    foreign key (default_address_address_id) references address (address_id);
+create table category
+(
+  category_id int auto_increment
+    primary key,
+  name        varchar(255) not null
+)
+  engine = InnoDB;
+create table product
+(
+  product_id           bigint auto_increment
+    primary key,
+  description          longtext     null,
+  end_date             datetime     not null,
+  max_sales            bigint       null,
+  name                 varchar(255) not null,
+  category_category_id int          null,
+  manufacturer_user_id int          not null,
+  constraint FKkfo6vlkbs8rk2ktwyjt713ask
+    foreign key (manufacturer_user_id) references user (user_id),
+  constraint FKle1pobdrc8a2uw97gukfmvan4
+    foreign key (category_category_id) references category (category_id)
+)
+  engine = InnoDB;
+create table payment_method
+(
+  payment_method_id bigint auto_increment
+    primary key,
+  token             varchar(255) not null,
+  type              varchar(255) not null,
+  user_user_id      int          not null,
+  constraint FKb85gyn7flumxdjw8wjvst81pb
+    foreign key (user_user_id) references user (user_id)
+)
+  engine = InnoDB;
+create table user_orders
+(
+  order_id                         bigint auto_increment
+    primary key,
+  order_date                       datetime not null,
+  address_address_id               bigint   not null,
+  payment_method_payment_method_id bigint   not null,
+  user_user_id                     int      not null,
+  constraint FK3a79tx1s3sik0nckxv3ctkede
+    foreign key (address_address_id) references address (address_id),
+  constraint FKk3l8l51p5csh379l0fa31c3wd
+    foreign key (user_user_id) references user (user_id),
+  constraint FKlhw744cul4ae4ipnjpuixk17y
+    foreign key (payment_method_payment_method_id) references payment_method (payment_method_id)
+)
+  engine = InnoDB;
+create table product_option
+(
+  option_id             bigint auto_increment
+    primary key,
+  image                 varchar(255) null,
+  manufaturer_reference varchar(255) null,
+  option_name           varchar(255) not null,
+  product_product_id    bigint       not null,
+  constraint FKf135hq0tq3mo9dttbfhcidbac
+    foreign key (product_product_id) references product (product_id)
+)
+  engine = InnoDB;
+create table step
+(
+  step_id            bigint auto_increment
+    primary key,
+  threshold          int    not null,
+  product_product_id bigint not null,
+  constraint FKf8vdfl8uoy17po361nq3w0i9r
+    foreign key (product_product_id) references product (product_id)
+)
+  engine = InnoDB;
+create table order_item
+(
+  dispatchment_date datetime     null,
+  quantity          int          not null,
+  tracking_number   varchar(255) null,
+  option_option_id  bigint       not null,
+  order_order_id    bigint       not null,
+  primary key (option_option_id, order_order_id),
+  constraint FK6nkqyjsflv4uktkqpdcsacluv
+    foreign key (option_option_id) references product_option (option_id),
+  constraint FKtmwacvl0np4l15yc7c63byq7x
+    foreign key (order_order_id) references user_orders (order_id)
+)
+  engine = InnoDB;
+create table price
+(
+  price            decimal(19, 2) not null,
+  option_option_id bigint         not null,
+  step_step_id     bigint         not null,
+  primary key (option_option_id, step_step_id),
+  constraint FK8iiig1dmafh7c6kvp7dvb7x35
+    foreign key (step_step_id) references step (step_id),
+  constraint FKs03qeovq78b5g1qj2549yj159
+    foreign key (option_option_id) references product_option (option_id)
+)
+  engine = InnoDB;
+
 INSERT INTO role (role_id, role_name) VALUES (1, 'ADMIN');
 INSERT INTO role (role_id, role_name) VALUES (2, 'USER');
 INSERT INTO role (role_id, role_name) VALUES (3, 'SUPPLIER');
