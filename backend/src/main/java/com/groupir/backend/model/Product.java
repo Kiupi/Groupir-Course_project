@@ -1,9 +1,10 @@
 package com.groupir.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Data
@@ -30,4 +31,8 @@ public class Product {
 
     @Column
     private Long maxSales;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
+    private List<Step> steps = new ArrayList<>();
 }
