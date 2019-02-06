@@ -8,7 +8,7 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import {environment} from '../environments/environment'
+import {environment} from '../environments/environment';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
