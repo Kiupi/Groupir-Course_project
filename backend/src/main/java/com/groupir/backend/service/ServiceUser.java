@@ -59,7 +59,7 @@ public class ServiceUser {
      *  update a user drom database
      * @param updateUser is a user
      */
-    public void update(User updateUser) {
+    public User update(User updateUser) {
         Optional<User> inDB = userRepository.findById(updateUser.getUserId());
         if(updateUser.getPassword() != null){
             updateUser.encodePassword(passwordEncoder);
@@ -68,6 +68,8 @@ public class ServiceUser {
             updateUser.setPassword(inDB.get().getPassword());
         }
         userRepository.save(updateUser);
+
+        return updateUser;
     }
 
     /**
