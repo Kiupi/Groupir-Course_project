@@ -1,4 +1,4 @@
-package com.groupir.backend.dao;
+package com.groupir.backend.dto;
 
 import lombok.Data;
 
