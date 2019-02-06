@@ -13,6 +13,7 @@ import com.groupir.backend.service.ServiceUser;
 import io.swagger.annotations.ApiKeyAuthDefinition;
 import com.groupir.backend.service.ServiceUserOrders;
 import org.modelmapper.ModelMapper;
+import io.swagger.annotations.ApiKeyAuthDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
