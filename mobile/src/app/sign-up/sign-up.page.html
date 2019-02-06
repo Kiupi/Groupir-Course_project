@@ -11,6 +11,8 @@
 <ion-content padding>
     <form #form="ngForm" (ngSubmit)="signup(form.value)" novalidate>
         <ion-list>
+
+            <!-- Name -->
             <ion-item>
                 <ion-label position="stacked">Name</ion-label>
                 <ion-input type="text" name="name" ngModel required #name="ngModel"
@@ -22,6 +24,31 @@
                 </ion-label>
             </ion-item>
 
+            <!-- Surname -->
+            <ion-item>
+            <ion-label position="stacked">Surname</ion-label>
+                <ion-input type="text" name="surname" ngModel required #surname="ngModel"
+                           [class.invalid]="surname.errors && surname.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" *ngIf="surname.errors?.required && surname.dirty">
+                <ion-label>
+                    Surname is required
+                </ion-label>
+            </ion-item>
+
+            <!-- Birth Date -->
+            <ion-item>
+                <ion-label position="stacked">Birth date</ion-label>
+                <ion-input type="date" name="birthDate" ngModel required #birthDate="ngModel"
+                           [class.invalid]="birthDate.errors && birthDate.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" *ngIf="birthDate.errors?.required && birthDate.dirty">
+                <ion-label>
+                    Birth date is required
+                </ion-label>
+            </ion-item>
+
+            <!-- Email -->
             <ion-item>
                 <ion-label position="stacked">Email</ion-label>
                 <ion-input type="email" name="email" ngModel required email #email="ngModel"
@@ -37,23 +64,13 @@
                     Email is not valid
                 </ion-label>
             </ion-item>
-
-            <ion-item>
-                <ion-label position="stacked">Username</ion-label>
-                <ion-input type="text" name="username" ngModel required #username="ngModel"
-                           [class.invalid]="username.errors && username.dirty"></ion-input>
-            </ion-item>
-            <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+            <ion-item class="error-message" *ngIf="email.errors?.emailTaken">
                 <ion-label>
-                    Username is required
-                </ion-label>
-            </ion-item>
-            <ion-item class="error-message" *ngIf="username.errors?.usernameTaken">
-                <ion-label>
-                    Username already taken
+                    Email already taken
                 </ion-label>
             </ion-item>
 
+            <!-- Password -->
             <ion-item>
                 <ion-label position="stacked">Password</ion-label>
                 <ion-input type="password" name="password" ngModel required #password="ngModel"
@@ -65,6 +82,7 @@
                 </ion-label>
             </ion-item>
 
+            <!-- Submit -->
             <div padding>
                 <ion-button color="primary" expand="block" type="submit" [disabled]="!form.valid">Sign up</ion-button>
             </div>
@@ -72,57 +90,3 @@
         </ion-list>
     </form>
 </ion-content>
-
-<!--
-<ion-header>
-  <ion-toolbar>
-    <ion-title>sign-up</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Sign-Up</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-        <ion-list>
-            <ion-item>
-                <label for="name">Name : </label>
-                <ion-input class="form" type="text" id="name" required placeholder="Cyril" #name></ion-input>
-            </ion-item>
-            <p *ngIf="!isName">Please fill your name</p>
-            <ion-item>
-                <label for="surname">Surname : </label>
-                <ion-input type="text" id="surname" required placeholder="levoisindudessus" #surname></ion-input>
-            </ion-item>
-            <p *ngIf="!isSurname">Please fill your surname</p>
-            <ion-item>
-                <label for="birthDate">Birth date : </label>
-                <ion-input type="date" id="birthDate" required #birthDate></ion-input>
-            </ion-item>
-            <p *ngIf="!isBirthDate">Please fill your birth date</p>
-            <ion-item>
-                <label for="mail">Mail : </label>
-                <ion-input type="email" id="mail" required placeholder="cyril.voisindudessus@tse.com" #mail></ion-input>
-            </ion-item>
-            <p *ngIf="!isMail">Please fill your mail</p>
-            <ion-item>
-                <label for="password">Password : </label>
-                <ion-input type="password" id="password" required placeholder="coucou" #password></ion-input>
-            </ion-item>
-            <p *ngIf="!isPassword">Please fill your password</p>
-            <ion-item>
-                <label for="confirmPassword">Confirm password : </label>
-                <ion-input type="password" id="confirmPassword" required placeholder="coucou" #confirmPassword></ion-input>
-            </ion-item>
-            <p *ngIf="!isConfirmPassword">Please confirm your password</p>
-            <p *ngIf="!isSamePassword">He is not identical as your password</p>
-        </ion-list>
-        <p *ngIf="!isOldEnough">We are sorry, your are not old enough to sign up, you have to be 18 or more</p>
-        <ion-button slot="end" type="submit" (click)="onSubmit(name.value, surname.value, birthDate.value, mail.value, password.value, confirmPassword.value)">Submit</ion-button>
-    </ion-card-content>
-  </ion-card>
-</ion-content>
--->
