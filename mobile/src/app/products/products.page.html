@@ -1,4 +1,4 @@
-<ion-menu side="start" menuId="categories" class="my-custom-menu">
+<ion-menu side="start" menuId="categories">
     <ion-header>
         <ion-toolbar color="tertiary">
             <ion-title>Categories</ion-title>
@@ -18,8 +18,8 @@
 <ion-router-outlet main>
     <ion-searchbar placeholder="Search a product"></ion-searchbar>
     <ion-content padding #content>
-        <ion-card *ngFor="let product of products">
-            <ng-container *ngIf="category == null || product.category == category">
+        <ng-container *ngFor="let product of products" class="product-list">
+            <ion-card *ngIf="category == null || product.category == category">
                 <ion-item>
                     <ion-col>
                         <img src={{product.image}}/>
@@ -31,9 +31,9 @@
                         <div clear small>{{product.quantity}} achetés</div>
                     </ion-col>
                 </ion-item>
-            </ng-container>
-        </ion-card>
-        <ion-infinite-scroll threshold="400px" (ionInfinite)="loadData($event)">
+            </ion-card>
+        </ng-container>
+        <ion-infinite-scroll threshold="0px" (ionInfinite)="loadData($event)">
             <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
             </ion-infinite-scroll-content>
         </ion-infinite-scroll>
