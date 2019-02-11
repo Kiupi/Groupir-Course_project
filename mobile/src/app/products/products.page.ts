@@ -18,50 +18,69 @@ export class ProductsPage implements OnInit {
   constructor(private menu: MenuController, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
     moment.locale('FR-fr');
     this.products = [];
-    this.categories = [{name: "All"}, {name: "Categorie 1", id: 1}, {name: "Categorie 2", id: 2}, {name: "Categorie 3", id: 3}];
+    this.categories = [{name: "All"}];
     let page = this;
     this.http.get('localhost:8080/api/product/list').subscribe((response:any) => {
       response.products.forEach(function(productDTO) {
         page.addProduct(productDTO);
       });
+      page.http.get('localhost:8080/api/category/list').subscribe((response:any) => {
+        response.categories.forEach(function(category) {
+          page.addCategory(category);
+        });
+      }, (err) => {
+        console.log(err);
+        page.loadPlaceholderCategories();
+      });
     }, (err) => {
       console.log(err);
-      page.addProduct({
-        id: 0,
-        description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number.",
-        category: {
-          categoryId: 1,
-          name: "Categorie 1"
-        },
-        nameProduct: "Dot Product",
-        date: 1550959110725,
-        img: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif",
-        nbOrder: 105,
-      });
-      page.addProduct({
-        id: 1,
-        description: "In computing, a computer keyboard is a typewriter-style device which uses an arrangement of buttons or keys to act as mechanical levers or electronic switches. Following the decline of punch cards and paper tape, interaction via teleprinter-style keyboards became the main input method for computers.",
-        category: {
-          categoryId: 2,
-          name: "Categorie 2"
-        },
-        nameProduct: "Computer Keyboard",
-        date: 1550999110725,
-        img: "https://cdn.wccftech.com/wp-content/uploads/2018/11/Wooting-Seasonic-Partnership.jpg",
-        nbOrder: 84,
-      });
-      page.addProduct({
-        id: 2,
-        description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs.",
-        category: {
-          categoryId: 3,
-          name: "Categorie 3"
-        },
-        nameProduct: "Spring",
-        date: 1953759110725,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA",
-        nbOrder: 302,
-      });
+      page.loadPlaceholderProducts();
+      page.loadPlaceholderCategories();
+    });
+  }
+
+  loadPlaceholderProducts() {
+    this.addProduct({
+      id: 0,
+      description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number.",
+      categoryId: 1,
+      nameProduct: "Dot Product",
+      date: 1550959110725,
+      img: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif",
+      nbOrder: 105,
+    });
+    this.addProduct({
+      id: 1,
+      description: "In computing, a computer keyboard is a typewriter-style device which uses an arrangement of buttons or keys to act as mechanical levers or electronic switches. Following the decline of punch cards and paper tape, interaction via teleprinter-style keyboards became the main input method for computers.",
+      categoryId: 2,
+      nameProduct: "Computer Keyboard",
+      date: 1550999110725,
+      img: "https://cdn.wccftech.com/wp-content/uploads/2018/11/Wooting-Seasonic-Partnership.jpg",
+      nbOrder: 84,
+    });
+    this.addProduct({
+      id: 2,
+      description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs.",
+      categoryId: 3,
+      nameProduct: "Spring",
+      date: 1953759110725,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA",
+      nbOrder: 302,
+    });
+  }
+
+  loadPlaceholderCategories() {
+    this.addCategory({
+      id: 1,
+      name: "Category 1"
+    });
+    this.addCategory({
+      id: 2,
+      name: "Category 2"
+    });
+    this.addCategory({
+      id: 3,
+      name: "Category 3"
     });
   }
 
@@ -69,7 +88,7 @@ export class ProductsPage implements OnInit {
     let product = {
       id: productDTO.id,
       description: productDTO.description,
-      category: productDTO.category.categoryId,
+      category: productDTO.categoryId,
       name: productDTO.nameProduct,
       endDate: new Date(productDTO.date),
       image: productDTO.img,
@@ -77,6 +96,10 @@ export class ProductsPage implements OnInit {
     };
     this.updateRemainingTime(product);
     this.products.push(product);
+  }
+
+  addCategory(category) {
+    this.categories.push(category);
   }
 
   updateRemainingTime(product) {
