@@ -5,12 +5,10 @@ import com.groupir.backend.model.Step;
 import com.groupir.backend.service.ServiceProduct;
 import com.groupir.backend.service.ServiceStep;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -51,7 +49,7 @@ public class StepRestController {
     public ResponseEntity getOneStep(@PathVariable("id") long idStep) {
         Step step = serviceStep.findOne(idStep);
         if (step == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Step with id " + idStep + " not found", HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(step, HttpStatus.OK);
         }
@@ -106,7 +104,7 @@ public class StepRestController {
      */
     @DeleteMapping("/step/delete/{id}")
     public ResponseEntity<String> deleteStep(@PathVariable("id") int idStep) {
-        if (!serviceStep.findById(idStep)) {
+        if (!serviceStep.isPresent(idStep)) {
             return new ResponseEntity<>("Step with id " + idStep + " is not found", HttpStatus.NOT_FOUND);
         }
         serviceStep.delete(idStep);
@@ -126,7 +124,7 @@ public class StepRestController {
         if (product == null) {
             return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
         } else {
-            if (!serviceStep.findById(idStep)) {
+            if (!serviceStep.isPresent(idStep)) {
                 return new ResponseEntity<>("Step with id " + idStep + " is not found", HttpStatus.NOT_FOUND);
             }
             updateStep.setStepId(idStep);
