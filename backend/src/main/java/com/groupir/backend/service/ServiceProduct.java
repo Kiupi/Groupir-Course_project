@@ -151,7 +151,7 @@ public class ServiceProduct {
                 .addMappings(mapping -> {
                     mapping.map(Product::getProductId, ProductDTO::setId);
                     mapping.map(Product::getDescription, ProductDTO::setDescription);
-                    mapping.map(Product::getCategory, ProductDTO::setCategory);
+                    mapping.map(source -> source.getCategory().getCategoryId(), ProductDTO::setCategoryId);
                     mapping.map(Product::getName, ProductDTO::setNameProduct);
                     mapping.map(Product::getEndDate, ProductDTO::setDate);
                 });
