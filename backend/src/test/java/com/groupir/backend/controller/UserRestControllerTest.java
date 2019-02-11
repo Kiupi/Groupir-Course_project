@@ -115,13 +115,18 @@ class UserRestControllerTest {
             return newUser;
         });
         given(serviceUser.findAllUser()).willReturn(users);
-        given(serviceUser.update(any(User.class))).willAnswer(invocation -> invocation);
+        given(serviceUser.update(any(User.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         given(serviceUser.findIfExist(1)).willReturn(true);
         given(serviceUser.findIfExist(2)).willReturn(true);
         given(serviceUser.findIfExist(3)).willReturn(true);
 
-        given(userRepository.findByEmail("theo.basty@telecom-st-etienne.fr")).willReturn(Optional.of(theo));
+        given(userRepository.findByEmail(theo.getEmail())).willReturn(Optional.of(theo));
+        given(serviceUser.findByEmail(theo.getEmail())).willReturn(Optional.of(theo));
+        given(userRepository.findByEmail(cyril.getEmail())).willReturn(Optional.of(cyril));
+        given(serviceUser.findByEmail(cyril.getEmail())).willReturn(Optional.of(cyril));
+        given(userRepository.findByEmail(raphael.getEmail())).willReturn(Optional.of(raphael));
+        given(serviceUser.findByEmail(raphael.getEmail())).willReturn(Optional.of(raphael));
     }
 
     @Nested
@@ -166,7 +171,7 @@ class UserRestControllerTest {
             MvcResult result = mockMvc.perform(post("/api/user/add")
                     .content(newUserJSon)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(status().isUnauthorized()).andReturn();
+                    .andExpect(status().isForbidden()).andReturn();
         }
 
         @WithAnonymousUser
@@ -177,7 +182,7 @@ class UserRestControllerTest {
                     "    \"firstName\": \"New\",\n" +
                     "    \"birthDate\": null,\n" +
                     "    \"role\": {\n" +
-                    "      \"roleId\": 1\n" +
+                    "      \"roleId\": 3\n" +
                     "    },\n" +
                     "    \"email\": \"new.user@test.test\",\n" +
                     "    \"defaultAddress\": null,\n" +
@@ -187,7 +192,7 @@ class UserRestControllerTest {
             MvcResult result = mockMvc.perform(post("/api/user/add")
                     .content(newUserJSon)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(status().isUnauthorized()).andReturn();
+                    .andExpect(status().isForbidden()).andReturn();
         }
 
         // /api/user/list
@@ -196,7 +201,7 @@ class UserRestControllerTest {
         void Anonymous_shouldNotBeAbleToListUser() throws Exception {
             MvcResult result = mockMvc.perform(get("/api/user/list")
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(status().isUnauthorized()).andReturn();
+                    .andExpect(status().isForbidden()).andReturn();
         }
 
         // /api/user/login
@@ -223,7 +228,7 @@ class UserRestControllerTest {
                     "    \"firstName\": \"Updated\",\n" +
                     "    \"birthDate\": null,\n" +
                     "    \"role\": {\n" +
-                    "      \"roleId\": 2\n" +
+                    "      \"roleId\": 1\n" +
                     "    },\n" +
                     "    \"email\": \"new.user@test.test\",\n" +
                     "    \"defaultAddress\": null,\n" +
@@ -232,7 +237,7 @@ class UserRestControllerTest {
             MvcResult result = mockMvc.perform(put("/api/user/update/1")
                     .content(updatedUserJSon)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(status().isUnauthorized()).andReturn();
+                    .andExpect(status().isForbidden()).andReturn();
         }
 
         // /api/user/delete/{id}
@@ -241,7 +246,7 @@ class UserRestControllerTest {
         void Anonymous_shouldNotAbleToDeleteAnUser() throws Exception {
             MvcResult result = mockMvc.perform(delete("/api/user/delete/1")
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(status().isUnauthorized()).andReturn();
+                    .andExpect(status().isForbidden()).andReturn();
         }
 
     }
@@ -373,7 +378,7 @@ class UserRestControllerTest {
         @WithMockUser(username = "theo.basty@telecom-st-etienne.fr", authorities = {"ADMIN"})
         @Test
         void Admin_shouldBeAbleToDeleteAnOtherUser() throws Exception {
-            MvcResult result = mockMvc.perform(delete("/api/user/delete/1")
+            MvcResult result = mockMvc.perform(delete("/api/user/delete/2")
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                     .andExpect(status().isOk()).andReturn();
         }
@@ -390,12 +395,280 @@ class UserRestControllerTest {
 
     @Nested
     class UserAccess {
+        // /api/user/add
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldBeAbleToRegisterUser() throws Exception {
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 2\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
 
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk()).andReturn();
+        }
+
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldNotBeAbleToRegisterAdmin() throws Exception {
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 1\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
+
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldNotBeAbleToRegisterSupplier() throws Exception {
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 3\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
+
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        // /api/user/list
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldNotBeAbleToListUser() throws Exception {
+            MvcResult result = mockMvc.perform(get("/api/user/list")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        // /api/user/login
+        // not relevant, an user can just login as an other user by not sending it's authorization token
+
+        // /api/user/update/{id}
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldNotBeAbleToUpdateAnOtherUser() throws Exception {
+            String updatedUserJSon = "  {\n" +
+                    "    \"userId\": 1," +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"Updated\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 1\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"0000\"\n" +
+                    "  }";
+            MvcResult result = mockMvc.perform(put("/api/user/update/1")
+                    .content(updatedUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldBeAbleToUpdateHimself() throws Exception {
+            String updatedUserJSon = "  {\n" +
+                    "    \"userId\": 2," +
+                    "    \"lastName\": \"Faisandier\",\n" +
+                    "    \"firstName\": \"Cyril\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 2\n" +
+                    "    },\n" +
+                    "    \"email\": \"updated.email@telecom-st-etienne.fr\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"0000\"\n" +
+                    "  }";
+            MvcResult result = mockMvc.perform(put("/api/user/update/2")
+                    .content(updatedUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk()).andReturn();
+        }
+
+        // /api/user/delete/{id}
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void User_shouldNotAbleToDeleteAnOtherUser() throws Exception {
+            MvcResult result = mockMvc.perform(delete("/api/user/delete/1")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
+        @Test
+        void Anonymous_shouldBeAbleToDeleteHimself() throws Exception {
+            MvcResult result = mockMvc.perform(delete("/api/user/delete/2")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk()).andReturn();
+        }
     }
 
     @Nested
     class SupplierAccess {
+        // /api/user/add
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Supplier_shouldBeAbleToRegisterUser() throws Exception {
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 2\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
 
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk()).andReturn();
+        }
+
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Supplier_shouldNotBeAbleToRegisterAdmin() throws Exception {
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 1\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
+
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Supplier_shouldNotBeAbleToRegisterSupplier() throws Exception {
+            String newUserJSon = "  {\n" +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"New\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 3\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"test\"\n" +
+                    "  }";
+
+            MvcResult result = mockMvc.perform(post("/api/user/add")
+                    .content(newUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        // /api/user/list
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Supplier_shouldNotBeAbleToListUser() throws Exception {
+            MvcResult result = mockMvc.perform(get("/api/user/list")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        // /api/user/login
+        // not relevant, an user can just login as an other user by not sending it's authorization token
+
+        // /api/user/update/{id}
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Supplier_shouldNotBeAbleToUpdateAnOtherUser() throws Exception {
+            String updatedUserJSon = "  {\n" +
+                    "    \"userId\": 1," +
+                    "    \"lastName\": \"User\",\n" +
+                    "    \"firstName\": \"Updated\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 1\n" +
+                    "    },\n" +
+                    "    \"email\": \"new.user@test.test\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"0000\"\n" +
+                    "  }";
+            MvcResult result = mockMvc.perform(put("/api/user/update/1")
+                    .content(updatedUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Supplier_shouldBeAbleToUpdateHimself() throws Exception {
+            String updatedUserJSon = "  {\n" +
+                    "    \"userId\": 3," +
+                    "    \"lastName\": \"Chevasson\",\n" +
+                    "    \"firstName\": \"Raphaël\",\n" +
+                    "    \"birthDate\": null,\n" +
+                    "    \"role\": {\n" +
+                    "      \"roleId\": 3\n" +
+                    "    },\n" +
+                    "    \"email\": \"updated.email@telecom-st-etienne.fr\",\n" +
+                    "    \"defaultAddress\": null,\n" +
+                    "    \"password\": \"0000\"\n" +
+                    "  }";
+            MvcResult result = mockMvc.perform(put("/api/user/update/3")
+                    .content(updatedUserJSon)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isOk()).andReturn();
+        }
+
+        // /api/user/delete/{id}
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void User_shouldNotAbleToDeleteAnOtherUser() throws Exception {
+            MvcResult result = mockMvc.perform(delete("/api/user/delete/1")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
+        @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
+        @Test
+        void Anonymous_shouldNotBeAbleToDeleteHimself() throws Exception {
+            MvcResult result = mockMvc.perform(delete("/api/user/delete/3")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
     }
 
 }
