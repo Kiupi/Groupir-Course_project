@@ -33,7 +33,7 @@ import java.util.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("api/user")
 public class UserRestController {
