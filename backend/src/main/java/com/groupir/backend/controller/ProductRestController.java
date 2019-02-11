@@ -98,7 +98,7 @@ public class ProductRestController {
      * @return list of product filter by category
      */
     @GetMapping(value = "/findByCategory/{id}")
-    public ResponseEntity findProductsbyCategory(@PathVariable(name="id") int idCategory){
+    public ResponseEntity findProductsByCategory(@PathVariable(name="id") int idCategory){
         List<ProductDTO> products=serviceProduct.findAllByCategory(idCategory);
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
