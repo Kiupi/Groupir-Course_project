@@ -7,6 +7,8 @@ import com.groupir.backend.model.*;
 import com.groupir.backend.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -170,4 +172,15 @@ public class ServiceProduct {
 
         return productDTOList;
     }
+
+    /**
+     *  find all products containing "str" in name
+     * @param str product's name
+     * @return products
+     */
+    public List<ProductDTO> findProductsByName(String str) {
+        List<Product> products = productRepository.findAllByNameContaining(str);
+        return getDtoOFProduct(products);
+    }
+
 }
