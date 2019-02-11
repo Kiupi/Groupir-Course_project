@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
-import {JwtHelperService} from '@auth0/angular-jwt';
 import {tap} from 'rxjs/operators';
 import {environment} from '../environments/environment';
-import {text} from '@angular/core/src/render3';
 
 
 @Injectable({
@@ -17,33 +15,10 @@ export class AuthService {
 
 
     private authUser = new ReplaySubject<any>(1);
-    public authUserObservable = this.authUser.asObservable();
 
 
     constructor(private readonly httpClient: HttpClient,
-                private readonly navCtrl: NavController,
-                private readonly jwtHelper: JwtHelperService) {
-    }
-
-    hasAccess(): Promise<boolean> {
-        const jwt = localStorage.getItem(this.jwtTokenName);
-
-        if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
-            return new Promise((resolve, _) => {
-                this.httpClient.get(`${environment.serverURL}/authenticate`)
-                    .subscribe(() => {
-                            this.authUser.next(jwt);
-                            resolve(true);
-                        },
-                        err => {
-                            this.logout();
-                            resolve(false);
-                        });
-            });
-        } else {
-            this.logout();
-            return Promise.resolve(false);
-        }
+                private readonly navCtrl: NavController) {
     }
 
     logout() {

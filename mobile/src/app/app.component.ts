@@ -12,9 +12,6 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
 
-    title: 'app';
-    restItems: any;
-
     constructor(
         private platform: Platform,
         private splashScreen: SplashScreen,
@@ -23,7 +20,6 @@ export class AppComponent {
     ) {
         this.initializeApp();
     }
-
 
     initializeApp() {
         this.platform.ready().then(() => {
