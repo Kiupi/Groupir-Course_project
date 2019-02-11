@@ -3,14 +3,13 @@ import {Routes, RouterModule} from '@angular/router';
 import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
-    {path: '', redirectTo: 'sign-up', pathMatch: 'full'},
+    {path: '', redirectTo: 'user', pathMatch: 'full'},
     {path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [AuthGuard]},
     {path: 'sign-up', loadChildren: './sign-up/sign-up.module#SignUpPageModule'},
     {path: 'login', loadChildren: './login/login.module#LoginPageModule'},
     {path: 'forgot-page', loadChildren: './forgot-page/forgot-page.module#ForgotPagePageModule'},
     {path: 'products', loadChildren: './products/products.module#ProductsPageModule'},
-    {path: 'address-list', loadChildren: './profil/address-list.module#AddressListPageModule'},
-    {path: 'detail', loadChildren: './profil/detail.module#DetailPageModule'},
+    {path: 'user', loadChildren: './user/user.module#UserPageModule'}
 ];
 
 @NgModule({

@@ -11,24 +11,18 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {CommonModule} from '@angular/common';
-import { DetailComponent } from './profil/detail/detail.component';
-import { AddressListComponent } from './profil/address-list/address-list.component';
-import { PurchaseListComponent } from './profil/purchase-list/purchase-list.component';
-import { PaymentListComponent } from './profil/payment-list/payment-list.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        DetailComponent,
-        AddressListComponent,
-        PurchaseListComponent,
-        PaymentListComponent
+        AppComponent
     ],
     entryComponents: [],
     imports: [
         HttpClientModule,
         CommonModule,
         BrowserModule,
+        FormsModule,
         IonicModule.forRoot(),
         AppRoutingModule
     ],
