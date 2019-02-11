@@ -8,6 +8,10 @@ import javax.persistence.*;
 @Data
 public class Role {
 
+    public static String ADMIN = "ADMIN";
+    public static String USER = "USER";
+    public static String SUPPLIER = "SUPPLIER";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;

@@ -1,5 +1,6 @@
 package com.groupir.backend.controller;
 
+import com.groupir.backend.exceptions.GlobalControllerExceptionHandler;
 import com.groupir.backend.model.Role;
 import com.groupir.backend.model.User;
 import com.groupir.backend.repository.RoleRepository;
@@ -48,6 +49,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -65,7 +68,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -80,6 +82,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
+@EnableWebMvc
 @WebMvcTest(UserRestController.class)
 @AutoConfigureTestDatabase
 @ComponentScan("com.groupir.backend.security")
@@ -570,7 +573,7 @@ class UserRestControllerTest {
 
         @WithMockUser(username = "cyril.faisandier@telecom-st-etienne.fr", authorities = {"USER"})
         @Test
-        void Anonymous_shouldBeAbleToDeleteHimself() throws Exception {
+        void User_shouldBeAbleToDeleteHimself() throws Exception {
             MvcResult result = mockMvc.perform(delete("/api/user/delete/2")
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                     .andExpect(status().isOk()).andReturn();
@@ -701,7 +704,7 @@ class UserRestControllerTest {
         // /api/user/delete/{id}
         @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
         @Test
-        void User_shouldNotAbleToDeleteAnOtherUser() throws Exception {
+        void Supplier_shouldNotAbleToDeleteAnOtherUser() throws Exception {
             MvcResult result = mockMvc.perform(delete("/api/user/delete/1")
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                     .andExpect(status().isForbidden()).andReturn();
@@ -709,7 +712,7 @@ class UserRestControllerTest {
 
         @WithMockUser(username = "raphael.chevasson@telecom-st-etienne.fr", authorities = {"SUPPLIER"})
         @Test
-        void Anonymous_shouldNotBeAbleToDeleteHimself() throws Exception {
+        void Supplier_shouldNotBeAbleToDeleteHimself() throws Exception {
             MvcResult result = mockMvc.perform(delete("/api/user/delete/3")
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                     .andExpect(status().isForbidden()).andReturn();
