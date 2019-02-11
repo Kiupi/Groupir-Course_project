@@ -8,11 +8,13 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
     <form #form="ngForm" (ngSubmit)="signup(form.value)" novalidate>
         <ion-list>
 
-            <!-- Name -->
+            <!-- Name
+             <input name="password" [(ngModel)]="password" #password="ngModel">
+             -->
             <ion-item>
                 <ion-label position="stacked">Name</ion-label>
                 <ion-input type="text" name="name" ngModel required #name="ngModel"
