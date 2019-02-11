@@ -1,14 +1,12 @@
 package com.groupir.backend.service;
 
 import com.google.common.collect.Lists;
+import com.groupir.backend.exceptions.CategoryNotFoundException;
 import com.groupir.backend.model.OrderItem;
 import com.groupir.backend.model.Price;
 import com.groupir.backend.model.Product;
 import com.groupir.backend.model.Step;
-import com.groupir.backend.repository.OrderItemRepository;
-import com.groupir.backend.repository.PriceRepository;
-import com.groupir.backend.repository.ProductRepository;
-import com.groupir.backend.repository.StepRepository;
+import com.groupir.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +30,9 @@ public class ServiceProduct {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     /**
      * find all product from database
@@ -109,5 +110,17 @@ public class ServiceProduct {
         Step step =stepRepository.findByProduct_ProductIdAndThresholdLessThanEqualOrderByThresholdDesc(idProduct,somme);
         Price price = priceRepository.findByKey_Option_OptionIdAndKey_Step_StepId(optionId,step.getStepId());
         return price.getPrice();
+    }
+
+    /**
+     * find list of product by category
+     * @param idCategory category's id
+     * @return list of product
+     */
+    public List<Product> findAllByCategory(int idCategory) {
+        if(!categoryRepository.findById(idCategory).isPresent()){
+            throw new CategoryNotFoundException("Category with id "+ idCategory + " not found!");
+        }
+        return productRepository.findAllByCategory_CategoryId(idCategory);
     }
 }
