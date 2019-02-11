@@ -2,6 +2,8 @@ package com.groupir.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.*;
@@ -34,5 +36,11 @@ public class Product {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Step> steps = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<ProductOption> productOptions = new ArrayList<>();
 }
