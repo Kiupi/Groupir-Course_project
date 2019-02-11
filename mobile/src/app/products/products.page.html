@@ -6,11 +6,13 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <ion-item ion-activatable button *ngFor="let category of categories"
-                      (click)="onCategoryClick($event, category.id)">
-                <ion-ripple-effect></ion-ripple-effect>
-                {{ category.name }}
-            </ion-item>
+            <ion-menu-toggle auto-hide="false">
+                <ion-item ion-activatable button *ngFor="let category of categories"
+                          (click)="onCategoryClick($event, category.id)">
+                    <ion-ripple-effect></ion-ripple-effect>
+                    {{ category.name }}
+                </ion-item>
+            </ion-menu-toggle>
         </ion-list>
     </ion-content>
 </ion-menu>
@@ -38,5 +40,6 @@
             </ion-infinite-scroll-content>
         </ion-infinite-scroll>
     </ion-content>
+    <ion-searchbar placeholder="Search a product"></ion-searchbar>
 
 </ion-router-outlet>
