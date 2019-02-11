@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import { MenuController } from '@ionic/angular';
-import {IonTabs} from "@ionic/angular";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -15,27 +15,68 @@ export class ProductsPage implements OnInit {
   categories: any;
   category: String;
 
-  constructor(private menu: MenuController, private router: Router, private route: ActivatedRoute) {
+  constructor(private menu: MenuController, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
     moment.locale('FR-fr');
-    let page = this;
-    this.products = [
-      {id: 0, quantity: 105, category: 1, name: "Dot Product", image: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif", description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number."},
-      {id: 1, quantity: 84, category: 2, name: "Computer Keyboard", image: "https://cdn.wccftech.com/wp-content/uploads/2018/11/Wooting-Seasonic-Partnership.jpg", description: "In computing, a computer keyboard is a typewriter-style device which uses an arrangement of buttons or keys to act as mechanical levers or electronic switches. Following the decline of punch cards and paper tape, interaction via teleprinter-style keyboards became the main input method for computers."},
-      {id: 2, quantity: 302, category: 3, name: "Spring", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA", description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs."},
-    ];
-    this.products.forEach(function(product) {
-      product.endDate = new Date();
-      let seconds = Math.round(Math.random() * 1000 + 100);
-      product.endDate.setSeconds(product.endDate.getSeconds() + seconds);
-      product.id = Math.floor(3 + Math.random() * 1e9);
-      page.updateRemainingTime(product);
-    });
+    this.products = [];
     this.categories = [{name: "All"}, {name: "Categorie 1", id: 1}, {name: "Categorie 2", id: 2}, {name: "Categorie 3", id: 3}];
+    let page = this;
+    this.http.get('localhost:8080/api/product/list').subscribe((response:any) => {
+      response.products.forEach(function(productDTO) {
+        page.addProduct(productDTO);
+      });
+    }, (err) => {
+      console.log(err);
+      page.addProduct({
+        id: 0,
+        description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number.",
+        category: {
+          categoryId: 1,
+          name: "Categorie 1"
+        },
+        nameProduct: "Dot Product",
+        date: 1550959110725,
+        img: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif",
+        nbOrder: 105,
+      });
+      page.addProduct({
+        id: 1,
+        description: "In computing, a computer keyboard is a typewriter-style device which uses an arrangement of buttons or keys to act as mechanical levers or electronic switches. Following the decline of punch cards and paper tape, interaction via teleprinter-style keyboards became the main input method for computers.",
+        category: {
+          categoryId: 2,
+          name: "Categorie 2"
+        },
+        nameProduct: "Computer Keyboard",
+        date: 1550999110725,
+        img: "https://cdn.wccftech.com/wp-content/uploads/2018/11/Wooting-Seasonic-Partnership.jpg",
+        nbOrder: 84,
+      });
+      page.addProduct({
+        id: 2,
+        description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs.",
+        category: {
+          categoryId: 3,
+          name: "Categorie 3"
+        },
+        nameProduct: "Spring",
+        date: 1953759110725,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA",
+        nbOrder: 302,
+      });
+    });
   }
 
-  openCategoriesMenu() {
-    this.menu.enable(true, 'categories');
-    this.menu.open('categories');
+  addProduct(productDTO) {
+    let product = {
+      id: productDTO.id,
+      description: productDTO.description,
+      category: productDTO.category.categoryId,
+      name: productDTO.nameProduct,
+      endDate: new Date(productDTO.date),
+      image: productDTO.img,
+      quantity: productDTO.nbOrder
+    };
+    this.updateRemainingTime(product);
+    this.products.push(product);
   }
 
   updateRemainingTime(product) {
@@ -53,7 +94,7 @@ export class ProductsPage implements OnInit {
   loadData(event) {
     setTimeout(() => {
       for(let i = 0; i < 3; i++) {
-        var newProduct = this.products[Math.floor(Math.random() * this.products.length)];
+        let newProduct = this.products[Math.floor(Math.random() * this.products.length)];
         newProduct.id = Math.floor(3 + Math.random() * 1e9);
         newProduct.endDate = new Date();
         let seconds = Math.round(Math.random() * 1000 + 100);
