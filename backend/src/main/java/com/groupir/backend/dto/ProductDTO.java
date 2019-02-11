@@ -12,7 +12,7 @@ public class ProductDTO {
 
     private long id ;
     private String description;
-    private Category category;
+    private int categoryId;
     private String nameProduct;
     private Date date;
     private String img;
