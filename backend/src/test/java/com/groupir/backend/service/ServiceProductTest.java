@@ -1,6 +1,7 @@
 package com.groupir.backend.service;
 
 import com.google.common.collect.Lists;
+import com.groupir.backend.dto.ProductDTO;
 import com.groupir.backend.model.*;
 import com.groupir.backend.repository.*;
 import org.junit.Assert;
@@ -93,7 +94,7 @@ class ServiceProductTest {
                     .filter(product -> product.getCategory().getCategoryId()==ID_CATEGORY)
                     .toArray()
                     .length;
-            List<Product> products = serviceProduct.findAllByCategory(ID_CATEGORY);
+            List<ProductDTO> products = serviceProduct.findAllByCategory(ID_CATEGORY);
             products.forEach(product -> {
                 Assert.assertEquals(ID_CATEGORY, (int) product.getCategory().getCategoryId());
             });

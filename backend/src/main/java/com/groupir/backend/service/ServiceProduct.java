@@ -1,17 +1,17 @@
 package com.groupir.backend.service;
 
 import com.google.common.collect.Lists;
+import com.groupir.backend.dto.ProductDTO;
 import com.groupir.backend.exceptions.CategoryNotFoundException;
-import com.groupir.backend.model.OrderItem;
-import com.groupir.backend.model.Price;
-import com.groupir.backend.model.Product;
-import com.groupir.backend.model.Step;
+import com.groupir.backend.model.*;
 import com.groupir.backend.repository.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +34,22 @@ public class ServiceProduct {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductOptionRepository productOptionRepository;
+
     /**
      * find all product from database
      *
      * @return list of all product
      */
-    public List<Product> findAllProduct() {
-        return (List<Product>) productRepository.findAll();
+    public List<ProductDTO> findAllProduct() {
+        List<Product> products= (List<Product>) productRepository.findAll();
+        List<ProductDTO> productDTOList= new ArrayList<>();
+        if(products.isEmpty()){
+            return productDTOList;
+        }
+        productDTOList= getDtoOFProduct(products);
+        return productDTOList;
     }
 
     /**
@@ -117,10 +126,47 @@ public class ServiceProduct {
      * @param idCategory category's id
      * @return list of product
      */
-    public List<Product> findAllByCategory(int idCategory) {
+    public List<ProductDTO> findAllByCategory(int idCategory) {
         if(!categoryRepository.findById(idCategory).isPresent()){
             throw new CategoryNotFoundException("Category with id "+ idCategory + " not found!");
         }
-        return productRepository.findAllByCategory_CategoryId(idCategory);
+        List<Product> products = productRepository.findAllByCategory_CategoryId(idCategory);
+
+        return getDtoOFProduct(products);
+    }
+
+    /**
+     *  transform product into productDTO
+     * @param products
+     * @return ProductDTO
+     */
+    public List<ProductDTO> getDtoOFProduct(List<Product> products){
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<OrderItem> orderItems = (List<OrderItem>) orderItemRepository.findAll();
+        ModelMapper modelMapper= new ModelMapper();
+        modelMapper.createTypeMap( Product.class, ProductDTO.class)
+                .addMappings(mapping -> {
+                    mapping.map(Product::getProductId, ProductDTO::setId);
+                    mapping.map(Product::getDescription, ProductDTO::setDescription);
+                    mapping.map(Product::getCategory, ProductDTO::setCategory);
+                    mapping.map(Product::getName, ProductDTO::setNameProduct);
+                    mapping.map(Product::getEndDate, ProductDTO::setDate);
+                });
+        products
+            .forEach(product -> {
+                ProductDTO productDTO = new ProductDTO();
+                ProductOption productOption= productOptionRepository.findFirstByProduct(product);
+                int somme=orderItems.stream()
+                        .filter(orderItem -> orderItem.getKey().getOption().getProduct().getProductId().equals(product.getProductId()))
+                        .mapToInt(OrderItem::getQuantity)
+                        .sum();
+                modelMapper.map(product,productDTO);
+
+                productDTO.setNbOrder(somme);
+                productDTO.setImg(productOption.getImage());
+                productDTOList.add(productDTO);
+            });
+
+        return productDTOList;
     }
 }
