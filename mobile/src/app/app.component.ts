@@ -1,7 +1,4 @@
-import { Component,OnInit } from '@angular/core';
-
-import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {Component} from '@angular/core';
 
 import {HttpClient} from '@angular/common/http';
 
@@ -27,14 +24,11 @@ export class AppComponent {
         this.initializeApp();
     }
 
-  ngOnInit(){
-  }
 
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
+    initializeApp() {
+        this.platform.ready().then(() => {
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
+        });
+    }
 }
