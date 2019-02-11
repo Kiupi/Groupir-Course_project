@@ -54,12 +54,12 @@ export class AuthService {
             username: username,
             password: password
         };
-        return this.httpClient.post(`${environment.serverURL}/api/login`, values, {responseType: 'text'})
+        return this.httpClient.post(`${environment.serverURL}/api/user/login`, values, {responseType: 'text'})
             .pipe(tap(jwt => this.handleJwtResponse(jwt)));
     }
 
     signup(values: any): Observable<string> {
-        return this.httpClient.post(`${environment.serverURL}/api/signup`, values, {responseType: 'text'})
+        return this.httpClient.post(`${environment.serverURL}/api/user/signup`, values, {responseType: 'text'})
             .pipe(tap(jwt => {
                 if (jwt !== 'EXIST') {
                     return this.handleJwtResponse(jwt);
