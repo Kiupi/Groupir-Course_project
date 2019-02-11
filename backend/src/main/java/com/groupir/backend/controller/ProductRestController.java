@@ -103,5 +103,17 @@ public class ProductRestController {
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 
+    /**
+     *  the get request is "/api/product/findProductsByName/{name}" to use this method
+     * @param str is a substring of product's name
+     * @return list of product filter by substring of name
+     */
+    @GetMapping(value = "/findProductsByName/{name}")
+    public ResponseEntity findProductsByName(@PathVariable(name = "name") String str){
+        List<ProductDTO> productDTOList=serviceProduct.findProductsByName(str);
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+
+
 
 }
