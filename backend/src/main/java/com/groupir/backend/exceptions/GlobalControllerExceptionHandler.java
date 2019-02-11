@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalControllerExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "User not found") // 400
     @ExceptionHandler(UserNotFoundException.class)
-    public void handleConflict() {
+    public void UserConflict() {
+        // Nothing to do
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Category not found") // 400
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public void CategoryConflict() {
         // Nothing to do
     }
 }
