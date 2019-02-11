@@ -51,10 +51,10 @@ export class AuthService {
 
     login(username: any, password: any): Observable<string> {
         let values = {
-            username: username,
+            email: username,
             password: password
         };
-        return this.httpClient.post(`${environment.serverURL}/api/user/login`, values, {responseType: 'text'})
+        return this.httpClient.post(`${environment.serverURL}/api/user/login`, JSON.stringify(values), {responseType: 'text'})
             .pipe(tap(jwt => this.handleJwtResponse(jwt)));
     }
 
