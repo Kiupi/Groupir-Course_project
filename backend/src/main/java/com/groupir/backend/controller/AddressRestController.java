@@ -51,8 +51,8 @@ public class AddressRestController {
             return new ResponseEntity<>("User id from url and address.user.id from request body mismatch",
                     HttpStatus.CONFLICT);
         }
-        addressService.add(newAddress);
-        return new ResponseEntity<>("User added successfully", HttpStatus.OK);
+        long addressId = addressService.add(newAddress);
+        return new ResponseEntity<>("Address added successfully - generated id is " + addressId, HttpStatus.OK);
     }
 
     /**
@@ -94,10 +94,11 @@ public class AddressRestController {
             return new ResponseEntity<>("User id from url and address.user.id from request body mismatch",
                     HttpStatus.CONFLICT);
         }
-        if (addressId != updatedAddress.getAddressId()) {
+        if (updatedAddress.getAddressId() != null && addressId != updatedAddress.getAddressId()) {
             return new ResponseEntity<>("Adress id from url and address.user.id from request body mismatch",
                     HttpStatus.CONFLICT);
         }
+        updatedAddress.setAddressId(addressId);
 
         if(!addressService.isPresent(addressId)){
             return new ResponseEntity<>("Address with id " + addressId + " not found", HttpStatus.NOT_FOUND);
