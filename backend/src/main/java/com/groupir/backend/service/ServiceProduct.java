@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -62,7 +63,7 @@ public class ServiceProduct {
     public Product findOne(long idProduct) {
         try {
             return productRepository.findById(idProduct).get();
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return null;
         }
 

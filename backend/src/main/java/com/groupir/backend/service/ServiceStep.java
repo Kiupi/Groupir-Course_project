@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class ServiceStep {
     public Step findOne(long idStep) {
         try {
             return stepRepository.findById(idStep).get();
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return null;
         }
 
@@ -42,9 +43,10 @@ public class ServiceStep {
      * Add a step in database
      *
      * @param newStep is a step
+     * @return the saved entity
      */
-    public void add(Step newStep) {
-        stepRepository.save(newStep);
+    public Step add(Step newStep) {
+        return stepRepository.save(newStep);
     }
 
     /**
@@ -61,8 +63,8 @@ public class ServiceStep {
      *
      * @param updateStep is a step
      */
-    public void update(Step updateStep) {
-        stepRepository.save(updateStep);
+    public Step update(Step updateStep) {
+        return stepRepository.save(updateStep);
     }
 
     /**
@@ -71,7 +73,7 @@ public class ServiceStep {
      * @param idStep is id of step
      * @return false if isn't present in database else false
      */
-    public boolean findById(long idStep) {
+    public boolean isPresent(long idStep) {
         return stepRepository.findById(idStep).isPresent();
     }
 }
