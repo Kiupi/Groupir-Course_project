@@ -9,6 +9,7 @@ const routes: Routes = [
     {path: 'login', loadChildren: './login/login.module#LoginPageModule'},
     {path: 'forgot-page', loadChildren: './forgot-page/forgot-page.module#ForgotPagePageModule'},
     {path: 'products', loadChildren: './products/products.module#ProductsPageModule'},
+    {path: 'product-details', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
     {path: 'main-supplier', loadChildren: './main-supplier/main-supplier.module#MainSupplierModule'},
     {path: '**', redirectTo: 'login'}
 ];
