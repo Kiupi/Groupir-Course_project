@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import { MenuController } from '@ionic/angular';
+import {IonTabs} from "@ionic/angular";
 
 @Component({
   selector: 'app-products',
@@ -70,7 +71,6 @@ export class ProductsPage implements OnInit {
   }
 
   onCategoryClick(event, categoryId) {
-    this.menu.close('categories');
     this.goToCategory(categoryId);
   }
 
