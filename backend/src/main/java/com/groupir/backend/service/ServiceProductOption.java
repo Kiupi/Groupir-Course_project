@@ -44,8 +44,8 @@ public class ServiceProductOption {
      *
      * @param newProductOption is a productOption
      */
-    public void add(ProductOption newProductOption) {
-        productOptionRepository.save(newProductOption);
+    public ProductOption add(ProductOption newProductOption) {
+        return productOptionRepository.save(newProductOption);
     }
 
     /**
