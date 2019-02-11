@@ -19,14 +19,15 @@ export class ProductsPage implements OnInit {
     moment.locale('FR-fr');
     let page = this;
     this.products = [
-      {quantity: 105, category: 1, name: "Dot Product", image: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif", description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number."},
-      {quantity: 84, category: 2, name: "Computer Keyboard", image: "https://cdn.wccftech.com/wp-content/uploads/2018/11/Wooting-Seasonic-Partnership.jpg", description: "In computing, a computer keyboard is a typewriter-style device which uses an arrangement of buttons or keys to act as mechanical levers or electronic switches. Following the decline of punch cards and paper tape, interaction via teleprinter-style keyboards became the main input method for computers."},
-      {quantity: 302, category: 3, name: "Spring", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA", description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs."},
+      {id: 0, quantity: 105, category: 1, name: "Dot Product", image: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif", description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number."},
+      {id: 1, quantity: 84, category: 2, name: "Computer Keyboard", image: "https://cdn.wccftech.com/wp-content/uploads/2018/11/Wooting-Seasonic-Partnership.jpg", description: "In computing, a computer keyboard is a typewriter-style device which uses an arrangement of buttons or keys to act as mechanical levers or electronic switches. Following the decline of punch cards and paper tape, interaction via teleprinter-style keyboards became the main input method for computers."},
+      {id: 2, quantity: 302, category: 3, name: "Spring", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA", description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs."},
     ];
     this.products.forEach(function(product) {
       product.endDate = new Date();
       let seconds = Math.round(Math.random() * 1000 + 100);
       product.endDate.setSeconds(product.endDate.getSeconds() + seconds);
+      product.id = Math.floor(3 + Math.random() * 1e9);
       page.updateRemainingTime(product);
     });
     this.categories = [{name: "All"}, {name: "Categorie 1", id: 1}, {name: "Categorie 2", id: 2}, {name: "Categorie 3", id: 3}];
@@ -52,7 +53,12 @@ export class ProductsPage implements OnInit {
   loadData(event) {
     setTimeout(() => {
       for(let i = 0; i < 3; i++) {
-        this.products.push(this.products[Math.floor(Math.random() * this.products.length)]);
+        var newProduct = this.products[Math.floor(Math.random() * this.products.length)];
+        newProduct.id = Math.floor(3 + Math.random() * 1e9);
+        newProduct.endDate = new Date();
+        let seconds = Math.round(Math.random() * 1000 + 100);
+        newProduct.endDate.setSeconds(newProduct.endDate.getSeconds() + seconds);
+        this.products.push(newProduct);
       }
       event.target.complete();
       if (this.products.length == 100) {
@@ -61,17 +67,27 @@ export class ProductsPage implements OnInit {
     }, Math.random() * 1000 + 100);
   }
 
-  goToCategory(category) {
+  goToCategory(categoryId) {
       let url = "/products";
-      if(category != null) {
-          url += "?category=" + category;
+      if(categoryId != null) {
+          url += "?category=" + categoryId;
       }
       this.router.navigateByUrl(url);
-      this.category = category;
+      this.category = categoryId;
   }
 
   onCategoryClick(event, categoryId) {
     this.goToCategory(categoryId);
+  }
+
+  goToProduct(productId) {
+    let url = "/product?id=" + productId;
+    console.log(url);
+  }
+
+  onProductClick(event, productId) {
+    if(productId == null) return;
+    this.goToProduct(productId);
   }
 
   ngOnInit() {
