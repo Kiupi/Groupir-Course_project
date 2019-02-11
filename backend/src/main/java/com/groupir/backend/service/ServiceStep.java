@@ -25,13 +25,18 @@ public class ServiceStep {
     }
 
     /**
-     * find all step from database with corresponding product id
+     * find one step from database
      *
-     * @return list of all steps
+     * @return one step
      */
-   /* public List<Step> findAllStepByProductId(long idProduct) {
-        return (List<Step>) stepRepository.findAll().;
-    }*/
+    public Step findOne(long idStep) {
+        try {
+            return stepRepository.findById(idStep).get();
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
     /**
      * Add a step in database
