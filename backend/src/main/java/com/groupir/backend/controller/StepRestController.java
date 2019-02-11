@@ -43,15 +43,31 @@ public class StepRestController {
     }
 
     /**
+     * the get request is "/api/product/step/stepID" to use this method
+     *
+     * @return list of all step
+     */
+    @GetMapping("/step/{id}")
+    public ResponseEntity getOneStep(@PathVariable("id") long idStep) {
+        Step step = serviceStep.findOne(idStep);
+        if (step == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(step, HttpStatus.OK);
+        }
+
+    }
+
+    /**
      * the get request is "/api/product/{productID}/step/list" to use this method
      *
      * @return list of all step for a given product
      */
     @GetMapping("{id}/step/list")
-    public ResponseEntity<List<Step>> getAllStep(@PathVariable("id") long idProduct) {
+    public ResponseEntity getAllStep(@PathVariable("id") long idProduct) {
         Product product = serviceProduct.findOne(idProduct);
         if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Product with id " + idProduct + " not found",HttpStatus.NOT_FOUND);
         } else {
             List<Step> steps = product.getSteps();
             if (steps.size() == 0) {
@@ -73,7 +89,7 @@ public class StepRestController {
     public ResponseEntity<String> addStep(@RequestBody Step newStep, @PathVariable("id") long idProduct) {
         Product product = serviceProduct.findOne(idProduct);
         if (product == null) {
-            return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Product with id " + idProduct + " not found", HttpStatus.NOT_FOUND);
         } else {
             newStep.setProduct(product);
             serviceStep.add(newStep);
