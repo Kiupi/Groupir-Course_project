@@ -45,7 +45,7 @@ export class ProductsPage implements OnInit {
     this.addProduct({
       id: 0,
       description: "In mathematics, the dot product or scalar product is an algebraic operation that takes two equal-length sequences of numbers (usually coordinate vectors) and returns a single number.",
-      categoryId: 1,
+      categoryId: 2,
       nameProduct: "Dot Product",
       date: 1550959110725,
       img: "https://www.cmath.fr/1ere/produitscalaire/1images8/dessin5.gif",
@@ -63,26 +63,31 @@ export class ProductsPage implements OnInit {
     this.addProduct({
       id: 2,
       description: "A spring is an elastic object that stores mechanical energy. Springs are typically made of spring steel. There are many spring designs. In everyday use, the term often refers to coil springs.",
-      categoryId: 3,
+      categoryId: 2,
       nameProduct: "Spring",
       date: 1953759110725,
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnpKaQGLvgftLaJhf-P2FSK8xlMpcy4RyslOPo5DtozY6r3AFsA",
       nbOrder: 302,
+    });
+    this.addProduct({
+      id: 3,
+      description: "vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum",
+      categoryId: 1,
+      nameProduct: "Sun Shield",
+      date: 2053759110725,
+      img: "https://ae01.alicdn.com/kf/HTB1YxCwSVXXXXXWXXXXq6xXFXXXQ/Car-Windshield-Sunshades-Window-Sun-Shield-Visor-Silver-Car-Shade-Sun-Protection-Size-92-cm-142.jpg_640x640.jpg",
+      nbOrder: 30200,
     });
   }
 
   loadPlaceholderCategories() {
     this.addCategory({
       id: 1,
-      name: "Category 1"
+      name: "Automobile"
     });
     this.addCategory({
       id: 2,
-      name: "Category 2"
-    });
-    this.addCategory({
-      id: 3,
-      name: "Category 3"
+      name: "Divers"
     });
   }
 
@@ -119,8 +124,8 @@ export class ProductsPage implements OnInit {
   loadData(event) {
     setTimeout(() => {
       for(let i = 0; i < 3; i++) {
-        let newProduct = this.products[Math.floor(Math.random() * this.products.length)];
-        newProduct.id = Math.floor(3 + Math.random() * 1e9);
+        let newProduct = JSON.parse(JSON.stringify(this.products[Math.floor(Math.random() * this.products.length)]));
+        newProduct.id = Math.floor(4 + Math.random() * 1e9);
         newProduct.endDate = new Date();
         let seconds = Math.round(Math.random() * 1000 + 100);
         newProduct.endDate.setSeconds(newProduct.endDate.getSeconds() + seconds);
