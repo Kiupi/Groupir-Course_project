@@ -14,11 +14,13 @@ export class ProductsPage implements OnInit {
   products: any;
   categories: any;
   category: String;
+  searchValue: String;
 
   constructor(private menu: MenuController, private router: Router, private route: ActivatedRoute, private http: HttpClient) {
     moment.locale('FR-fr');
     this.products = [];
     this.categories = [{name: "All"}];
+    this.searchValue = "";
     let page = this;
     this.http.get('localhost:8080/api/product/list').subscribe((response:any) => {
       response.products.forEach(function(productDTO) {
@@ -152,6 +154,10 @@ export class ProductsPage implements OnInit {
   onProductClick(event, productId) {
     if(productId == null) return;
     this.goToProduct(productId);
+  }
+
+  onSearchBarChange() {
+    console.log(this.searchValue);
   }
 
   ngOnInit() {

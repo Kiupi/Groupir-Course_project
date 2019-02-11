@@ -18,10 +18,10 @@
 </ion-menu>
 
 <ion-router-outlet main>
-    <ion-searchbar placeholder="Search a product"></ion-searchbar>
+    <ion-searchbar placeholder="Search a product" (ionChange)="onSearchBarChange()" [(ngModel)]="searchValue"></ion-searchbar>
     <ion-content padding #content>
         <ng-container *ngFor="let product of products" class="product-list">
-            <ion-card *ngIf="category == null || product.category == category" (click)="onProductClick($event, product.id)" ion-activatable>
+            <ion-card *ngIf="(category == null || product.category == category) && (searchValue == '' || product.name.toLowerCase().indexOf(searchValue.toLowerCase()) != -1)" (click)="onProductClick($event, product.id)" ion-activatable>
                 <ion-ripple-effect></ion-ripple-effect>
                 <ion-item>
                     <ion-col>
