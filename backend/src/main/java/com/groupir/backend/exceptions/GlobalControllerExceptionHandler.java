@@ -36,4 +36,10 @@ public class GlobalControllerExceptionHandler {
     public void handleNotAllowed(final OperationNotAllowedException e, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.FORBIDDEN.value(), e.getLocalizedMessage());
     }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Category not found") // 400
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public void CategoryConflict() {
+        // Nothing to do
+    }
 }
