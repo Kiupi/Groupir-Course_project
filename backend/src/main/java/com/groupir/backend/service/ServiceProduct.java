@@ -80,8 +80,8 @@ public class ServiceProduct {
      *
      * @param updateProduct is a product
      */
-    public void update(Product updateProduct) {
-        productRepository.save(updateProduct);
+    public Product update(Product updateProduct) {
+        return productRepository.save(updateProduct);
     }
 
     /**
