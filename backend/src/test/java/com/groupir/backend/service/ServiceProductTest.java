@@ -119,4 +119,17 @@ class ServiceProductTest {
         Assert.assertEquals(p.getPrice(),price);
 
     }
+
+    @Test
+    void shouldGetProductsBySubStringName(){
+        final String SUBSTRING_NAME="el";
+        List<Product> products = (List<Product>) productRepository.findAll();
+        List<ProductDTO> productDTOList=serviceProduct.findProductsByName(SUBSTRING_NAME);
+        int nbProductWithName=products.stream()
+                .filter(product -> product.getName().contains(SUBSTRING_NAME))
+                .toArray()
+                .length;
+        Assert.assertEquals(nbProductWithName,productDTOList.size());
+
+    }
 }

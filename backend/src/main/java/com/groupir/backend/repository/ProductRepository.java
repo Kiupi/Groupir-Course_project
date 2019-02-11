@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
     List<Product> findAllByCategory_CategoryId(Integer category_categoryId);
+    List<Product> findAllByNameContaining(String name);
 }
