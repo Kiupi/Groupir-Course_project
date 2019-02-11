@@ -5,12 +5,10 @@ import com.groupir.backend.model.ProductOption;
 import com.groupir.backend.service.ServiceProduct;
 import com.groupir.backend.service.ServiceProductOption;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -51,7 +49,7 @@ public class ProductOptionRestController {
     public ResponseEntity getOneProductOption(@PathVariable("id") long idProductOption) {
         ProductOption productOption = serviceProductOption.findOne(idProductOption);
         if (productOption == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(("ProductOption with id " + idProductOption + " not found"), HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(productOption, HttpStatus.OK);
         }
@@ -106,7 +104,7 @@ public class ProductOptionRestController {
      */
     @DeleteMapping("/productOption/delete/{id}")
     public ResponseEntity<String> deleteProductOption(@PathVariable("id") int idProductOption) {
-        if (!serviceProductOption.findById(idProductOption)) {
+        if (!serviceProductOption.isPresent(idProductOption)) {
             return new ResponseEntity<>("ProductOption with id " + idProductOption + " is not found", HttpStatus.NOT_FOUND);
         }
         serviceProductOption.delete(idProductOption);
@@ -126,7 +124,7 @@ public class ProductOptionRestController {
         if (product == null) {
             return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
         } else {
-            if (!serviceProductOption.findById(idProductOption)) {
+            if (!serviceProductOption.isPresent(idProductOption)) {
                 return new ResponseEntity<>("ProductOption with id " + idProductOption + " is not found", HttpStatus.NOT_FOUND);
             }
             updateProductOption.setOptionId(idProductOption);

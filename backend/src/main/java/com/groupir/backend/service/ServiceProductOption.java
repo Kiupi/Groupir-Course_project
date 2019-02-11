@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class ServiceProductOption {
     public ProductOption findOne(long idProductOption) {
         try {
             return productOptionRepository.findById(idProductOption).get();
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return null;
         }
 
@@ -71,7 +72,7 @@ public class ServiceProductOption {
      * @param idProductOption is id of productOption
      * @return false if isn't present in database else false
      */
-    public boolean findById(long idProductOption) {
+    public boolean isPresent(long idProductOption) {
         return productOptionRepository.findById(idProductOption).isPresent();
     }
 }

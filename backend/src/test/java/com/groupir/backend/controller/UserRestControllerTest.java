@@ -5,7 +5,6 @@ import com.groupir.backend.model.User;
 import com.groupir.backend.repository.RoleRepository;
 import com.groupir.backend.repository.UserRepository;
 import com.groupir.backend.service.ServiceUser;
-import jdk.nashorn.internal.runtime.options.Option;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
