@@ -152,8 +152,8 @@ export class ProductsPage implements OnInit {
   }
 
   goToProduct(productId) {
-    let url = "/product?id=" + productId;
-    console.log(url);
+    let url = "/product-details?id=" + productId;
+    this.router.navigateByUrl(url);
   }
 
   onProductClick(event, productId) {
