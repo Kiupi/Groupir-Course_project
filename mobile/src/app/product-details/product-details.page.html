@@ -1,9 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Product Details {{productId}}</ion-title>
+    <ion-title>{{product.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-item>
+    <ion-col col-5>
+      <img src={{product.image}}/>
+    </ion-col>
+    <ion-col col-5>
+      <p class="description">{{product.description}}</p>
+    </ion-col>
+  </ion-item>
+  <ion-item>
+    <ion-label>Option</ion-label>
+    <ion-select [(ngModel)]="selectedOptionId">
+      <ion-select-option *ngFor="let option of product.options" [value]="option.id">{{option.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!-- progress bar -->
+  <!-- bigger description ? -->
+  <!-- buttons -->
 </ion-content>
