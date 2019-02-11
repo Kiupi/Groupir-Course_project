@@ -1,5 +1,6 @@
 package com.groupir.backend.controller;
 
+import com.groupir.backend.dto.ProductDTO;
 import com.groupir.backend.model.Product;
 import com.groupir.backend.service.ServiceProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ProductRestController {
      */
     @GetMapping("/list")
     public ResponseEntity getAllProduct() {
-        List<Product> products = serviceProduct.findAllProduct();
+        List<ProductDTO> products = serviceProduct.findAllProduct();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -98,7 +99,7 @@ public class ProductRestController {
      */
     @GetMapping(value = "/findByCategory/{id}")
     public ResponseEntity findProductsbyCategory(@PathVariable(name="id") int idCategory){
-        List<Product> products=serviceProduct.findAllByCategory(idCategory);
+        List<ProductDTO> products=serviceProduct.findAllByCategory(idCategory);
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 
