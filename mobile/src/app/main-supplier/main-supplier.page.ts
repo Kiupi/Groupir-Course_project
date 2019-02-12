@@ -3,11 +3,11 @@ import {OrderItem} from '../interface/orderItem.interface';
 import {SessionsServices} from '../sharedServices/sessions.services';
 
 @Component({
-    selector: 'app-acceuil-fournisseur',
-    templateUrl: './acceuil-fournisseur.page.html',
-    styleUrls: ['./acceuil-fournisseur.page.scss'],
+    selector: 'app-main-supplier',
+    templateUrl: './main-supplier.page.html',
+    styleUrls: ['./main-supplier.page.scss'],
 })
-export class AcceuilFournisseurPage implements OnInit {
+export class MainSupplierPage implements OnInit {
 
     public orderItems: Array<OrderItem>;
 
