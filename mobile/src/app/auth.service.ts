@@ -21,11 +21,6 @@ export class AuthService {
                 private readonly navCtrl: NavController) {
     }
 
-    hasAccess(): Promise<boolean> {
-        const jwt = localStorage.getItem(this.jwtTokenName);
-        return this.checkToken();
-    }
-
     logout() {
         localStorage.removeItem(this.jwtTokenName);
         this.authUser.next(null);
@@ -65,6 +60,11 @@ export class AuthService {
         this.authUser.next(jwt);
 
         return jwt;
+    }
+
+    hasAccess(): Promise<boolean> {
+        const jwt = localStorage.getItem(this.jwtTokenName);
+        return this.checkToken();
     }
 
     private checkToken(): Promise<boolean> {
