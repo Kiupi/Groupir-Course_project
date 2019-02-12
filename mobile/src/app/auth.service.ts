@@ -83,16 +83,13 @@ export class AuthService {
         });
     }
 
-    private setHeadersToken(): HttpHeaders | null {
+    public setHeadersToken(): HttpHeaders | null {
 
         const jwt = localStorage.getItem(this.jwtTokenName);
         if (jwt) {
             const token = JSON.parse(jwt).token;
 
-            return new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            });
+            return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token);
         } else {
             return null;
         }

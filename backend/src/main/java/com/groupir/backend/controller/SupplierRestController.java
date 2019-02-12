@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/supplier")
 public class SupplierRestController {
