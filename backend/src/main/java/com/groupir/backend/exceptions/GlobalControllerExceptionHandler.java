@@ -16,13 +16,7 @@ import java.io.IOException;
 public class GlobalControllerExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "User not found") // 400
     @ExceptionHandler(UserNotFoundException.class)
-    public void UserConflict() {
-        // Nothing to do
-    }
-
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Category not found") // 400
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public void CategoryConflict() {
+    public void handleUserNotFound() {
         // Nothing to do
     }
 

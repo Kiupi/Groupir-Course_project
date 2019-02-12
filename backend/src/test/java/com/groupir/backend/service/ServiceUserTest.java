@@ -49,6 +49,7 @@ class ServiceUserTest {
         user.setEmail("test@test.fr");
         user.setBirthDate(new Date());
         user.setRole(role);
+        user.setEnabled(true);
         serviceUser.add(user);
         assertTrue(userRepository.findByEmail("test@test.fr").isPresent());
     }
