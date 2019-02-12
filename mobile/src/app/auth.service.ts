@@ -91,7 +91,7 @@ export class AuthService {
 
             return new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authentification': 'Bearer ' + JSON.stringify(token)
+                'Authorization': 'Bearer ' + token
             });
         } else {
             return null;

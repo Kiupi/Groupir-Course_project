@@ -31,9 +31,12 @@ export class LoginPage implements OnInit {
             .pipe(finalize(() => loading.dismiss()))
             .subscribe(
                 _ => {
+                    console.log('ça passe');
                     this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
                 },
-                err => this.handleError(err));
+                err => {
+                    this.handleError(err);
+                });
     }
 
     async handleError(error: any) {
