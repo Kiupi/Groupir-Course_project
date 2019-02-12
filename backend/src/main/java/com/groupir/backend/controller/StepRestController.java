@@ -43,7 +43,7 @@ public class StepRestController {
     /**
      * the get request is "/api/product/step/stepID" to use this method
      *
-     * @return list of all step
+     * @return one step
      */
     @GetMapping("/step/{id}")
     public ResponseEntity getOneStep(@PathVariable("id") long idStep) {

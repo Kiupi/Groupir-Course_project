@@ -36,4 +36,10 @@ public class GlobalControllerExceptionHandler {
     public void CategoryConflict() {
         // Nothing to do
     }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Expired or invalid jwt token")
+    public void handleInvalidJwtAuthentication(){
+        // Nothing to do
+    }
 }
