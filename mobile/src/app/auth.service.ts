@@ -35,7 +35,8 @@ export class AuthService {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
-        return this.httpClient.post(`${environment.serverURL}/api/user/login`, JSON.stringify(values), {headers: headers, responseType: 'text'})
+        return this.httpClient
+            .post(`${environment.serverURL}/api/user/login`, JSON.stringify(values), {headers: headers, responseType: 'text'})
             .pipe(tap(jwt => this.handleJwtResponse(jwt)));
     }
 
@@ -43,7 +44,8 @@ export class AuthService {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
-        return this.httpClient.post(`${environment.serverURL}/api/user/signup`, values, {headers: headers, responseType: 'text'})
+        return this.httpClient
+            .post(`${environment.serverURL}/api/user/signup`, values, {headers: headers, responseType: 'text'})
             .pipe(tap(jwt => {
                 if (jwt !== 'EXIST') {
                     return this.handleJwtResponse(jwt);
