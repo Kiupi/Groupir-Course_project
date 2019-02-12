@@ -1,9 +1,7 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-
-import {HttpClient} from '@angular/common/http';
 
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';

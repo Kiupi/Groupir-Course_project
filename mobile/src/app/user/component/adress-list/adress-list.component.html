@@ -1,27 +1,22 @@
 <p>
   adress-list works!
 </p>
+
 <!--
-<ion-header>
-  <ion-toolbar>
-    <span>Posts disponibles</span>
-      <ion-button text="Offline mode" slot="end" (click)="goOnCachedMode()">Cached mode</ion-button>
-  </ion-toolbar>
-</ion-header>
 <ion-content>
   <section>
-    <ion-card *ngFor="let article of articles">
+    <ion-card *ngFor="let address of addresses">
       <ion-card-header>
-        <ion-card-title (click)="onClickArticle(article)">{{article.title}}</ion-card-title>
+        <ion-card-title>{{address.number}}, {{address.street}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>{{article.body}}</p><br/>
-        <p>Cached : {{article.cached}}</p>
+        <p>Postal code : {{address.postalCode}}</p><br/>
+        <p>Country : {{address.country}}</p>
       </ion-card-content>
       <ion-fab vertical="bottom" horizontal="end">
-        <ion-fab-button (click)="toggleCache(article)" size="small">
-          <ion-icon *ngIf="!article.cached" name="save"></ion-icon>
-          <ion-icon *ngIf="article.cached" name="trash"></ion-icon>
+        <ion-fab-button size="small">
+          <ion-icon (click)="modifyAddress(address)" name="modify"></ion-icon>
+          <ion-icon (click)="deleteAddress(address)" name="trash"></ion-icon>
         </ion-fab-button>
       </ion-fab>
     </ion-card>

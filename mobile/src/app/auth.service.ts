@@ -84,7 +84,7 @@ export class AuthService {
         });
     }
 
-    private setHeadersToken(): HttpHeaders | null {
+    public setHeadersToken(): HttpHeaders | null {
 
         const jwt = localStorage.getItem(this.jwtTokenName);
         if (jwt) {
