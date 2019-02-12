@@ -224,6 +224,15 @@ class UserRestControllerTest {
                     .andExpect(status().isForbidden()).andReturn();
         }
 
+        // /api/user/get/*
+        @WithAnonymousUser
+        @Test
+        void Anonymous_shouldNotBeAbleToGetUser() throws Exception {
+            MvcResult result = mockMvc.perform(get("/api/user/get/1")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(status().isForbidden()).andReturn();
+        }
+
         // /api/user/login
         @WithAnonymousUser
         @Test
