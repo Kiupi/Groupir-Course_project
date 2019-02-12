@@ -96,7 +96,7 @@ class ServiceProductTest {
                     .length;
             List<ProductDTO> products = serviceProduct.findAllByCategory(ID_CATEGORY);
             products.forEach(product -> {
-                Assert.assertEquals(ID_CATEGORY, (int) product.getCategory().getCategoryId());
+                Assert.assertEquals(ID_CATEGORY,  product.getCategoryId());
             });
             Assert.assertEquals(nbProductOCategory1,products.size());
         }

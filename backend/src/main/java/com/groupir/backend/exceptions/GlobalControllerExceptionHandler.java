@@ -36,4 +36,28 @@ public class GlobalControllerExceptionHandler {
     public void CategoryConflict() {
         // Nothing to do
     }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT,reason = "this price already exist ") // 409
+    @ExceptionHandler(PriceConflictException.class)
+    public void PriceConflict() {
+        // Nothing to do
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Step not found") // 400
+    @ExceptionHandler(StepNotFoundException.class)
+    public void stepNotFound() {
+        // Nothing to do
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "ProductOption not found") // 400
+    @ExceptionHandler(ProductOptionNotFoundException.class)
+    public void productOptionNotFound() {
+        // Nothing to do
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Price not found") // 400
+    @ExceptionHandler(PriceNotFoundException.class)
+    public void priceNotFound() {
+        // Nothing to do
+    }
 }
