@@ -1,5 +1,6 @@
 package com.groupir.backend.controller;
 
+import com.groupir.backend.dto.ProductDTO;
 import com.groupir.backend.model.Product;
 import com.groupir.backend.service.ServiceProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,9 @@ public class ProductRestController {
      * @return list of all product
      */
     @GetMapping("/list")
-    public ResponseEntity<List<Product>> getAllProduct() {
-        List<Product> products = serviceProduct.findAllProduct();
-        if (products.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(products, HttpStatus.OK);
-        }
-
+    public ResponseEntity getAllProduct() {
+        List<ProductDTO> products = serviceProduct.findAllProduct();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     /**
@@ -80,5 +76,44 @@ public class ProductRestController {
         serviceProduct.update(updateProduct);
         return new ResponseEntity<>("Product with id " + idProduct + " updated", HttpStatus.OK);
     }
+
+    /**
+     *  the get request is "/api/product/find/{id}" to use this method
+     * @param idProduct is the variable "id" in the request
+     * @return Product
+     */
+    @GetMapping(value = "/find/{id}")
+    public ResponseEntity findOneProduct(@PathVariable(name = "id") long idProduct){
+        if (!serviceProduct.findById(idProduct)) {
+            return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
+        }
+        Product product=serviceProduct.findOne(idProduct);
+        return new ResponseEntity<>(product,HttpStatus.OK);
+
+    }
+
+    /**
+     *  the get request is "/api/product/findByCategory/{id}" to use this method
+     * @param idCategory is the variable "id" in the request
+     * @return list of product filter by category
+     */
+    @GetMapping(value = "/findByCategory/{id}")
+    public ResponseEntity findProductsByCategory(@PathVariable(name="id") int idCategory){
+        List<ProductDTO> products=serviceProduct.findAllByCategory(idCategory);
+        return new ResponseEntity<>(products,HttpStatus.OK);
+    }
+
+    /**
+     *  the get request is "/api/product/findProductsByName/{name}" to use this method
+     * @param str is a substring of product's name
+     * @return list of product filter by substring of name
+     */
+    @GetMapping(value = "/findProductsByName/{name}")
+    public ResponseEntity findProductsByName(@PathVariable(name = "name") String str){
+        List<ProductDTO> productDTOList=serviceProduct.findProductsByName(str);
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+
+
 
 }

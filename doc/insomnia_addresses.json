@@ -1,0 +1,175 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2019-02-06T11:05:54.867Z",
+	"__export_source": "insomnia.desktop.app:v6.3.2",
+	"resources": [
+		{
+			"_id": "wrk_bdbfd30f88ac41c5b265771ce03aab3d",
+			"created": 1549448715739,
+			"description": "",
+			"modified": 1549448715739,
+			"name": "POC - Groupir",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_8b2d2497b1184c9aa2c63e7bb2a20700",
+			"color": null,
+			"created": 1549448716309,
+			"data": {},
+			"isPrivate": false,
+			"metaSortKey": 1549448716309,
+			"modified": 1549448724933,
+			"name": "New Environment",
+			"parentId": "wrk_bdbfd30f88ac41c5b265771ce03aab3d",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_a11a598f837b42089cad74ba82503692",
+			"cookies": [],
+			"created": 1549448716313,
+			"modified": 1549448716313,
+			"name": "Default Jar",
+			"parentId": "wrk_bdbfd30f88ac41c5b265771ce03aab3d",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_f9947105072b41f5a469a3bb89cd4bba",
+			"created": 1549448809487,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1549448809487,
+			"modified": 1549448809487,
+			"name": "address",
+			"parentId": "wrk_bdbfd30f88ac41c5b265771ce03aab3d",
+			"_type": "request_group"
+		},
+		{
+			"_id": "env_224be7d37f054fc09467b619ffa272c6",
+			"color": null,
+			"created": 1549448735971,
+			"data": {
+				"address_id": 19,
+				"url": "localhost:8080",
+				"user_id": 1
+			},
+			"isPrivate": false,
+			"metaSortKey": 1549448735971,
+			"modified": 1549450973027,
+			"name": "Dev",
+			"parentId": "env_8b2d2497b1184c9aa2c63e7bb2a20700",
+			"_type": "environment"
+		},
+		{
+			"_id": "req_82251cf78f3946d4b53114965b1de1d3",
+			"authentication": {},
+			"body": {},
+			"created": 1549448798658,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1549448806779.75,
+			"method": "GET",
+			"modified": 1549449273421,
+			"name": "list",
+			"parameters": [],
+			"parentId": "fld_f9947105072b41f5a469a3bb89cd4bba",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/address/list",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3326b30e113c433b877b2e87fba3aca5",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"city\": \"Saint-Etienne\",\n  \"country\": \"France\",\n  \"number\": \"25\",\n  \"postalCode\": \"42000\",\n  \"street\": \"rue du Dr. Amino\",\n  \"user\": {\n    \"userId\": \"{{ user_id  }}\"\n\t}\n}"
+			},
+			"created": 1549449134678,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_70c5e9ff04c842ae88b0f8457d12c0b2",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1549448806729.75,
+			"method": "POST",
+			"modified": 1549450183564,
+			"name": "add",
+			"parameters": [],
+			"parentId": "fld_f9947105072b41f5a469a3bb89cd4bba",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/address/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_751f851f56654ff588faac1fa60ca648",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"city\": \"Saint-Etienne\",\n  \"country\": \"France\",\n  \"number\": \"25\",\n  \"postalCode\": \"42000\",\n  \"street\": \"Rue Dr. Rémy Annino\",\n  \"user\": {\n    \"userId\": \"{{ user_id  }}\"\n\t}\n}"
+			},
+			"created": 1549449144589,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_509402b0c244425ca221ef9a75df7bda",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1549448806679.75,
+			"method": "PUT",
+			"modified": 1549450761028,
+			"name": "update",
+			"parameters": [],
+			"parentId": "fld_f9947105072b41f5a469a3bb89cd4bba",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/address/update/{{ address_id  }}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3599fa5f52d84cfca0d067c3ca8ced1f",
+			"authentication": {},
+			"body": {},
+			"created": 1549449151354,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1549448806629.75,
+			"method": "DELETE",
+			"modified": 1549449752481,
+			"name": "delete",
+			"parameters": [],
+			"parentId": "fld_f9947105072b41f5a469a3bb89cd4bba",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/address/delete/{{ address_id  }}",
+			"_type": "request"
+		}
+	]
+}

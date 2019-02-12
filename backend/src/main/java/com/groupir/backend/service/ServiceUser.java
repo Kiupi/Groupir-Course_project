@@ -1,13 +1,18 @@
 package com.groupir.backend.service;
 
+import com.groupir.backend.exceptions.ExceptionNoUserForPrincipal;
 import com.groupir.backend.model.User;
 import com.groupir.backend.repository.UserRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -29,6 +34,20 @@ public class ServiceUser {
     }
 
     /**
+     * find one user from database
+     *
+     * @return one user
+     */
+    public User findOne(int idUser) {
+        try {
+            return userRepository.findById(idUser).get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+
+    }
+
+    /**
      * find user by its email
      * @param email
      * @return
@@ -41,9 +60,10 @@ public class ServiceUser {
      *  Add a user in database
      * @param newUser is a user
      */
-    public void add(User newUser) {
+    public User add(User newUser) {
         newUser.encodePassword(passwordEncoder);
         userRepository.save(newUser);
+        return newUser;
     }
 
     /**
@@ -55,10 +75,10 @@ public class ServiceUser {
     }
 
     /**
-     *  update a user drom database
+     *  update a user from database
      * @param updateUser is a user
      */
-    public void update(User updateUser) {
+    public User update(User updateUser) {
         Optional<User> inDB = userRepository.findById(updateUser.getUserId());
         if(updateUser.getPassword() != null){
             updateUser.encodePassword(passwordEncoder);
@@ -67,6 +87,8 @@ public class ServiceUser {
             updateUser.setPassword(inDB.get().getPassword());
         }
         userRepository.save(updateUser);
+
+        return updateUser;
     }
 
     /**
@@ -78,8 +100,32 @@ public class ServiceUser {
         return userRepository.findById(idUser).isPresent();
     }
 
+    /**
+     * retrieve the user associated to a authentication
+     * @param authentication the authentication for which to find the User
+     * @return the User associated to the authentication
+     */
+    public User findAuthenticated(Authentication authentication){
+        if(authentication.getName() != null && !authentication.getName().equals("")) {
+            Optional<User> user = userRepository.findByEmail(authentication.getName());
+            if(user.isPresent()){
+                return user.get();
+            }
+            else {
+                throw new ExceptionNoUserForPrincipal();
+            }
+        }
+        else {
+            throw new RuntimeException("No name for authentication");
+        }
+    }
 
-    public Optional<User> findById(int idUser) {
+    /*
+     * find user by its id
+     * @param idUser user's id
+     * @return User
+     */
+    public Optional<User> isPresent(int idUser) {
         return userRepository.findById(idUser);
     }
 }
