@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,20 @@ public class ServiceUser {
      */
     public List<User> findAllUser(){
         return (List<User>) userRepository.findAll();
+    }
+
+    /**
+     * find one user from database
+     *
+     * @return one user
+     */
+    public User findOne(int idUser) {
+        try {
+            return userRepository.findById(idUser).get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+
     }
 
     /**
@@ -110,7 +125,7 @@ public class ServiceUser {
      * @param idUser user's id
      * @return User
      */
-    public Optional<User> findById(int idUser) {
+    public Optional<User> isPresent(int idUser) {
         return userRepository.findById(idUser);
     }
 }
