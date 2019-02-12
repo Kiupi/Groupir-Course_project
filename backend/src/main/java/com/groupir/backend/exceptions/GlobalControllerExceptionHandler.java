@@ -20,12 +20,6 @@ public class GlobalControllerExceptionHandler {
         // Nothing to do
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Category not found") // 400
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public void CategoryConflict() {
-        // Nothing to do
-    }
-
     @ExceptionHandler(NoRoleSetException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "The User sent doesn't have a role defined")
     public void handleNoRole(){
