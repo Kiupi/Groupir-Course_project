@@ -47,7 +47,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/delete/*").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/api/user/update/*").hasAnyAuthority("ADMIN", "USER", "SUPPLIER")
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
-                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
 
                 //Supplier Controller
                 .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
