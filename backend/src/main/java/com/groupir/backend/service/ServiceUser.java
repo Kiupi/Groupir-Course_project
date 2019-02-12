@@ -106,7 +106,7 @@ public class ServiceUser {
      * @return the User associated to the authentication
      */
     public User findAuthenticated(Authentication authentication){
-        if(authentication.getName() != null && authentication.getName().equals("")) {
+        if(authentication.getName() != null && !authentication.getName().equals("")) {
             Optional<User> user = userRepository.findByEmail(authentication.getName());
             if(user.isPresent()){
                 return user.get();
