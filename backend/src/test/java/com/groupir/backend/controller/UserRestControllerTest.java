@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -72,6 +71,7 @@ class UserRestControllerTest {
         theo.setLastName("Basty");
         theo.setPassword("$2a$12$tSYPw1WzkuG/hmgMwtue/.duktRg.FQ9yVKGylUsup/AU8VHcnR3q");
         theo.setRole(admin);
+        theo.setEnabled(true);
 
         cyril = new User();
         cyril.setUserId(2);
@@ -81,6 +81,7 @@ class UserRestControllerTest {
         cyril.setLastName("Faisandier");
         cyril.setPassword("none");
         cyril.setRole(user);
+        cyril.setEnabled(true);
 
         raphael = new User();
         raphael.setUserId(3);
@@ -90,6 +91,7 @@ class UserRestControllerTest {
         raphael.setLastName("Chevasson");
         raphael.setPassword("none");
         raphael.setRole(supplier);
+        raphael.setEnabled(true);
 
         users = Lists.list(theo, cyril, raphael);
     }
