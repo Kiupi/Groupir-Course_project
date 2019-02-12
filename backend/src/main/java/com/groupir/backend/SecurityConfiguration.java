@@ -51,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 //Supplier Controller
                 .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
+                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
 
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
