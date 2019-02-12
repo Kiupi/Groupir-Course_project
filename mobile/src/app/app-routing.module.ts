@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
@@ -11,10 +11,13 @@ const routes: Routes = [
     {path: 'products', loadChildren: './products/products.module#ProductsPageModule'},
     {path: 'main-supplier', loadChildren: './main-supplier/main-supplier.module#MainSupplierModule'},
     {path: '**', redirectTo: 'login'}
+
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [
+        RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

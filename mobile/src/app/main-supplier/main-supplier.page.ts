@@ -15,13 +15,11 @@ export class MainSupplierPage implements OnInit {
     }
 
     ngOnInit() {
-    }
-
-    public push() {
         this.sessionsService.getOrderItems().subscribe(
-            (data) => {
-                console.log(data);
+            (data: Array<OrderItem>) => {
+                this.orderItems = data;
             }
         );
     }
+
 }

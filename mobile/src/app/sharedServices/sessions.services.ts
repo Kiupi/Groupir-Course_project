@@ -21,7 +21,7 @@ export class SessionsServices {
 
         const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token);
 
-        return this.httpClient.get(`${environment.serverURL}/api/supplier/items`, {headers: headers, responseType: 'text'});
+        return this.httpClient.get(`${environment.serverURL}/api/supplier/items`, {headers: headers});
     }
 
 }

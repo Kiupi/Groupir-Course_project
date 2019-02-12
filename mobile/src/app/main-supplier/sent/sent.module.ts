@@ -5,14 +5,12 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
 
-import {MainSupplierPage} from './main-supplier.page';
-import {MainSupplierRoutingModule} from './main-supplier.router.module';
-
+import {SentPage} from './sent.page';
 
 const routes: Routes = [
     {
         path: '',
-        component: MainSupplierPage
+        component: SentPage
     }
 ];
 
@@ -21,9 +19,9 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
-        MainSupplierRoutingModule
+        RouterModule.forChild(routes)
     ],
-    declarations: [MainSupplierPage]
+    declarations: [SentPage]
 })
-export class MainSupplierModule {
+export class SentPageModule {
 }
