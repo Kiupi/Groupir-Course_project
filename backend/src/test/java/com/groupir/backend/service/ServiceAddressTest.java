@@ -49,6 +49,22 @@ class ServiceAddressTest {
     }
 
     @Test
+    void shouldGetAllAddressesOfTheo(){
+        List<Address> allAddressOfTheo = addressService.findAllFromUserId(1);
+        System.out.println("allAddress = " + allAddressOfTheo);
+
+        // assert all addresses are returned
+        Assert.assertEquals(2, allAddressOfTheo.size());
+    }
+
+    @Test
+    void shouldGetAnEmptyListIfNoAdress(){
+        // make sure an empty list is returned for an user with no address (Cyril)
+        List<Address> noAddress = addressService.findAllFromUserId(2);
+        Assert.assertEquals(0, noAddress.size());
+    }
+
+    @Test
     void shouldAddAddress(){
         Role role = new Role();
         role.setRoleId(1);
