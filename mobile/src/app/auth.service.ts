@@ -90,10 +90,7 @@ export class AuthService {
         if (jwt) {
             const token = JSON.parse(jwt).token;
 
-            return new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            });
+            return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token);
         } else {
             return null;
         }
