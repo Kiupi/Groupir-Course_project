@@ -140,7 +140,7 @@ export class ProductDetailsPage implements OnInit {
                   .css("text-anchor", "middle")
                   .attr("x", priceX)
                   .attr("y", priceY)
-                  .attr("fill", "black")
+                  .attr("fill", "#654236")
                   .attr("font-size", "17px")
                   .attr("font-family", "Arial")
           );
