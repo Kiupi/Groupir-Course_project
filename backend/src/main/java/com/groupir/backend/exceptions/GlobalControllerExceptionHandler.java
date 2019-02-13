@@ -1,8 +1,6 @@
 package com.groupir.backend.exceptions;
 
-import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,5 +63,10 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Expired or invalid jwt token")
     public void handleInvalidJwtAuthentication(){
         // Nothing to do
+    }
+
+    @ExceptionHandler(OrderItemNotFoundException.class)
+    public void handleOrderItemNotFound(final OrderItemNotFoundException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), e.getLocalizedMessage());
     }
 }
