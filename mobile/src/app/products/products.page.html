@@ -6,7 +6,7 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <ion-menu-toggle auto-hide="false">
+            <ion-menu-toggle auto-hide="true">
                 <ion-item ion-activatable button *ngFor="let category of categories"
                           (click)="onCategoryClick($event, category.id)">
                     <ion-ripple-effect></ion-ripple-effect>
