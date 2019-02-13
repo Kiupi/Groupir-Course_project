@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-02-06T11:05:54.867Z",
+	"__export_date": "2019-02-13T13:57:08.657Z",
 	"__export_source": "insomnia.desktop.app:v6.3.2",
 	"resources": [
 		{
@@ -46,17 +46,29 @@
 			"_type": "request_group"
 		},
 		{
+			"_id": "fld_a6280f69bd8543eda4d49c001641ab3f",
+			"created": 1550062487162,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1549448809437,
+			"modified": 1550062513147,
+			"name": "payment method",
+			"parentId": "wrk_bdbfd30f88ac41c5b265771ce03aab3d",
+			"_type": "request_group"
+		},
+		{
 			"_id": "env_224be7d37f054fc09467b619ffa272c6",
 			"color": null,
 			"created": 1549448735971,
 			"data": {
-				"address_id": 19,
+				"address_id": 10,
+				"payment_method_id": 5,
 				"url": "localhost:8080",
 				"user_id": 1
 			},
 			"isPrivate": false,
 			"metaSortKey": 1549448735971,
-			"modified": 1549450973027,
+			"modified": 1550064516082,
 			"name": "Dev",
 			"parentId": "env_8b2d2497b1184c9aa2c63e7bb2a20700",
 			"_type": "environment"
@@ -158,7 +170,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1549448806629.75,
 			"method": "DELETE",
-			"modified": 1549449752481,
+			"modified": 1549876949156,
 			"name": "delete",
 			"parameters": [],
 			"parentId": "fld_f9947105072b41f5a469a3bb89cd4bba",
@@ -169,6 +181,116 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "{{url}}/api/user/{{ user_id  }}/address/delete/{{ address_id  }}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e8c93ae1c8f04c499f50aa45975c40ad",
+			"authentication": {},
+			"body": {},
+			"created": 1550062487266,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1549448806779.75,
+			"method": "GET",
+			"modified": 1550062851144,
+			"name": "list",
+			"parameters": [],
+			"parentId": "fld_a6280f69bd8543eda4d49c001641ab3f",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/payment-method/list",
+			"_type": "request"
+		},
+		{
+			"_id": "req_187e9dbdefd647aaaf1b764fe307dd89",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"token\": \"a1b2c3d4\",\n  \"type\": \"MasterCard\",\n  \"user\": {\n    \"userId\": \"{{ user_id  }}\"\n  }\n}"
+			},
+			"created": 1550062487273,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_70c5e9ff04c842ae88b0f8457d12c0b2",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1549448806729.75,
+			"method": "POST",
+			"modified": 1550063166007,
+			"name": "add",
+			"parameters": [],
+			"parentId": "fld_a6280f69bd8543eda4d49c001641ab3f",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/payment-method/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6a1a107139604fb19e1232dce1e78b6a",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"token\": \"a0b1c2d3\",\n  \"type\": \"MasterCard\",\n  \"user\": {\n    \"userId\": \"{{ user_id  }}\"\n  }\n}"
+			},
+			"created": 1550062487276,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_509402b0c244425ca221ef9a75df7bda",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1549448806679.75,
+			"method": "PUT",
+			"modified": 1550063348163,
+			"name": "update",
+			"parameters": [],
+			"parentId": "fld_a6280f69bd8543eda4d49c001641ab3f",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/payment-method/update/{{payment_method_id}}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ac9ac78ab18d4458893add895da2d65b",
+			"authentication": {},
+			"body": {},
+			"created": 1550062487278,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1549448806629.75,
+			"method": "DELETE",
+			"modified": 1550063361306,
+			"name": "delete",
+			"parameters": [],
+			"parentId": "fld_a6280f69bd8543eda4d49c001641ab3f",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{url}}/api/user/{{ user_id  }}/payment-method/delete/{{payment_method_id}}",
 			"_type": "request"
 		}
 	]
