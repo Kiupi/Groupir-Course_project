@@ -3,12 +3,12 @@ INSERT INTO role (role_id, role_name) VALUES (2, 'USER');
 INSERT INTO role (role_id, role_name) VALUES (3, 'SUPPLIER');
 
 
-INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id) VALUES (1, '1996-06-03 00:00:00', 'theo.basty@telecom-st-etienne.fr', 'Théo', 'Basty', '$2a$12$tSYPw1WzkuG/hmgMwtue/.duktRg.FQ9yVKGylUsup/AU8VHcnR3q', null, 1);
-INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id) VALUES (2, null, 'cyril.faisandier@telecom-st-etienne.fr', 'Cyril', 'Faisandier', '0000', null, 1);
-INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id) VALUES (3, null, 'baptiste.wolf@telcom-st-etienne.fr', 'Baptiste', 'Wolf', '0000', null, 2);
-INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id) VALUES (4, null, 'raphael.chevasson@telecom-st-etienne.fr', 'Raphaël', 'Chevasson', '0000', null, 2);
-INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id) VALUES (5, null, 'julien.subercaze@telecom-st-etienne.fr', 'Julien', 'Subercaze', '0000', null, 3);
-INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id) VALUES (6, null, 'jacques.fayolle@telecom-st-etienne.fr', 'Jacques', 'Fayolle', '0000', null, 3);
+INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id,enabled) VALUES (1, '1996-06-03 00:00:00', 'theo.basty@telecom-st-etienne.fr', 'Théo', 'Basty', '$2a$12$tSYPw1WzkuG/hmgMwtue/.duktRg.FQ9yVKGylUsup/AU8VHcnR3q', null, 1,true);
+INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id,enabled) VALUES (2, null, 'cyril.faisandier@telecom-st-etienne.fr', 'Cyril', 'Faisandier', '$2a$12$AjFcPlQQWrVNZmtVmVxaue31MgGUV6HK5mbLY7PLO6a/41C85oWWy', null, 1,true);
+INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id,enabled) VALUES (3, null, 'baptiste.wolf@telcom-st-etienne.fr', 'Baptiste', 'Wolf', '$2a$12$WqSH0xc6lQt3YMHMe93.EOQ9kSdXv9BG9GMoyoSRGaj7LWO4IRVQe', null, 2,true);
+INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id,enabled) VALUES (4, null, 'raphael.chevasson@telecom-st-etienne.fr', 'Raphaël', 'Chevasson', '$2a$12$c5IQwOw6ozbJbW5CdpVOjOKxd/ApEPNzGW425NFfAw35h2sLJ3kcG', null, 2,true);
+INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id,enabled) VALUES (5, null, 'julien.subercaze@telecom-st-etienne.fr', 'Julien', 'Subercaze', '$2a$12$myAby57ot5nLdV6CFyjXhe1N8WSDWdScQ69o2Q4TAEv8JWeXjclvO', null, 3,true);
+INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, default_address_address_id, role_role_id,enabled) VALUES (6, null, 'jacques.fayolle@telecom-st-etienne.fr', 'Jacques', 'Fayolle', '$2a$12$TGo1tT47VfjrvTzWELuI7.NzLn7f5CtYco5VUrlirqCTnvE4CQwCO', null, 3,true);
 
 
 INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (1, 'Saint Étienne', 'France', '25', '42000', 'Rue du docteur Rémy Annino', 1);
