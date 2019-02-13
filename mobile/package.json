@@ -29,7 +29,8 @@
     "ng2-validation": "^4.2.0",
     "moment": "^2.24.0",
     "rxjs": "~6.3.3",
-    "zone.js": "~0.8.29"
+    "zone.js": "~0.8.29",
+    "jquery": "3.3.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.12.3",
