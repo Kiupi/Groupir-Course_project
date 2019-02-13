@@ -33,6 +33,21 @@ export class ProductDetailsPage implements OnInit {
           name: "116 cm"
         }],
         bought: 3,
+        steps: [
+          {
+            until: 5,
+            price: "$10.99"
+          }, {
+            until: 8,
+            price: "$9.99"
+          }, {
+            until: 16,
+            price: "$7.99"
+          }, {
+            until: 20,
+            price: "$6.99"
+          }
+        ],
         maxBought: 20
       }
     });
@@ -40,7 +55,7 @@ export class ProductDetailsPage implements OnInit {
 
   ngOnInit() {
     let ProgressBar = {
-      defaults: {padding: 1, innerPadding: 4, progress: 0},
+      defaults: {padding: 1, innerPadding: 1, progress: 0},
       init: function(el, options) {
         this.options = $.extend({}, ProgressBar.defaults, options);
         this.$el = $(el);
@@ -49,11 +64,13 @@ export class ProductDetailsPage implements OnInit {
         this.$svg.css({"width": "100%"});
         this.$container = this.$svg.find('#container');
         this.$bar = this.$svg.find('#bar');
+        this.$steps = this.$svg.find('#steps');
         this.options.supportSVGFilter = this.supportSVGFilter();
         if(!this.options.supportSVGFilter) {
           this.$container.attr('filter', null);
           this.$container.attr('stroke-width', '1');
         }
+        this.steps = this.options.steps;
         this.draw();
       },
       set: function(progress) {
@@ -72,8 +89,14 @@ export class ProductDetailsPage implements OnInit {
           paddingY: this.options.padding + this.options.innerPadding,
           width: this.options.progress
         };
+        let stepOptions = {
+          steps: this.$steps,
+          paddingX: this.options.padding,
+          paddingY: this.options.padding,
+        };
         this.drawBar(containerOptions);
         this.drawBar(barOptions);
+        this.drawSteps(stepOptions);
       },
       drawBar: function(options) {
         let width = this.$svg.width();
@@ -91,6 +114,38 @@ export class ProductDetailsPage implements OnInit {
         replace(/{LBP}/g, leftX + "," + bottomY).
         replace(/{RBP}/g, rightX + "," + bottomY);
         options.bar.attr('d', result);
+      },
+      drawSteps: function(options) {
+        $('text', this.$svg).remove();
+        let width = this.$svg.width();
+        let height = this.$svg.height();
+        let topY = options.paddingY;
+        let bottomY = height - options.paddingY;
+        let leftX = options.paddingX + height/2;
+        let barWidth = typeof options.width == "undefined" ? width : width * options.width;
+        barWidth = Math.max(barWidth, height + options.paddingX*2);
+        let rightX = barWidth - options.paddingX - height/2;
+        let result = "";
+        for(let i = 0; i < this.steps.length; i++) {
+          let step = this.steps[i];
+          let pstep = this.steps[i - 1];
+          let stepX = (rightX - leftX) * step.until;
+          let pstepX = pstep == null ? leftX : (rightX - leftX) * pstep.until;
+          result += "M" + stepX + "," + topY + " L" + stepX + "," + bottomY;
+          let priceX = (pstepX + stepX) * .5;
+          let priceY = (topY + bottomY) * .5 + 5;
+          $("g", this.$svg).append(
+              $(document.createElementNS('http://www.w3.org/2000/svg', "text"))
+                  .html(step.price)
+                  .css("text-anchor", "middle")
+                  .attr("x", priceX)
+                  .attr("y", priceY)
+                  .attr("fill", "black")
+                  .attr("font-size", "17px")
+                  .attr("font-family", "Arial")
+          );
+        }
+        options.steps.attr('d', result);
       },
       supportSVGFilter: function() {
         return typeof SVGFEColorMatrixElement !== "undefined" && SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE==2;
@@ -125,7 +180,15 @@ export class ProductDetailsPage implements OnInit {
     $(window).resize(function() {
       $('.progress').progressBar('draw');
     });
-    $('.progress').progressBar({padding: 0, innerPadding: 5, progress: 0});
+    let barSteps = [];
+    let page = this;
+    this.product.steps.forEach(function(step) {
+      barSteps.push({
+        until: step.until / page.product.maxBought,
+        price: step.price
+      });
+    });
+    $('.progress').progressBar({padding: 0, innerPadding: 5, progress: 0, steps: barSteps});
     this.updateBar();
   }
 
