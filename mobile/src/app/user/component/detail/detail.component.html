@@ -5,8 +5,8 @@
     <!-- Name -->
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
-      <ion-input type="text" name="name" ngModel required #name="ngModel"
-                 [class.invalid]="name.errors && name.dirty" value="{{this.user[0].user.firstName}}">
+      <ion-input type="text" name="name" [(ngModel)]="user.firstName" required #name="ngModel"
+                 [class.invalid]="name.errors && name.dirty">
 
       </ion-input>
     </ion-item>
@@ -19,8 +19,8 @@
     <!-- Surname -->
     <ion-item>
       <ion-label position="stacked">Surname</ion-label>
-      <ion-input type="text" name="surname" ngModel required #surname="ngModel"
-                 [class.invalid]="surname.errors && surname.dirty" value="{{this.user[0].user.lastName}}"></ion-input>
+      <ion-input type="text" name="surname" [(ngModel)]="user.lastName" required #surname="ngModel"
+                 [class.invalid]="surname.errors && surname.dirty"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="surname.errors?.required && surname.dirty">
       <ion-label>
@@ -31,8 +31,8 @@
     <!-- Birth Date -->
     <ion-item>
       <ion-label position="stacked">Birth date</ion-label>
-      <ion-input type="date" name="birthDate" ngModel required #birthDate="ngModel"
-                 [class.invalid]="birthDate.errors && birthDate.dirty" value="{{this.user[0].user.birthDate.getUTCDate()}}"></ion-input>
+      <ion-input type="date" name="birthDate" [(ngModel)]="user.birthDate" required #birthDate="ngModel"
+                 [class.invalid]="birthDate.errors && birthDate.dirty"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="birthDate.errors?.required && birthDate.dirty">
       <ion-label>
@@ -43,8 +43,8 @@
     <!-- Email -->
     <ion-item>
       <ion-label position="stacked">Email</ion-label>
-      <ion-input type="email" name="email" ngModel required email #email="ngModel"
-                 [class.invalid]="email.errors && email.dirty" value="{{this.user[0].user.email}}"></ion-input>
+      <ion-input type="email" name="email" [(ngModel)]="user.email" required email #email="ngModel"
+                 [class.invalid]="email.errors && email.dirty"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
       <ion-label>
@@ -66,7 +66,7 @@
     <!-- Old Password -->
     <ion-item>
       <ion-label position="stacked">Old password</ion-label>
-      <ion-input type="old_password" name="old_password" ngModel required #old_password="ngModel"
+      <ion-input type="old_password" name="old_password" ngModel required #old_password="ngModel" #old_password="ngModel"
                  [class.invalid]="old_password.errors && old_password.dirty"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="old_password.errors?.required && old_password.dirty">
@@ -78,7 +78,7 @@
     <!-- New Password -->
     <ion-item>
       <ion-label position="stacked">New password</ion-label>
-      <ion-input type="new_password" name="new_password" ngModel required #new_password="ngModel"
+      <ion-input type="new_password" name="new_password" ngModel required #new_password="ngModel" #new_password="ngModel"
                  [class.invalid]="new_password.errors && new_password.dirty"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="new_password.errors?.required && new_password.dirty">
