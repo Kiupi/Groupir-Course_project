@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{product.name}}</ion-title>
+    <ion-title *ngIf="product != null">{{product.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
+  <ion-item *ngIf="product != null">
     <ion-col col-5>
       <img src={{product.image}}/>
     </ion-col>
@@ -13,7 +13,7 @@
       <p class="description">{{product.description}}</p>
     </ion-col>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="product != null">
     <ion-label>Option</ion-label>
     <ion-select [(ngModel)]="selectedOptionId" interface="action-sheet">
       <ion-select-option *ngFor="let option of product.options" [value]="option.id">{{option.name}}</ion-select-option>

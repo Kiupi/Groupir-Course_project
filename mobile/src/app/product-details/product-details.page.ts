@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import * as $ from "jquery";
+import { HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-product-details',
@@ -12,48 +15,106 @@ export class ProductDetailsPage implements OnInit {
   product: any;
   selectedOptionId: Number;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, ) {
     let page = this;
     this.selectedOptionId = 0;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
     this.route.queryParams.subscribe(params => {
-      page.productId = params["id"];
-      page.product = {
-        id: page.productId,
-        name: "Sun Shield",
-        description: "vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum",
-        image: "https://ae01.alicdn.com/kf/HTB1YxCwSVXXXXXWXXXXq6xXFXXXQ/Car-Windshield-Sunshades-Window-Sun-Shield-Visor-Silver-Car-Shade-Sun-Protection-Size-92-cm-142.jpg_640x640.jpg",
-        options: [{
-          id: 0,
-          name: "92 cm"
-        }, {
-          id: 1,
-          name: "104 cm"
-        }, {
-          id: 2,
-          name: "116 cm"
-        }],
-        bought: 3,
-        steps: [
-          {
-            until: 5,
-            price: "$10.99"
-          }, {
-            until: 8,
-            price: "$9.99"
-          }, {
-            until: 16,
-            price: "$7.99"
-          }, {
-            until: 20,
-            price: "$6.99"
-          }
-        ],
-        maxBought: 20
-      }
+      page.productId = params['id'];
+      page.http.get(`${environment.serverURL}/api/product/find/` + page.productId, {headers: headers}).subscribe((productDTO:any) => {
+        page.http.get(`${environment.serverURL}/api/product/` + page.productId + '/productOption/list', {headers: headers}).subscribe((options:any) => {
+          page.http.get(`${environment.serverURL}/api/product/` + page.productId + '/step/list', {headers: headers}).subscribe((steps:any) => {
+            console.log(steps);
+            page.setProduct(productDTO, options, steps);
+          }, (err) => {
+            console.log(err);
+            page.loadPlaceholderProduct();
+          });
+        }, (err) => {
+          console.log(err);
+          page.loadPlaceholderProduct();
+        });
+      }, (err) => {
+        console.log(err);
+        page.loadPlaceholderProduct();
+      });
     });
   }
 
-  ngOnInit() {
+  loadPlaceholderProduct() {
+    let page = this;
+    page.product = {
+      id: page.productId,
+      name: "Sun Shield",
+      description: "vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum vroum",
+      image: "https://ae01.alicdn.com/kf/HTB1YxCwSVXXXXXWXXXXq6xXFXXXQ/Car-Windshield-Sunshades-Window-Sun-Shield-Visor-Silver-Car-Shade-Sun-Protection-Size-92-cm-142.jpg_640x640.jpg",
+      options: [{
+        id: 0,
+        name: "92 cm"
+      }, {
+        id: 1,
+        name: "104 cm"
+      }, {
+        id: 2,
+        name: "116 cm"
+      }],
+      bought: 3,
+      steps: [
+        {
+          until: 5,
+          price: "$10.99"
+        }, {
+          until: 8,
+          price: "$9.99"
+        }, {
+          until: 16,
+          price: "$7.99"
+        }, {
+          until: 20,
+          price: "$6.99"
+        }
+      ],
+      maxBought: 20
+    }
+  }
+
+  setProduct(productDTO, options, steps) {
+    console.log(options);
+    let page = this;
+    let product = {
+      id: page.productId,
+      name: productDTO.name,
+      description: productDTO.description,
+      image: null,
+      options: [],
+      bought: 3,
+      steps: [
+        {
+          until: 5,
+          price: "$10.99"
+        }, {
+          until: 8,
+          price: "$9.99"
+        }, {
+          until: 16,
+          price: "$7.99"
+        }, {
+          until: productDTO.maxSales,
+          price: "$6.99"
+        }
+      ],
+      maxBought: productDTO.maxSales
+    };
+    options.forEach(function(option) {
+      product.options.push({
+        id: option.optionId,
+        name: option.optionName
+      });
+    });
+    product.image = options[0].image;
+    page.product = product;
     let ProgressBar = {
       defaults: {padding: 1, innerPadding: 1, progress: 0},
       init: function(el, options) {
@@ -181,7 +242,6 @@ export class ProductDetailsPage implements OnInit {
       $('.progress').progressBar('draw');
     });
     let barSteps = [];
-    let page = this;
     this.product.steps.forEach(function(step) {
       barSteps.push({
         until: step.until / page.product.maxBought,
@@ -190,6 +250,10 @@ export class ProductDetailsPage implements OnInit {
     });
     $('.progress').progressBar({padding: 0, innerPadding: 5, progress: 0, steps: barSteps});
     this.updateBar();
+  }
+
+  ngOnInit() {
+
   }
 
   updateBar() {
