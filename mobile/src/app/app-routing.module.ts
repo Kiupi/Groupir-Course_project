@@ -11,7 +11,10 @@ const routes: Routes = [
     {path: 'products', loadChildren: './products/products.module#ProductsPageModule', canActivate: [AuthGuard]},
     {path: 'product-details', loadChildren: './product-details/product-details.module#ProductDetailsPageModule', canActivate: [AuthGuard] },
     {path: 'main-supplier', loadChildren: './main-supplier/main-supplier.module#MainSupplierModule', canActivate: [AuthGuard]},
+    {path: 'basket', loadChildren: './basket/basket.module#BasketPageModule'},
     {path: '**', redirectTo: 'login'}
+
+
 
 ];
 
