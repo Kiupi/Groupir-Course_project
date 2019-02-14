@@ -1,9 +1,6 @@
-<p>
-  purchase-history works!
-</p>
-
 <ion-content>
   <section>
+    <div *ngIf="historyPurchase">
     <ion-card *ngFor="let date of historyPurchase">
       <ion-card-header>
         <ion-card-title>Purchase made the {{date.dateOrder.getUTCDate()}}</ion-card-title>
@@ -24,5 +21,9 @@
         </ul>
       </ion-card-content>
     </ion-card>
+    </div>
+    <div *ngIf="!historyPurchase">
+      <ion-text>No purchase in historic</ion-text>
+    </div>
   </section>
 </ion-content>

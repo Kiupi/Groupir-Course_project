@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth.service";
 import {PaymentList} from "../interface/payment-list";
 import {User} from "../interface/user.interface";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,7 +16,7 @@ export class UserPage implements OnInit {
   public paymentList: PaymentList;
   private user: User;
 
-  constructor(private httpClient: HttpClient, private readonly authService: AuthService) {
+  constructor(private httpClient: HttpClient, private readonly authService: AuthService, private router:Router) {
   }
 
   ngOnInit() {
@@ -62,5 +63,21 @@ export class UserPage implements OnInit {
           this.paymentList = JSON.parse(data);
           console.log(this.paymentList);
         });
+  }
+
+  goToProducts() {
+    this.router.navigateByUrl('products');
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  goToBasket() {
+    this.router.navigateByUrl('basket');
+  }
+
+  goToProfil() {
+    this.router.navigateByUrl('user');
   }
 }

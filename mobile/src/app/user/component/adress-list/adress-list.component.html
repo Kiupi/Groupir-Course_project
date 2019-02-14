@@ -1,23 +1,24 @@
-<p>
-  adress-list works!
-</p>
-
 <ion-content>
-  <section>
-    <ion-card *ngFor="let address of this.user">
-      <ion-card-header>
-        <ion-card-title>{{address.number}}, {{address.street}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Postal code : {{address.postalCode}}</p><br/>
-        <p>Country : {{address.country}}</p>
-      </ion-card-content>
-      <ion-fab vertical="bottom" horizontal="end">
-        <ion-fab-button size="small">
-          <ion-icon (click)="modifyAddress(address)" name="modify"></ion-icon>
-          <ion-icon (click)="deleteAddress(address)" name="trash"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-card>
-  </section>
+    <section>
+        <div *ngIf="user.defaultAddress">
+            <ion-card *ngFor="let address of user.defaultAddress">
+                <ion-card-header>
+                    <ion-card-title>{{address.number}}, {{address.street}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <p>Postal code : {{address.postalCode}}</p><br/>
+                    <p>Country : {{address.country}}</p>
+                </ion-card-content>
+                <ion-fab vertical="bottom" horizontal="end">
+                    <ion-fab-button size="small">
+                        <ion-icon (click)="modifyAddress(address)" name="modify"></ion-icon>
+                        <ion-icon (click)="deleteAddress(address)" name="trash"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </ion-card>
+        </div>
+        <div *ngIf="!user.defaultAddress">
+            <ion-text>Aucune address</ion-text>
+        </div>
+    </section>
 </ion-content>
