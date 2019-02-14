@@ -41,10 +41,9 @@ public class Product {
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Step> steps = new ArrayList<>();
+    private List<Step> steps;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<ProductOption> productOptions = new ArrayList<>();
+    private List<ProductOption> productOptions;
 }
