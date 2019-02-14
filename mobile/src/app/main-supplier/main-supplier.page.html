@@ -1,26 +1,39 @@
-<ion-tabs>
+<ion-header>
+    <ion-toolbar>
+        <ion-title>acceuilFournisseur</ion-title>
+    </ion-toolbar>
+</ion-header>
 
-    <!-- tab bar for navigation -->
-    <ion-tab-bar slot="top">
-        <ion-tab-button tab="new">
-            <ion-label>New</ion-label>
+
+<ion-content padding>
+    <div>
+        <ion-button>
             <ion-icon name="cart"></ion-icon>
-        </ion-tab-button>
-
-        <ion-tab-button tab="send">
-            <ion-label>Sent</ion-label>
+            <ion-label>New</ion-label>
+        </ion-button>
+        <ion-button>
             <ion-icon name="cube"></ion-icon>
-        </ion-tab-button>
+            <ion-label>Sent</ion-label>
+        </ion-button>
+    </div>
+    <div *ngIf="new">
+        <ion-card *ngFor="let orderItem from orderItems">
+            <ion-card-header>
+                <ion-card-title>{{orderItem.productOption.productName}}</ion-card-title>
+                <ion-card-subtitle>{{orderItem.productOption.optionName}}</ion-card-subtitle>
+            </ion-card-header>
+        </ion-card>
+    </div>
+
+    <!--
+    <ion-tab-bar slot="top">
+      <ion-tab-button>
+
+      </ion-tab-button>
+      <ion-tab-button>
+
+      </ion-tab-button>
     </ion-tab-bar>
+    -->
 
-</ion-tabs>
-
-<!--
-  <div *ngFor="let orderItem from orderItems">
-    <ion-card>
-      <ion-card-header>
-        <ion-title></ion-title>
-      </ion-card-header>
-    </ion-card>
-  </div>
-  -->
+</ion-content>
