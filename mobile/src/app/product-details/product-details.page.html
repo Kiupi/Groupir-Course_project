@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item *ngIf="product != null">
+  <ion-item *ngIf="product != null && product.options[selectedOptionId] != null">
     <ion-col col-5>
-      <img src={{product.image}}/>
+      <img src={{product.options[selectedOptionId].image}}/>
     </ion-col>
     <ion-col col-5>
       <p class="description">{{product.description}}</p>
@@ -15,8 +15,8 @@
   </ion-item>
   <ion-item *ngIf="product != null">
     <ion-label>Option</ion-label>
-    <ion-select [(ngModel)]="selectedOptionId" interface="action-sheet">
-      <ion-select-option *ngFor="let option of product.options" [value]="option.id">{{option.name}}</ion-select-option>
+    <ion-select [(ngModel)]="selectedOptionId" (ionChange)="changeOption()" interface="action-sheet">
+      <ion-select-option *ngFor="let option of product.options" [value]="option.order">{{option.name}}</ion-select-option>
     </ion-select>
   </ion-item>
 
