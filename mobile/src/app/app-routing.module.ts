@@ -12,11 +12,14 @@ const routes: Routes = [
     {path: 'user', loadChildren: './user/user.module#UserPageModule'},
     {path: 'product-details', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
     {path: 'main-supplier', loadChildren: './main-supplier/main-supplier.module#MainSupplierModule'},
+    {path: 'basket-confirm', loadChildren: './basket-confirm/basket-confirm.module#BasketConfirmModule', canActivate: [AuthGuard]},
     {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [
+        RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

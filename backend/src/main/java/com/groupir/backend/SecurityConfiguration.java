@@ -1,6 +1,5 @@
 package com.groupir.backend;
 
-import com.groupir.backend.model.Role;
 import com.groupir.backend.security.JwtConfigurer;
 import com.groupir.backend.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/delete/*").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/api/user/update/*").hasAnyAuthority("ADMIN", "USER", "SUPPLIER")
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
+                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
+
+                //Address Controller
+                .antMatchers("/api/user/*/address/**").hasAnyAuthority("ADMIN", "SUPPLIER", "USER")
 
                 //Supplier Controller
                 .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
