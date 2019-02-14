@@ -1,13 +1,11 @@
 package com.groupir.backend.service;
 
-import com.groupir.backend.dto.UpdatedDelivery;
-import com.groupir.backend.model.OrderItem;
-import com.groupir.backend.model.OrderItemKey;
-import com.groupir.backend.model.User;
+import com.groupir.backend.dto.ItemToSendUpdate;
+import com.groupir.backend.exceptions.OrderItemNotFoundException;
+import com.groupir.backend.model.*;
 import com.groupir.backend.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.List;
@@ -38,23 +36,23 @@ public class ServiceSupplier {
 
     /**
      * update delivery information of an OrderItem using informations specified by the manufacturer
-     * @param updatedDelivery the object containing the Id of the OrderItem and the new informations for this object
+     * @param itemToSendUpdate the object containing the Id of the OrderItem and the new informations for this object
      * @return the updated OrderItem
      */
-    public OrderItem updateDeliveryStatus(UpdatedDelivery updatedDelivery){
-        OrderItemKey oiKey = new OrderItemKey();
-        oiKey.option = updatedDelivery.getOption();
-        oiKey.order = updatedDelivery.getOrder();
+    public OrderItem updateDeliveryStatus(ItemToSendUpdate itemToSendUpdate){
+        OrderItemKey oiKey = new OrderItemKey(new ProductOption(), new Order());
+        oiKey.option.setOptionId(itemToSendUpdate.getOptionId());
+        oiKey.order.setOrderId(itemToSendUpdate.getOrderId());
 
         Optional<OrderItem> oItem = orderItemRepository.findById(oiKey);
         if(oItem.isPresent()){
             OrderItem orderItem = oItem.get();
-            orderItem.setTrackingNumber(updatedDelivery.getTrackingNumber());
-            orderItem.setDispatchmentDate(updatedDelivery.getDispatchmentDate());
+            orderItem.setTrackingNumber(itemToSendUpdate.getTrackingNumber());
+            orderItem.setDispatchmentDate(itemToSendUpdate.getDispatchmentDate());
             return orderItemRepository.save(orderItem);
         }
         else {
-            throw new RuntimeException("The OrderItem updated by supplier could not be find");
+            throw new OrderItemNotFoundException("The OrderItem updated by supplier could not be find");
         }
     }
 }

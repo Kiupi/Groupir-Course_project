@@ -71,8 +71,9 @@ export class AuthService {
     private checkToken(): Promise<boolean> {
         const headers = this.setHeadersToken();
         return new Promise((resolve, _) => {
-            this.httpClient.get(`${environment.serverURL}/api/user/currentUser`, {headers: headers, responseType: 'text'})
-                .subscribe(() => {
+            this.getCurrentUser()
+                .subscribe((data) => {
+                        localStorage.setItem("user",data);
                         console.log('token ok');
                         resolve(true);
                     },
@@ -90,13 +91,15 @@ export class AuthService {
         if (jwt) {
             const token = JSON.parse(jwt).token;
 
-            return new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            });
+            return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token);
         } else {
             return null;
         }
 
+    }
+
+    getCurrentUser(): Observable<any>{
+        const headers = this.setHeadersToken();
+        return this.httpClient.get(`${environment.serverURL}/api/user/currentUser`, {headers: headers, responseType: 'text'});
     }
 }
