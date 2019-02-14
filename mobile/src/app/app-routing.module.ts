@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '', redirectTo: 'user', pathMatch: 'full'},
     {path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [AuthGuard]},
     {path: 'sign-up', loadChildren: './sign-up/sign-up.module#SignUpPageModule'},
     {path: 'login', loadChildren: './login/login.module#LoginPageModule'},

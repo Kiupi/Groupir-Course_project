@@ -4,6 +4,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {tap} from 'rxjs/operators';
 import {AuthService} from '../../../auth.service';
+import {User} from "../../../interface/user.interface";
 
 @Component({
   selector: 'app-detail',
@@ -11,10 +12,11 @@ import {AuthService} from '../../../auth.service';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-
+  user: User;
   constructor(private httpClient: HttpClient, private readonly authService: AuthService) { }
   ngOnInit() {
     this.coucou();
+    this.user = JSON.parse(localStorage.getItem("user"));
   }
 
   coucou() {
@@ -28,6 +30,8 @@ export class DetailComponent implements OnInit {
     })
         .subscribe((data) => {
           console.log(data);
+          this.user = JSON.parse(data);
+          console.log(this.user);
         });
   }
 }

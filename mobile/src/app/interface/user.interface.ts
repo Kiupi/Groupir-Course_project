@@ -1,7 +1,7 @@
 export interface User {
     id: number;
     birthDate: Date;
-    defaultAdress: any;
+    defaultAddress: any;
     email: string;
     firstName: string;
     lastName: string;

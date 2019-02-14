@@ -1,11 +1,12 @@
 <form #form="ngForm" (ngSubmit)="detail(form.value)" novalidate>
   <ion-list>
 
+    <p>Change personnal data</p>
     <!-- Name -->
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
       <ion-input type="text" name="name" ngModel required #name="ngModel"
-                 [class.invalid]="name.errors && name.dirty">
+                 [class.invalid]="name.errors && name.dirty" value="{{this.user[0].user.firstName}}">
 
       </ion-input>
     </ion-item>
@@ -19,7 +20,7 @@
     <ion-item>
       <ion-label position="stacked">Surname</ion-label>
       <ion-input type="text" name="surname" ngModel required #surname="ngModel"
-                 [class.invalid]="surname.errors && surname.dirty"></ion-input>
+                 [class.invalid]="surname.errors && surname.dirty" value="{{this.user[0].user.lastName}}"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="surname.errors?.required && surname.dirty">
       <ion-label>
@@ -31,7 +32,7 @@
     <ion-item>
       <ion-label position="stacked">Birth date</ion-label>
       <ion-input type="date" name="birthDate" ngModel required #birthDate="ngModel"
-                 [class.invalid]="birthDate.errors && birthDate.dirty"></ion-input>
+                 [class.invalid]="birthDate.errors && birthDate.dirty" value="{{this.user[0].user.birthDate.getUTCDate()}}"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="birthDate.errors?.required && birthDate.dirty">
       <ion-label>
@@ -43,7 +44,7 @@
     <ion-item>
       <ion-label position="stacked">Email</ion-label>
       <ion-input type="email" name="email" ngModel required email #email="ngModel"
-                 [class.invalid]="email.errors && email.dirty"></ion-input>
+                 [class.invalid]="email.errors && email.dirty" value="{{this.user[0].user.email}}"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
       <ion-label>
@@ -61,6 +62,7 @@
       </ion-label>
     </ion-item>
 
+    <p>Change password</p>
     <!-- Old Password -->
     <ion-item>
       <ion-label position="stacked">Old password</ion-label>

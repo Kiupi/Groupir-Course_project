@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PaymentList} from "../../../interface/payment-list";
 
 @Component({
   selector: 'app-payment-list',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-list.component.scss']
 })
 export class PaymentListComponent implements OnInit {
-
+  paymentList: PaymentList;
   constructor() { }
 
   ngOnInit() {
+    this.paymentList = JSON.parse(localStorage.getItem("paymentList"));
   }
 
 }
