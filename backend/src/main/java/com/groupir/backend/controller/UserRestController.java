@@ -47,6 +47,7 @@ public class UserRestController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
     @Autowired
     private ServiceUserOrders serviceUserOrders;
 

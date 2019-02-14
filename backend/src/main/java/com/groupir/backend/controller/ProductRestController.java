@@ -62,7 +62,7 @@ public class ProductRestController {
     }
 
     /**
-     * the put request is "/api/product/update" to use this method
+     * the put request is "/api/product/update/{id}" to use this method
      *
      * @param updateProduct is a JSON of product
      * @param idProduct     is id of product
@@ -72,6 +72,9 @@ public class ProductRestController {
     public ResponseEntity updateProduct(@RequestBody Product updateProduct, @PathVariable(name = "id") long idProduct) {
         if (!serviceProduct.findById(idProduct)) {
             return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
+        }
+        if(updateProduct.getProductId() != idProduct){
+            return new ResponseEntity<>("the request isn't well write", HttpStatus.BAD_REQUEST);
         }
         updateProduct.setProductId(idProduct);
         serviceProduct.update(updateProduct);
@@ -88,6 +91,7 @@ public class ProductRestController {
         if (!serviceProduct.findById(idProduct)) {
             return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
         }
+
         Product product=serviceProduct.findOne(idProduct);
         return new ResponseEntity<>(product,HttpStatus.OK);
 
