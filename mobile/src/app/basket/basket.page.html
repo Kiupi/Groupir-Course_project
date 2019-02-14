@@ -8,31 +8,28 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngFor="let product of basket" lines="full">
+  <ion-list *ngFor="let product of basket;let i=index" lines="full">
     <ion-item>
       <ion-list slot="start">
         <ion-item lines="none">
           <ion-title>{{product.name}}</ion-title>
         </ion-item>
         <ion-item lines="none">
-          <ion-label>Options:</ion-label>
+          <ion-label>Options: {{product.option}}</ion-label>
         </ion-item>
         <ion-item lines="none">
         </ion-item>
         <ion-item lines="none">
         </ion-item>
       </ion-list>
-      <ion-item lines="none" slot="end">{{product.price}} €</ion-item>
+      <ion-item lines="none" slot="end">{{prices[i]}} €</ion-item>
       <ion-button (click)="deleteProduct(product)" slot="end" color="danger">Delete</ion-button>
     </ion-item>
   </ion-list>
 
-
-
-
-
-
-
-
-
+  <ion-list>
+    <ion-item>
+      <ion-label slot="end">Total:   {{priceSum}} €</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

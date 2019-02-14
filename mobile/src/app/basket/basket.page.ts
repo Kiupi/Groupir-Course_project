@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-basket',
@@ -8,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class BasketPage implements OnInit {
 
   public basket: Array<any>;
+  public prices: Array<number>;
+  public priceSum = 0;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.basket = this.loadBasket();
+    this.getPrices();
   }
 
   loadBasket() {
@@ -34,9 +38,36 @@ export class BasketPage implements OnInit {
     return arr.filter(function(ele) {
       return ele !== value;
     });
+  }
 
+  getPrices() {
+    let test = 0;
+    this.prices = [];
+    for (const product in this.basket) {
+      this.prices.push(test);
+      test++;
+    }
+    this.countPriceSum();
+  }
+
+  countPriceSum() {
+    let sum = 0;
+    for (const price in this.prices) {
+      sum++;
+    }
+    this.priceSum = sum;
   }
 
   goToProducts() {
+    const url = '/products';
+    this.router.navigateByUrl(url);
+  }
+
+  goToProfile() {
+
+  }
+
+  disconnect() {
+
   }
 }
