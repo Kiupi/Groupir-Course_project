@@ -96,7 +96,6 @@ public class ProductRestController {
         }
 
         Product product=serviceProduct.findOne(idProduct);
-        return new ResponseEntity<>(product,HttpStatus.OK);
 
         return serviceProduct.findDetailsOf(idProduct);
     }

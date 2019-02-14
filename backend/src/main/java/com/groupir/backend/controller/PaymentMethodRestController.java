@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/user/{user_id}/payment-method")
 public class PaymentMethodRestController {
