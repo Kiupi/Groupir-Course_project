@@ -1,14 +1,16 @@
 package com.groupir.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity(name = "user_orders")
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,4 @@ public class Order {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Address address;
-
-
 }

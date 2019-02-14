@@ -1,12 +1,14 @@
 package com.groupir.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor
 public class ProductOption {
 
     @Id

@@ -1,5 +1,6 @@
 package com.groupir.backend;
 
+import com.groupir.backend.model.Role;
 import com.groupir.backend.security.JwtConfigurer;
 import com.groupir.backend.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,17 +51,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/delete/*").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/api/user/update/*").hasAnyAuthority("ADMIN", "USER", "SUPPLIER")
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
-                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
-
-                //Supplier Controller
-                .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
-                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
 
                 //Supplier Controller
                 .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
 
-                //Supplier Controller
-                .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
+                //PaymentMethod Controller
+                .antMatchers("/api/user/*/payment-method/**").hasAnyAuthority("SUPPLIER", "ADMIN", "USER")
+
+                // Product Controller
+                .antMatchers("/api/product/add").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/product/delete/*").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/product/update/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/product/**").permitAll()
+
 
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
