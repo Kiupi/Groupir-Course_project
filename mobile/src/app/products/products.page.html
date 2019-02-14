@@ -1,9 +1,45 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>products</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu side="start" menuId="categories">
+    <ion-header>
+        <ion-toolbar color="tertiary">
+            <ion-title>Categories</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-menu-toggle auto-hide="true">
+                <ion-item ion-activatable button *ngFor="let category of categories"
+                          (click)="onCategoryClick($event, category.id)">
+                    <ion-ripple-effect></ion-ripple-effect>
+                    {{ category.name }}
+                </ion-item>
+            </ion-menu-toggle>
+        </ion-list>
+    </ion-content>
+</ion-menu>
 
-<ion-content padding>
-
-</ion-content>
+<ion-router-outlet main>
+    <ion-searchbar placeholder="Search a product" (ionChange)="onSearchBarChange()" [(ngModel)]="searchValue"></ion-searchbar>
+    <ion-content padding #content>
+        <ng-container *ngFor="let product of products" class="product-list">
+            <ion-card *ngIf="(category == null || product.category == category) && (searchValue == '' || product.name.toLowerCase().indexOf(searchValue.toLowerCase()) != -1)" (click)="onProductClick($event, product.id)" ion-activatable>
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-item>
+                    <ion-col>
+                        <img src={{product.image}}/>
+                        <p class="description">{{product.description}}</p>
+                    </ion-col>
+                    <ion-col>
+                        <h2>{{product.name}}</h2>
+                        <div clear small>{{product.remainingTime}}</div>
+                        <div clear small>{{product.quantity}} achetés</div>
+                    </ion-col>
+                </ion-item>
+            </ion-card>
+        </ng-container>
+        <ion-infinite-scroll threshold="0px" (ionInfinite)="loadData($event)">
+            <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-content>
+    <ion-searchbar placeholder="Search a product"></ion-searchbar>
+</ion-router-outlet>
