@@ -1,5 +1,5 @@
 export interface OrderItem {
-    orderItemId: number;
+    orderId: number;
 
     /*  contain :
     Manufacturer Reference
@@ -8,7 +8,7 @@ export interface OrderItem {
     productId
     productName
  */
-    productOption: any;
+    option: any;
 
     /* contain :
     adressId
@@ -19,10 +19,9 @@ export interface OrderItem {
     street
     user
      */
-    orderAdress: any;
+    orderAddress: any;
 
-    orderDate: Date;
-    expeditionDate?: Date;
+    dispatchmentDate?: any;
     quantity: number;
     trackingNumber: string;
 }

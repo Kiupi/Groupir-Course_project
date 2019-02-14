@@ -15,7 +15,7 @@ export class SessionsServices {
 
     }
 
-    getOrderItems(): Observable<any> {
+    public getOrderItems(): Observable<any> {
         const jwt = localStorage.getItem(this.jwtTokenName);
         const token = JSON.parse(jwt).token;
 
@@ -24,4 +24,12 @@ export class SessionsServices {
         return this.httpClient.get(`${environment.serverURL}/api/supplier/items`, {headers: headers});
     }
 
+    public sendOrderItem(value: any): Observable<any> {
+        const jwt = localStorage.getItem(this.jwtTokenName);
+        const token = JSON.parse(jwt).token;
+
+        const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token);
+        return this.httpClient.post(`${environment.serverURL}/api/supplier/items/${value.orderId}/${value.optionId}`,
+            JSON.stringify(value), {headers: headers});
+    }
 }

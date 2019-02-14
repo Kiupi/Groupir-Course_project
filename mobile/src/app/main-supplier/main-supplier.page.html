@@ -7,24 +7,79 @@
 
 <ion-content padding>
     <div>
-        <ion-button>
+        <ion-button (click)="switchToNew()">
             <ion-icon name="cart"></ion-icon>
             <ion-label>New</ion-label>
         </ion-button>
-        <ion-button>
+        <ion-button (click)="switchToSend()">
             <ion-icon name="cube"></ion-icon>
             <ion-label>Sent</ion-label>
         </ion-button>
     </div>
     <div *ngIf="new">
-        <ion-card *ngFor="let orderItem from orderItems">
+        <ion-card *ngFor="let orderItem of orderItemsNew">
             <ion-card-header>
-                <ion-card-title>{{orderItem.productOption.productName}}</ion-card-title>
-                <ion-card-subtitle>{{orderItem.productOption.optionName}}</ion-card-subtitle>
+                <div>
+                    <ion-card-title>{{orderItem.option.productName}}</ion-card-title>
+                    <ion-card-subtitle>{{orderItem.option.optionName}}</ion-card-subtitle>
+                </div>
             </ion-card-header>
+            <ion-card-content>
+                <form (ngSubmit)="validateSend(f, orderItem)" #f="ngForm">
+                    <div>
+                        <ion-text>
+                            <ion-card-title>Delivery address :</ion-card-title>
+                            <p> {{orderItem.orderAddress.number}} {{orderItem.orderAddress.street}}
+                                {{orderItem.orderAddress.city}} {{orderItem.orderAddress.postalCode}}</p>
+                            <ion-card-title>Dispatchment date :</ion-card-title>
+                            <ion-datetime displayFormat="MM-DD-YYYY"
+                                          placeholder="Select Date" name="dispatchmentDate" ngModel required
+                                          #dispatchmentDate
+                                          [class.invalid]="!dispatchmentDate.value">>
+                                {{orderItem.dispatchmentDate}}</ion-datetime>
+                            <ion-card-title>Tracking Number</ion-card-title>
+                            <ion-item>
+                                <ion-label>N°:</ion-label>
+                                <ion-input type="text" name="trackingNumber" ngModel required #trackingNumber
+                                           [class.invalid]="!trackingNumber.value"></ion-input>
+                            </ion-item>
+                        </ion-text>
+                    </div>
+                    <div>
+                        <ion-button color="success" type="submit"
+                                    [disabled]="!trackingNumber.value || !dispatchmentDate.value">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        </ion-button>
+                    </div>
+                </form>
+            </ion-card-content>
         </ion-card>
     </div>
 
+    <div *ngIf="!new">
+        <ion-card *ngFor="let orderItem of orderItemsSent">
+            <ion-card-header>
+                <div>
+                    <ion-card-title>{{orderItem.option.productName}}</ion-card-title>
+                    <ion-card-subtitle>{{orderItem.option.optionName}}</ion-card-subtitle>
+                </div>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-text>
+                    <ion-card-title>Delivery address :</ion-card-title>
+                    <p> {{orderItem.orderAddress.number}} {{orderItem.orderAddress.street}}
+                        {{orderItem.orderAddress.city}} {{orderItem.orderAddress.postalCode}}</p>
+                    <ion-card-title>Dispatchment date :</ion-card-title>
+                    <ion-datetime displayFormat="MM-DD-YYYY"
+                                  name="dispatchmentDate" value="{{orderItem.dispatchmentDate}}" readonly
+                    >
+                        {{orderItem.dispatchmentDate}}</ion-datetime>
+                    <ion-card-title>Tracking Number</ion-card-title>
+                        <p>N°: {{orderItem.trackingNumber}}</p>
+                </ion-text>
+            </ion-card-content>
+        </ion-card>
+    </div>
     <!--
     <ion-tab-bar slot="top">
       <ion-tab-button>
