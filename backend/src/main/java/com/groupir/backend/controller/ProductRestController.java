@@ -1,8 +1,11 @@
 package com.groupir.backend.controller;
 
 import com.groupir.backend.dto.ProductDTO;
+import com.groupir.backend.dto.ProductDetailsDTO;
+import com.groupir.backend.exceptions.ProductNotFoundException;
 import com.groupir.backend.model.Product;
 import com.groupir.backend.service.ServiceProduct;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.http.HttpStatus;
@@ -62,7 +65,7 @@ public class ProductRestController {
     }
 
     /**
-     * the put request is "/api/product/update" to use this method
+     * the put request is "/api/product/update/{id}" to use this method
      *
      * @param updateProduct is a JSON of product
      * @param idProduct     is id of product
@@ -72,6 +75,9 @@ public class ProductRestController {
     public ResponseEntity updateProduct(@RequestBody Product updateProduct, @PathVariable(name = "id") long idProduct) {
         if (!serviceProduct.findById(idProduct)) {
             return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
+        }
+        if(updateProduct.getProductId() != idProduct){
+            return new ResponseEntity<>("the request isn't well write", HttpStatus.BAD_REQUEST);
         }
         updateProduct.setProductId(idProduct);
         serviceProduct.update(updateProduct);
@@ -84,13 +90,14 @@ public class ProductRestController {
      * @return Product
      */
     @GetMapping(value = "/find/{id}")
-    public ResponseEntity findOneProduct(@PathVariable(name = "id") long idProduct){
+    public ProductDetailsDTO findOneProduct(@PathVariable(name = "id") long idProduct){
         if (!serviceProduct.findById(idProduct)) {
-            return new ResponseEntity<>("Product with id " + idProduct + " is not found", HttpStatus.NOT_FOUND);
+            throw new ProductNotFoundException("The product with the id " + idProduct + " was not found");
         }
-        Product product=serviceProduct.findOne(idProduct);
-        return new ResponseEntity<>(product,HttpStatus.OK);
 
+        Product product=serviceProduct.findOne(idProduct);
+
+        return serviceProduct.findDetailsOf(idProduct);
     }
 
     /**

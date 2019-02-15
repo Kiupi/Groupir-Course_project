@@ -1,9 +1,9 @@
 export interface User {
+    userId: number;
     birthDate: Date;
-    defaultAdress: any;
+    defaultAddress: any;
     email: string;
     firstName: string;
     lastName: string;
     role: any;
-
 }

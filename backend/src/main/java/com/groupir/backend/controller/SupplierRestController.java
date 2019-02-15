@@ -61,10 +61,10 @@ public class SupplierRestController {
     }
 
     @PostMapping("/items/{orderId}/{optionId}")
-    public ItemToSendUpdate updateDeliveryStatus(@PathVariable Long optionId, @PathVariable Long orderId, @RequestBody ItemToSendUpdate itemToSendUpdate) {
+    public ItemToSendUpdate updateDeliveryStatus(@PathVariable Long optionId, @PathVariable Long orderId, @RequestBody ItemToSendUpdate itemToSendUpdate, Authentication authentication) {
         if (itemToSendUpdate.getOptionId().equals(optionId) &&
                 itemToSendUpdate.getOrderId().equals(orderId)) {
-            serviceSupplier.updateDeliveryStatus(itemToSendUpdate);
+            serviceSupplier.updateDeliveryStatus(itemToSendUpdate, authentication);
             return itemToSendUpdate;
         } else {
             throw new OrderItemNotFoundException("The OrderItem in url and in the doesn't match");

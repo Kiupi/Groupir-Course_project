@@ -32,11 +32,7 @@ public class AddressRestController {
     @GetMapping("/list")
     public ResponseEntity<List<Address>> getAllAdress(@PathVariable(name = "user_id") int userId) {
         List<Address> userAddresses = addressService.findAllFromUserId(userId);
-        if (userAddresses.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(userAddresses, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(userAddresses, HttpStatus.OK);
     }
 
     /**

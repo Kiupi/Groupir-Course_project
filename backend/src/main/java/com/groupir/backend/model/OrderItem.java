@@ -1,6 +1,8 @@
 package com.groupir.backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -8,7 +10,7 @@ import javax.persistence.Entity;
 import java.util.Date;
 
 @Entity
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor
 public class OrderItem {
     @EmbeddedId
     private OrderItemKey key;

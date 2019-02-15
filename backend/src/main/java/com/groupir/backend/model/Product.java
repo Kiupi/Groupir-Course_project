@@ -1,15 +1,19 @@
 package com.groupir.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,10 +41,9 @@ public class Product {
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Step> steps = new ArrayList<>();
+    private List<Step> steps;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "product")
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<ProductOption> productOptions = new ArrayList<>();
+    private List<ProductOption> productOptions;
 }

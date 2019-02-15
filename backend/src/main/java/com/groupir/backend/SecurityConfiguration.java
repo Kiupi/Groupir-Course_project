@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 
+                //OPTIONS request
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 //User Controller
@@ -52,15 +52,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
 
-                //Supplier Controller
-                .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
-                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
+                //Address Controller
+                .antMatchers("/api/user/*/address/**").hasAnyAuthority("ADMIN", "SUPPLIER", "USER")
 
                 //Supplier Controller
                 .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
 
-                //Supplier Controller
-                .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
+                //PaymentMethod Controller
+                .antMatchers("/api/user/*/payment-method/**").hasAnyAuthority("SUPPLIER", "ADMIN", "USER")
+
+                // Product Controller
+                .antMatchers("/api/product/add").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/product/delete/*").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/product/update/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/product/**").permitAll()
+
 
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));

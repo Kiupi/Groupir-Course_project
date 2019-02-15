@@ -12,7 +12,7 @@ INSERT INTO user (user_id, birth_date, email, first_name, last_name, password, d
 
 
 INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (1, 'Saint Étienne', 'France', '25', '42000', 'Rue du docteur Rémy Annino', 1);
-INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (2, 'Mulhouse', 'France', '45', '68100', 'Rue de la victoire', 2);
+INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (2, 'Mulhouse', 'France', '45', '68100', 'Rue de la victoire', 1);
 INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (3, 'Chartres', 'France', '72', '28000', 'Place de la libération', 3);
 INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (4, 'Paris', 'France', '65', '75013', 'Av. de la soeur Rosalie', 4);
 INSERT INTO address (address_id, city, country, number, postal_code, street, user_user_id) VALUES (5, 'Maubeuge', 'France', '2', '59600', 'Bd. de l''europe', 5);
