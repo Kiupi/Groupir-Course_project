@@ -41,6 +41,7 @@ public class User implements UserDetails {
     @ManyToOne
     private Address defaultAddress;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

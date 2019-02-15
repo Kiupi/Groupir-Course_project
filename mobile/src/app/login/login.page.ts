@@ -31,9 +31,22 @@ export class LoginPage implements OnInit {
             .pipe(finalize(() => loading.dismiss()))
             .subscribe(
                 _ => {
-                    this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
+                    this.authService.getCurrentUser().subscribe(
+                        (user)=>{
+                            localStorage.setItem('user',user);
+                            user = JSON.parse(user);
+                            if (user.role.roleName === 'SUPPLIER') {
+                                this.navCtrl.navigateRoot('/main-supplier', {replaceUrl: true});
+                            }
+                            else {
+                                this.navCtrl.navigateRoot('/products', {replaceUrl: true});
+                            }
+                        }
+                    );
                 },
-                err => this.handleError(err));
+                err => {
+                    this.handleError(err);
+                });
     }
 
     async handleError(error: any) {

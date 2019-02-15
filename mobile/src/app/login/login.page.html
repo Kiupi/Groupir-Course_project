@@ -23,7 +23,7 @@
             </ion-label>
         </ion-item>
         <div padding>
-            <ion-button color="primary" expand="block" type="button" [disabled]="!password.value && !username.value"
+            <ion-button color="primary" expand="block" type="button" [disabled]="!password.value || !username.value"
                         (click)="login(username.value, password.value)">Connexion
             </ion-button>
         </div>

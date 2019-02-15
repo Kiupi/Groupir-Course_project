@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Confirmation de la commande</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+    <h3>Sélectionnez un moyen de paiement</h3>
+    <ion-card *ngFor="let paymentMethod of paymentMethodList"
+              (click)="selectPaymentMethod(paymentMethod)"
+              [color]="(selectedPaymentMethod === paymentMethod) ? 'success' : null">
+        <ion-card-header>
+            <div>
+                <ion-card-title>{{paymentMethod.type}}</ion-card-title>
+                <ion-card-subtitle>{{paymentMethod.token}}</ion-card-subtitle>
+            </div>
+        </ion-card-header>
+        <ion-card-content>
+
+        </ion-card-content>
+    </ion-card>
+
+    <h3>Séléctionnez une adresse de livraison</h3>
+    <ion-card *ngFor="let address of addressList"
+              (click)="selectAddress(address)"
+              [color]="(selectedAddress === address) ? 'success' : null">
+        <ion-card-header>
+            <div>
+                <ion-card-title>{{address.number}} {{address.street}}</ion-card-title>
+                <ion-card-subtitle>{{address.postalCode}} {{address.city}}, {{address.country}}</ion-card-subtitle>
+            </div>
+        </ion-card-header>
+        <ion-card-content>
+
+        </ion-card-content>
+    </ion-card>
+
+    <ion-button [disabled]="selectedAddress === null || selectedPaymentMethod === null"
+                (click)="confirmCommand()">Confirmer la commande</ion-button>
+
+</ion-content>

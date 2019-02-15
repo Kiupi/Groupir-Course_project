@@ -35,7 +35,10 @@ export class AuthService {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
-        return this.httpClient.post(`${environment.serverURL}/api/user/login`, JSON.stringify(values), {headers: headers, responseType: 'text'})
+        return this.httpClient.post(`${environment.serverURL}/api/user/login`, JSON.stringify(values), {
+            headers: headers,
+            responseType: 'text'
+        })
             .pipe(tap(jwt => this.handleJwtResponse(jwt)));
     }
 
@@ -43,7 +46,8 @@ export class AuthService {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
-        return this.httpClient.post(`${environment.serverURL}/api/user/signup`, values, {headers: headers, responseType: 'text'})
+        return this.httpClient
+            .post(`${environment.serverURL}/api/user/signup`, values, {headers: headers, responseType: 'text'})
             .pipe(tap(jwt => {
                 if (jwt !== 'EXIST') {
                     return this.handleJwtResponse(jwt);
@@ -57,5 +61,45 @@ export class AuthService {
         this.authUser.next(jwt);
 
         return jwt;
+    }
+
+    hasAccess(): Promise<boolean> {
+        const jwt = localStorage.getItem(this.jwtTokenName);
+        return this.checkToken();
+    }
+
+    private checkToken(): Promise<boolean> {
+        const headers = this.setHeadersToken();
+        return new Promise((resolve, _) => {
+            this.getCurrentUser()
+                .subscribe((data) => {
+                        localStorage.setItem("user",data);
+                        console.log('token ok');
+                        resolve(true);
+                    },
+                    err => {
+                        console.log('token expired or does not exist');
+                        this.logout();
+                        resolve(false);
+                    });
+        });
+    }
+
+    public setHeadersToken(): HttpHeaders | null {
+
+        const jwt = localStorage.getItem(this.jwtTokenName);
+        if (jwt) {
+            const token = JSON.parse(jwt).token;
+
+            return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token);
+        } else {
+            return null;
+        }
+
+    }
+
+    getCurrentUser(): Observable<any>{
+        const headers = this.setHeadersToken();
+        return this.httpClient.get(`${environment.serverURL}/api/user/currentUser`, {headers: headers, responseType: 'text'});
     }
 }

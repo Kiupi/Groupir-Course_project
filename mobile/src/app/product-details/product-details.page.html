@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{product.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-col col-5>
+      <img src={{product.image}}/>
+    </ion-col>
+    <ion-col col-5>
+      <p class="description">{{product.description}}</p>
+    </ion-col>
+  </ion-item>
+  <ion-item>
+    <ion-label>Option</ion-label>
+    <ion-select [(ngModel)]="selectedOptionId" interface="action-sheet">
+      <ion-select-option *ngFor="let option of product.options" [value]="option.id">{{option.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="progress">
+    <svg>
+      <defs>
+        <linearGradient id="progressGradient" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop stop-color="#D6D4A0" offset="0"/>
+          <stop stop-color="#DA7635" offset="1"/>
+        </linearGradient>
+        <filter id="insetShadow" filterunits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="0%">
+          <feFlood flood-color="#000" flood-opacity="1"></feFlood>
+          <feComposite in2="SourceGraphic" operator="xor"></feComposite>
+          <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+          <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
+          <feFlood flood-color="#000" flood-opacity="1"></feFlood>
+          <feComposite in2="offsetblur" operator="atop"></feComposite>
+          <feComposite in2="SourceGraphic" operator="in"></feComposite>
+          <feMerge>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+            <feMergeNode></feMergeNode>
+          </feMerge>
+        </filter>
+      </defs>
+      <g>
+      <path id="container"
+            d="M10,0 L190,0 A1,1 0 1 1 190,20 L10,20 A1,1 0 1 1 10,0 z"
+            fill="#fff" filter="url(#insetShadow)" stroke-width="0" stroke="#CCC" />
+      <path id="bar"
+            d="M10,5 L50,5 A1,1 0 1 1 50,15 L10,15 A1,1 0 1 1 10,5 z"
+            fill="url(#progressGradient)"/>
+        <path id="steps" stroke="#654236" stroke-width="2" stroke-dasharray="6" stroke-dashoffset="3"></path>
+      </g>
+    </svg>
+  </div>
+
+  <ion-button (click)="buyProduct()">
+    Buy
+  </ion-button>
+</ion-content>

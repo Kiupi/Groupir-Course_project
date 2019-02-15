@@ -28,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -159,8 +160,12 @@ public class UserRestController {
      * @return string
      */
     @GetMapping(value = "/currentUser", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity getCurrentUser(Authentication authentication) {
-        return new ResponseEntity(authentication.getPrincipal(), HttpStatus.OK);
+    public User getCurrentUser(Authentication authentication) {
+        Optional<User> oUser = serviceUser.findByEmail(authentication.getName());
+        if(!oUser.isPresent()){
+            throw new UserNotFoundException("User corresponding to authentication not found");
+        }
+        return oUser.get();
     }
 
     @ApiKeyAuthDefinition(name = "authToken", key = "Authorization", in = ApiKeyAuthDefinition.ApiKeyLocation.HEADER)

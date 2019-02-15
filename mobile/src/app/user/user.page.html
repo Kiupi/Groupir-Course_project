@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="toolbar">
+            <ion-button (click)="goToProducts()">
+                <ion-icon name="home"></ion-icon>
+            </ion-button>
+            <ion-button (click)="logout()">
+                <ion-icon name="log-out"></ion-icon>
+            </ion-button>
+            <ion-title>User Area</ion-title>
+            <ion-button (click)="goToBasket()">
+                <ion-icon name="basket"></ion-icon>
+            </ion-button>
+            <ion-button (click)="goToProfil()">
+                <ion-icon name="contact"></ion-icon>
+            </ion-button>
+        </div>
+    </ion-toolbar>
+    <ion-button text="Go menu" slot="end" (click)="goTogglePage()">Go menu</ion-button>
+</ion-header>
+
+<ion-content padding>
+    <app-toggle-page (onToggle)="onToggle($event)" *ngIf="pageNumber === 'toggle-page'"></app-toggle-page>
+    <app-detail *ngIf="pageNumber === 'detail'"></app-detail>
+    <app-adress-list *ngIf="pageNumber === 'address-list'"></app-adress-list>
+    <app-payment-list *ngIf="pageNumber === 'payment-list'"></app-payment-list>
+    <app-purchase-history *ngIf="pageNumber === 'purchase-history'"></app-purchase-history>
+</ion-content>

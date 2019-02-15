@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
@@ -24,11 +25,14 @@ export class AppComponent {
         this.initializeApp();
     }
 
+  ngOnInit(){
+  }
 
-    initializeApp() {
-        this.platform.ready().then(() => {
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
-        });
-    }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
+  }
 }

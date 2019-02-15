@@ -1,0 +1,29 @@
+<ion-content>
+  <section>
+    <div *ngIf="historyPurchase">
+    <ion-card *ngFor="let purchase of historyPurchase">
+      <ion-card-header>
+        <ion-card-title>Purchase made the {{purchase.dateOrder}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Address : {{purchase.address.number}}, {{purchase.address.street}}</p><br/>
+        <p>          {{purchase.address.city}} {{purchase.address.postalCode}}</p><br/>
+        <p>Country : {{purchase.address.country}}</p>
+        <br/><br/>
+        <p>Item list : </p>
+        <ul>
+          <li *ngFor="let purchase of purchase.orderItems">
+            Name : {{purchase.productName}}<br/>
+            Price : {{purchase.price}}<br/>
+            Quantity : {{purchase.quantity}}<br/>
+            Option : {{purchase.optionName}}
+          </li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
+    </div>
+    <div *ngIf="!historyPurchase">
+      <ion-text>No purchase in historic</ion-text>
+    </div>
+  </section>
+</ion-content>
