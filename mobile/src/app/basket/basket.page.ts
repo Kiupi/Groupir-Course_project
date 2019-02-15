@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-basket',
@@ -12,7 +13,7 @@ export class BasketPage implements OnInit {
   public prices: Array<number>;
   public priceSum = 0;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.basket = this.loadBasket();
@@ -44,6 +45,11 @@ export class BasketPage implements OnInit {
     let test = 0;
     this.prices = [];
     for (const product in this.basket) {
+
+      /*this.http.get('localhost:8080/api/product/find/').subscribe((response:any) => {
+        response.products
+      }*/
+
       this.prices.push(test);
       test++;
     }
