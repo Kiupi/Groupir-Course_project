@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../../interface/user.interface";
+import {User} from '../../../interface/user.interface';
 
 @Component({
   selector: 'app-adress-list',
@@ -11,7 +11,7 @@ export class AdressListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user);
   }
-
 }

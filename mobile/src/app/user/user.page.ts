@@ -41,6 +41,7 @@ export class UserPage implements OnInit {
       'responseType': 'text'
     })
         .subscribe((data) => {
+          console.log('requestPaymentList');
           console.log(data);
           this.paymentList = JSON.parse(data);
           console.log(this.paymentList);
@@ -58,6 +59,7 @@ export class UserPage implements OnInit {
       'responseType': 'text'
     })
         .subscribe((data) => {
+          console.log('requestHistoryPurchase');
           console.log(data);
           this.paymentList = JSON.parse(data);
           console.log(this.paymentList);
