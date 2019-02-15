@@ -20,6 +20,7 @@ export class BasketConfirmPage implements OnInit {
     public selectedAddress = null;
     public selectedPaymentMethod = null;
     public canConfirm = false;
+    public step = "selection";
 
     constructor(private sessionsService: SessionsServices, private router: Router) {
         this.addressList = new Array<UserAddress>();
@@ -67,6 +68,8 @@ export class BasketConfirmPage implements OnInit {
     }
 
     confirmCommand() {
+        this.step = "loading";
         console.log("Confirming command... //TODO: impletment this");
+        setTimeout(() => {this.step = "success";}, 2000);
     }
 }

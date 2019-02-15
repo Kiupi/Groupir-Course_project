@@ -13,7 +13,9 @@ const routes: Routes = [
     {path: 'product-details', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
     {path: 'main-supplier', loadChildren: './main-supplier/main-supplier.module#MainSupplierModule'},
     {path: 'basket-confirm', loadChildren: './basket-confirm/basket-confirm.module#BasketConfirmModule', canActivate: [AuthGuard]},
+    {path: 'basket', loadChildren: './basket/basket.module#BasketPageModule'},
     {path: '**', redirectTo: 'login'}
+
 ];
 
 @NgModule({

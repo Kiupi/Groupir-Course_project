@@ -42,18 +42,18 @@ INSERT INTO user_orders (order_id, order_date, address_address_id, payment_metho
 INSERT INTO user_orders (order_id, order_date, address_address_id, payment_method_payment_method_id, user_user_id) VALUES (2, '2019-01-03 09:28:40', 4, 2, 4);
 
 
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (1, null, 'L100', 'Small Storage(16Go)', 1);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (2, null, 'X100', 'Large Storage(64Go)', 1);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (3, null, 'AluminiumShov', 'Aluminium', 2);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (4, null, 'StainlessShov', 'Stainless Steel', 2);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (5, null, 'BlueLong', 'Blue', 3);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (6, null, 'RedLong', 'Red', 3);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (7, null, 'MenString', 'Men', 4);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (8, null, 'WomenString', 'Women', 4);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (9, null, 'CherryBlueKB', 'Mechanical', 5);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (10, null, 'MembraneKB', 'Office', 5);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (11, null, 'NASAShield', 'Rocket', 6);
-INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (12, null, 'CarSield', 'Car', 6);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (1, 'https://cdn.techadvisor.co.uk/cmsdata/features/3513191/free-up-space-android-1600_thumb800.jpg', 'L100', 'Small Storage(16Go)', 1);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (2, 'https://static.fnac-static.com/multimedia/Images/FR/NR/9b/a2/61/6398619/1540-1/tsp20141031140216/Smartphone-Motorola-Nexus-6-32-Go-Bleu-Nuit.jpg', 'X100', 'Large Storage(64Go)', 1);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (3, 'http://www.bulldogtools.co.uk/gen/thumbs/3rqb7b5xynb4zbytqenzl3jphe-z6g4y33cyjfkv6nlpsnw5xng7gxxba4g-large.jpg', 'AluminiumShov', 'Aluminium', 2);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (4, 'https://i.ebayimg.com/images/g/MS0AAOSwrBJa4kPY/s-l500.jpg', 'StainlessShov', 'Stainless Steel', 2);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (5, 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a8/The_Dress_%28viral_phenomenon%29.png/220px-The_Dress_%28viral_phenomenon%29.png', 'BlueLong', 'Blue', 3);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (6, 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a8/The_Dress_%28viral_phenomenon%29.png/220px-The_Dress_%28viral_phenomenon%29.png', 'RedLong', 'Gold', 3);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (7, 'https://ae01.alicdn.com/kf/HTB1nn0NSVXXXXX0aXXXq6xXFXXXC/red-rose-flower-g-string-femme-tangas-women-sexy-thong-lace-panties-woman-panty-womens-underwear.jpg', 'MenString', 'Men', 4);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (8, 'https://ae01.alicdn.com/kf/HTB1nn0NSVXXXXX0aXXXq6xXFXXXC/red-rose-flower-g-string-femme-tangas-women-sexy-thong-lace-panties-woman-panty-womens-underwear.jpg', 'WomenString', 'Women', 4);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (9, '', 'CherryBlueKB', 'Mechanical', 5);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (10, '', 'MembraneKB', 'Office', 5);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (11, 'http://www.spaceanswers.com/wp-content/uploads/2013/12/Reentry-online.jpg', 'NASAShield', 'Rocket', 6);
+INSERT INTO product_option (option_id, image, manufaturer_reference, option_name, product_product_id) VALUES (12, 'https://i.ebayimg.com/images/g/MrwAAOSwvTBZqArW/s-l640.jpg', 'CarSield', 'Car', 6);
 
 
 INSERT INTO step (step_id, threshold, product_product_id) VALUES (1, 0, 1);
