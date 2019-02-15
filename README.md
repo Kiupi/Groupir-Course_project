@@ -34,3 +34,17 @@
       Le backend est alors complètement fonctionnel, mais sans données.
       
 3. (optionnel) Un fichier contenant des données de tests est disponible dans le dépot. Il s'agît de `backend/src/test/resources/sql/groupir_address.sql`. Le schémas n'est pas présent dans le script, seulement les données sous forme d'`INSERT`
+
+## Frontend
+
+Pour lancer l'application, commencez par ouvrir une console : 
+
+ 1. Se positionner dans le path [`/mobile/`](mobile).
+
+ 2. Si c'est la première fois, il faut installer tous les packages nécessaires. 
+
+    2.1 Taper la commande `npm install` afin d'installer toutes les dépendances.
+
+    2.2 Taper la commande `ionic info` pour verifier si ionic est installé. Si ce n'est pas le cas, installer ionic avec la commande `npm install -g ionic`.
+
+3. Pour lancer l'application, executer `ionic serve` dans la console et attendre la fin du lancement. La page devrait s'ouvrir automatiquement.
