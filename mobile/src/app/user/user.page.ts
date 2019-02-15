@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../auth.service";
-import {PaymentList} from "../interface/payment-list";
-import {User} from "../interface/user.interface";
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {AuthService} from '../auth.service';
+import {PaymentList} from '../interface/payment-list';
+import {User} from '../interface/user.interface';
 
 @Component({
   selector: 'app-user',
@@ -19,7 +19,7 @@ export class UserPage implements OnInit {
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.requestPaymentList();
     this.requestHistoryPurchase();
   }

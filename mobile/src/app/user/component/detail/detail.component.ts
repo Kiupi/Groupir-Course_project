@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../../interface/user.interface";
-import {FormControl} from "@angular/forms";
+import {User} from '../../../interface/user.interface';
 
 @Component({
   selector: 'app-detail',
@@ -12,8 +11,8 @@ export class DetailComponent implements OnInit {
   userBirthdate: Date;
   constructor() { }
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    console.log(this.user)
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user);
   }
 
   timestampToDate(timestamp: number): Date{

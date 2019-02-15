@@ -6,5 +6,7 @@ export interface User {
     firstName: string;
     lastName: string;
     role: any;
+    password: string;
+    enable: boolean;
 
 }
