@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {PaymentList} from "../../../interface/payment-list";
 
 @Component({
   selector: 'app-payment-list',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-list.component.scss']
 })
 export class PaymentListComponent implements OnInit {
-
+  @Input() paymentList: PaymentList;
   constructor() { }
 
   ngOnInit() {

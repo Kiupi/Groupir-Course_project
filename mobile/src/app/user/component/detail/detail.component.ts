@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, ReplaySubject} from 'rxjs';
-import {environment} from '../../../../environments/environment';
-import {tap} from 'rxjs/operators';
-import {AuthService} from '../../../auth.service';
+import {User} from "../../../interface/user.interface";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-detail',
@@ -11,23 +8,15 @@ import {AuthService} from '../../../auth.service';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-
-  constructor(private httpClient: HttpClient, private readonly authService: AuthService) { }
+  user: User;
+  userBirthdate: Date;
+  constructor() { }
   ngOnInit() {
-    this.coucou();
+    this.user = JSON.parse(localStorage.getItem("user"));
+    console.log(this.user)
   }
 
-  coucou() {
-    const headers = this.authService.setHeadersToken();
-    console.log(headers);
-    // url : `${environment.serverURL}/api/user/${user.id}/adress`
-    // on rajoute values en deuxieme param pour un post
-    this.httpClient.get(`${environment.serverURL}/api/user/1/address/list`, {
-      'headers': headers,
-      'responseType': 'text'
-    })
-        .subscribe((data) => {
-          console.log(data);
-        });
+  timestampToDate(timestamp: number): Date{
+    return new Date(timestamp);
   }
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {HistoryPurchase} from "../../../interface/history-purchase";
 
 @Component({
   selector: 'app-purchase-history',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./purchase-history.component.scss']
 })
 export class PurchaseHistoryComponent implements OnInit {
-
+  @Input() historyPurchase: HistoryPurchase;
   constructor() { }
 
   ngOnInit() {
+    console.log(this.historyPurchase);
   }
 
 }

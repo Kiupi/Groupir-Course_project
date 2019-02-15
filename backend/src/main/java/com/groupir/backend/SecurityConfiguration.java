@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 
+                //OPTIONS request
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 //User Controller
@@ -51,6 +51,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/update/*").hasAnyAuthority("ADMIN", "USER", "SUPPLIER")
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
                 .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
+
+                //Supplier Controller
+                .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
+                .antMatchers("/api/user/get/*").hasAuthority("ADMIN")
+
+                //Supplier Controller
+                .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")
 
                 //Supplier Controller
                 .antMatchers("/api/supplier/**").hasAnyAuthority("SUPPLIER")

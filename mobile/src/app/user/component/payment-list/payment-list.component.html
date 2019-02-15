@@ -2,24 +2,21 @@
   payment-list works!
 </p>
 
-<!--
 <ion-content>
   <section>
-    <ion-card *ngFor="let address of addresses">
+    <ion-card *ngFor="let payement of this.paymentList">
       <ion-card-header>
-        <ion-card-title>{{address.number}}, {{address.street}}</ion-card-title>
+        <ion-card-title>Paymenttype : {{payement.type}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Postal code : {{address.postalCode}}</p><br/>
-        <p>Country : {{address.country}}</p>
+        <p>Token : {{payement.token}}</p><br/>
       </ion-card-content>
       <ion-fab vertical="bottom" horizontal="end">
         <ion-fab-button size="small">
-          <ion-icon (click)="modifyAddress(address)" name="modify"></ion-icon>
-          <ion-icon (click)="deleteAddress(address)" name="trash"></ion-icon>
+          <ion-icon (click)="modifyPayment(payement)" name="modify"></ion-icon>
+          <ion-icon (click)="deletePayment(payement)" name="trash"></ion-icon>
         </ion-fab-button>
       </ion-fab>
     </ion-card>
   </section>
 </ion-content>
--->
