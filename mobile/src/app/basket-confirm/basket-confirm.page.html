@@ -6,37 +6,47 @@
 
 
 <ion-content padding>
-    <h3>Sélectionnez un moyen de paiement</h3>
-    <ion-card *ngFor="let paymentMethod of paymentMethodList"
-              (click)="selectPaymentMethod(paymentMethod)"
-              [color]="(selectedPaymentMethod === paymentMethod) ? 'success' : null">
-        <ion-card-header>
-            <div>
-                <ion-card-title>{{paymentMethod.type}}</ion-card-title>
-                <ion-card-subtitle>{{paymentMethod.token}}</ion-card-subtitle>
-            </div>
-        </ion-card-header>
-        <ion-card-content>
+    <div *ngIf="this.step=='selection'">
+        <h3>Select a payment method:</h3>
+        <ion-card *ngFor="let paymentMethod of paymentMethodList"
+                  (click)="selectPaymentMethod(paymentMethod)"
+                  [color]="(selectedPaymentMethod === paymentMethod) ? 'success' : null">
+            <ion-card-header>
+                <div>
+                    <ion-card-title>{{paymentMethod.type}}</ion-card-title>
+                    <ion-card-subtitle>{{paymentMethod.token}}</ion-card-subtitle>
+                </div>
+            </ion-card-header>
+            <ion-card-content>
 
-        </ion-card-content>
-    </ion-card>
+            </ion-card-content>
+        </ion-card>
 
-    <h3>Séléctionnez une adresse de livraison</h3>
-    <ion-card *ngFor="let address of addressList"
-              (click)="selectAddress(address)"
-              [color]="(selectedAddress === address) ? 'success' : null">
-        <ion-card-header>
-            <div>
-                <ion-card-title>{{address.number}} {{address.street}}</ion-card-title>
-                <ion-card-subtitle>{{address.postalCode}} {{address.city}}, {{address.country}}</ion-card-subtitle>
-            </div>
-        </ion-card-header>
-        <ion-card-content>
+        <h3>Select a delivery address:</h3>
+        <ion-card *ngFor="let address of addressList"
+                  (click)="selectAddress(address)"
+                  [color]="(selectedAddress === address) ? 'success' : null">
+            <ion-card-header>
+                <div>
+                    <ion-card-title>{{address.number}} {{address.street}}</ion-card-title>
+                    <ion-card-subtitle>{{address.postalCode}} {{address.city}}, {{address.country}}</ion-card-subtitle>
+                </div>
+            </ion-card-header>
+            <ion-card-content>
 
-        </ion-card-content>
-    </ion-card>
+            </ion-card-content>
+        </ion-card>
 
-    <ion-button [disabled]="selectedAddress === null || selectedPaymentMethod === null"
-                (click)="confirmCommand()">Confirmer la commande</ion-button>
+        <ion-button [disabled]="selectedAddress === null || selectedPaymentMethod === null"
+                    (click)="confirmCommand()">Confirmer la commande</ion-button>
+    </div>
 
+    <div *ngIf="this.step=='loading'">
+        <ion-spinner></ion-spinner>
+    </div>
+
+    <div *ngIf="this.step=='success'">
+        <h3>Order successfully registered.</h3>
+        <ion-button [color]="success" (click)="this.router.navigateByUrl('')">OK</ion-button>
+    </div>
 </ion-content>
