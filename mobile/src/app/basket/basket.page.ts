@@ -29,6 +29,8 @@ export class BasketPage implements OnInit {
   deleteProduct(product) {
     this.basket = this.arrayRemove(this.basket, product);
     this.persistBasket(this.basket);
+    this.basket = this.loadBasket();
+    this.getPrices();
     console.log('The product has been deleted');
   }
 
@@ -44,6 +46,7 @@ export class BasketPage implements OnInit {
 
   getPrices() {
     // let test = 0;
+    this.prices = [];
     this.prices = this.basket.map(productMap => productMap.price);
 
     /*for (const product in this.basket) {
