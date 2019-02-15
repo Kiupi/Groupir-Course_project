@@ -19,8 +19,6 @@
         </ion-item>
         <ion-item lines="none">
         </ion-item>
-        <ion-item lines="none">
-        </ion-item>
       </ion-list>
       <ion-item lines="none" slot="end">{{prices[i]}} €</ion-item>
       <ion-button (click)="deleteProduct(product)" slot="end" color="danger">Delete</ion-button>
@@ -32,4 +30,5 @@
       <ion-label slot="end">Total:   {{priceSum}} €</ion-label>
     </ion-item>
   </ion-list>
+  <ion-button (click)="confirm()" expand="block">Confirm</ion-button>
 </ion-content>

@@ -76,4 +76,9 @@ export class BasketPage implements OnInit {
   disconnect() {
 
   }
+
+  confirm() {
+    const url = '/basket-confirm';
+    this.router.navigateByUrl(url);
+  }
 }
