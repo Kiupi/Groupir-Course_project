@@ -1,7 +1,3 @@
-<p>
-  payment-list works!
-</p>
-
 <ion-content>
   <section>
     <ion-card *ngFor="let payement of this.paymentList">
@@ -11,12 +7,12 @@
       <ion-card-content>
         <p>Token : {{payement.token}}</p><br/>
       </ion-card-content>
-      <ion-fab vertical="bottom" horizontal="end">
-        <ion-fab-button size="small">
-          <ion-icon (click)="modifyPayment(payement)" name="modify"></ion-icon>
-          <ion-icon (click)="deletePayment(payement)" name="trash"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
+      <!--<ion-fab vertical="bottom" horizontal="end">-->
+        <!--<ion-fab-button size="small">-->
+          <!--<ion-icon (click)="modifyPayment(payement)" name="modify"></ion-icon>-->
+          <!--<ion-icon (click)="deletePayment(payement)" name="trash"></ion-icon>-->
+        <!--</ion-fab-button>-->
+      <!--</ion-fab>-->
     </ion-card>
   </section>
 </ion-content>

@@ -1,18 +1,18 @@
 <ion-content>
   <section>
     <div *ngIf="historyPurchase">
-    <ion-card *ngFor="let date of historyPurchase">
+    <ion-card *ngFor="let purchase of historyPurchase">
       <ion-card-header>
-        <ion-card-title>Purchase made the {{date.dateOrder.getUTCDate()}}</ion-card-title>
+        <ion-card-title>Purchase made the {{purchase.dateOrder}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Address : {{date.address.number}}, {{date.address.street}}</p><br/>
-        <p>          {{date.address.city}} {{date.address.postalCode}}</p><br/>
-        <p>Country : {{date.address.country}}</p>
+        <p>Address : {{purchase.address.number}}, {{purchase.address.street}}</p><br/>
+        <p>          {{purchase.address.city}} {{purchase.address.postalCode}}</p><br/>
+        <p>Country : {{purchase.address.country}}</p>
         <br/><br/>
         <p>Item list : </p>
         <ul>
-          <li *ngFor="let purchase of date.orderItems">
+          <li *ngFor="let purchase of purchase.orderItems">
             Name : {{purchase.productName}}<br/>
             Price : {{purchase.price}}<br/>
             Quantity : {{purchase.quantity}}<br/>
