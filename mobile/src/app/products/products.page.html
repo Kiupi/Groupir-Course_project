@@ -36,10 +36,6 @@
                 </ion-item>
             </ion-card>
         </ng-container>
-        <ion-infinite-scroll threshold="0px" (ionInfinite)="loadData($event)">
-            <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
-            </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
     </ion-content>
     <ion-searchbar placeholder="Search a product"></ion-searchbar>
 </ion-router-outlet>

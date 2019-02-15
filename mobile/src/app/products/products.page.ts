@@ -4,6 +4,8 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import { MenuController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -20,14 +22,19 @@ export class ProductsPage implements OnInit {
     moment.locale('FR-fr');
     this.products = [];
     this.categories = [{name: "All"}];
-    this.searchValue = "";
+    this.searchValue = '';
     let page = this;
-    this.http.get('localhost:8080/api/product/list').subscribe((response:any) => {
-      response.products.forEach(function(productDTO) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    this.http.get(`${environment.serverURL}/api/product/list`, {headers: headers}).subscribe((response:any) => {
+      console.log(response);
+      response.forEach(function(productDTO) {
         page.addProduct(productDTO);
       });
-      page.http.get('localhost:8080/api/category/list').subscribe((response:any) => {
-        response.categories.forEach(function(category) {
+      page.http.get(`${environment.serverURL}/api/category/list`, {headers: headers}).subscribe((response:any) => {
+        console.log(response);
+        response.forEach(function(category) {
           page.addCategory(category);
         });
       }, (err) => {
@@ -82,17 +89,17 @@ export class ProductsPage implements OnInit {
 
   loadPlaceholderCategories() {
     this.addCategory({
-      id: 1,
+      categoryId: 1,
       name: "Automobile"
     });
     this.addCategory({
-      id: 2,
+      categoryId: 2,
       name: "Divers"
     });
   }
 
   addProduct(productDTO) {
-    let product = {
+    const product = {
       id: productDTO.id,
       description: productDTO.description,
       category: productDTO.categoryId,
@@ -105,7 +112,11 @@ export class ProductsPage implements OnInit {
     this.products.push(product);
   }
 
-  addCategory(category) {
+  addCategory(categoryDTO) {
+    const category = {
+      id: categoryDTO.categoryId,
+      name: categoryDTO.name
+    }
     this.categories.push(category);
   }
 
