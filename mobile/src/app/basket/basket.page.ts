@@ -12,6 +12,7 @@ export class BasketPage implements OnInit {
   public basket: Array<any>;
   public prices: Array<number>;
   public priceSum = 0;
+  // public productMap = [{name: '', option: '', price: ''}];
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -42,26 +43,24 @@ export class BasketPage implements OnInit {
   }
 
   getPrices() {
-    let test = 0;
-    this.prices = [];
-    for (const product in this.basket) {
+    // let test = 0;
+    this.prices = this.basket.map(productMap => productMap.price);
 
-      /*this.http.get('localhost:8080/api/product/find/').subscribe((response:any) => {
-        response.products
-      }*/
+    /*for (const product in this.basket) {
 
-      this.prices.push(test);
+
+      const productPrices = product.map(productMap => productMap.price);
+      this.prices.push(productPrices);
       test++;
-    }
+    }*/
     this.countPriceSum();
   }
 
   countPriceSum() {
-    let sum = 0;
-    for (const price in this.prices) {
-      sum++;
+    this.priceSum = 0;
+    for (let i = 0; i < this.prices.length; i++) {
+      this.priceSum += +this.prices[i];
     }
-    this.priceSum = sum;
   }
 
   goToProducts() {
