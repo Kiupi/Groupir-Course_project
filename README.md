@@ -1,7 +1,7 @@
 # 2018-POC-5
 ## Backend
 ### Installation
-1. Copier le fichiers `backend/src/main/resources/application.properties.default` dans le même dossier et le renommer `application.properties`. Ce fichier sert de configuration pour le server de backend. 4 lignes nous intéressent particulièrement :
+1. Copier le fichiers [`backend/src/main/resources/application.properties.default`](backend/src/main/resources/application.properties.default) dans le même dossier et le renommer `application.properties`. Ce fichier sert de configuration pour le server de backend. 4 lignes nous intéressent particulièrement :
     ```
     spring.datasource.url=jdbc:mysql://localhost:3306/groupir?serverTimezone=UTC
     spring.datasource.username=root
@@ -33,4 +33,4 @@
       
       Le backend est alors complètement fonctionnel, mais sans données.
       
-3. (optionnel) Un fichier contenant des données de tests est disponible dans le dépot. Il s'agît de `backend/src/test/resources/sql/groupir_address.sql`. Le schémas n'est pas présent dans le script, seulement les données sous forme d'`INSERT`
+3. (optionnel) Un fichier contenant des données de tests est disponible dans le dépot. Il s'agît de [`backend/src/test/resources/sql/groupir_address.sql`](backend/src/test/resources/sql/groupir_address.sql). Le schémas n'est pas présent dans le script, seulement les données sous forme d'`INSERT`
