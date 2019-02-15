@@ -67,6 +67,7 @@ export class MainSupplierPage implements OnInit {
                 console.log(err);
             }
         );
+        this.ngOnInit();
     }
 
 
